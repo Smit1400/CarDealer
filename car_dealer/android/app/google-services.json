@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "813561752910",
+    "project_id": "mip-ty",
+    "storage_bucket": "mip-ty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813561752910:android:11ac2e103a5221fbd3021f",
+        "android_client_info": {
+          "package_name": "com.example.car_dealer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813561752910-cfqpv62nkv92fdof090ipi9lelffia9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMjZ3UlN96wps46zE_lxB-iOGLj5_byRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813561752910-cfqpv62nkv92fdof090ipi9lelffia9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
