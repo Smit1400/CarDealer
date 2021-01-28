@@ -27,7 +27,7 @@ class CustomBtn extends StatelessWidget {
           ),
         ),
         margin: EdgeInsets.symmetric(
-          horizontal: 24.0,
+          horizontal: 34.0,
           vertical: 8.0,
         ),
         child: Stack(
@@ -41,6 +41,71 @@ class CustomBtn extends StatelessWidget {
                     fontSize: 16.0,
                     color: _outlineBtn ? Colors.black : Colors.white,
                     fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _isLoading,
+              child: Center(
+                child: SizedBox(
+                  height: 30.0,
+                  width: 30.0,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SubmitBtn extends StatelessWidget {
+  final String text;
+  final Function onPressed;
+  final double sizeW;
+  final bool isLoading;
+  SubmitBtn({this.text, this.onPressed, this.sizeW, this.isLoading});
+
+  @override
+  Widget build(BuildContext context) {
+
+    bool _isLoading = isLoading ?? false;
+    double _sizeW = sizeW ?? 40;
+
+    return Container(
+      alignment: Alignment.centerRight,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+      child: Container(
+        child: Stack(
+          children: [
+            Visibility(
+              visible: _isLoading ? false : true,
+              child: Center(
+                child: RaisedButton(
+                  onPressed: onPressed,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0)),
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.all(0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50.0,
+                    width: _sizeW * 0.5,
+                    decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.circular(80.0),
+                        gradient: new LinearGradient(colors: [
+                          Color.fromARGB(255, 255, 136, 34),
+                          Color.fromARGB(255, 255, 177, 41)
+                        ])),
+                    padding: const EdgeInsets.all(0),
+                    child: Text(
+                      text ?? "Text",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),

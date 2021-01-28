@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/Screens/register/register.dart';
-import 'package:car_dealer/components/background1.dart';
-import 'package:car_dealer/Screens/login/login.dart';
+import 'package:car_dealer/screens/register_page.dart';
+import 'package:car_dealer/screens/widgets/background1.dart';
+import 'package:car_dealer/screens/login_page.dart';
 
-
-class HomeScreen extends StatelessWidget {
+class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -46,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LoginScreen()));
+                          builder: (context) => LoginPage()));
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
@@ -79,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RegisterScreen()));
+                          builder: (context) => RegisterPage()));
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 import 'package:car_dealer/screens/constants.dart';
+import 'package:car_dealer/screens/login_page.dart';
+
 import 'package:car_dealer/screens/widgets/custom_button.dart';
 import 'package:car_dealer/screens/widgets/custom_input.dart';
+import 'package:car_dealer/screens/widgets/background.dart';
 
 
 class RegisterPage extends StatefulWidget {
@@ -91,21 +93,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
+      body: Background(
         child: Container(
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.only(
-                  top: 24.0,
-                ),
+                 alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
-                  "Create A New Account",
-                  textAlign: TextAlign.center,
-                  style: Constants.boldHeading,
+                  "\nSign Up",
+                  style: Constants.mainHead,
+                textAlign: TextAlign.left,
                 ),
               ),
               Column(
@@ -120,6 +122,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                     textInputAction: TextInputAction.next,
                   ),
+                  //  CustomInput(
+                  //   hintText: "Name..",
+                  //   onChanged: (value) {
+                  //     _registerEmail = value;
+                  //   },
+                  //   onSubmitted: (value) {
+                  //     _passwordFocusNode.requestFocus();
+                  //   },
+                  //   textInputAction: TextInputAction.next,
+                  // ),
                   CustomInput(
                     hintText: "Password...",
                     onChanged: (value) {
@@ -131,26 +143,39 @@ class _RegisterPageState extends State<RegisterPage> {
                       _submitForm();
                     },
                   ),
-                  CustomBtn(
-                    text: "Create New Account",
-                    onPressed: () {
-                      _submitForm();
-                    },
+                  SubmitBtn(
+                text:"Create account",
+                onPressed: (){
+                  _submitForm();
+                },
+                sizeW:size.width,
                     isLoading: _registerFormLoading,
                   )
                 ],
               ),
+
               Padding(
                 padding: const EdgeInsets.only(
-                  bottom: 16.0,
+                  bottom: 26.0,
                 ),
-                child: CustomBtn(
-                  text: "Back To Login",
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  outlineBtn: true,
+                child: 
+                Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: GestureDetector(
+                onTap: () => {
+                   Navigator.pop(context)
+                },
+                child: Text(
+                  "Back To Login",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2661FA)
+                  ),
                 ),
+              ),
+            ),
               ),
             ],
           ),

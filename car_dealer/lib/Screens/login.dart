@@ -1,10 +1,95 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/Screens/login/login.dart';
-import 'package:car_dealer/components/background.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterScreen extends StatelessWidget {
+import 'package:car_dealer/screens/constants.dart';
+import 'package:car_dealer/screens/register.dart';
+import 'package:car_dealer/screens/widgets/background.dart';
+
+class LoginScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+   Future<void> _alertDialogBuilder(String error) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Error"),
+            content: Container(
+              child: Text(error),
+            ),
+            actions: [
+              FlatButton(
+                child: Text("Close Dialog"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
+
+  // Create a new user account
+  Future<String> _loginAccount() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _loginEmail, password: _loginPassword);
+      return null;
+    } on FirebaseAuthException catch(e) {
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  void _submitForm() async {
+
+    setState(() {
+      _loginFormLoading = true;
+    });
+
+    String _loginFeedback = await _loginAccount();
+
+    if(_loginFeedback != null) {
+      _alertDialogBuilder(_loginFeedback);
+
+      setState(() {
+        _loginFormLoading = false;
+      });
+    }
+  }
+
+  bool _loginFormLoading = false;
+  String _loginEmail = "";
+  String _loginPassword = "";
+
+  FocusNode _passwordFocusNode;
+
+  @override
+  void initState() {
+    _passwordFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -16,12 +101,8 @@ class RegisterScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                "SIGN UP",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF2661FA),
-                  fontSize: 36
-                ),
+                "SIGN IN",
+                style: Constants.mainHead,
                 textAlign: TextAlign.left,
               ),
             ),
@@ -33,31 +114,7 @@ class RegisterScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  labelText: "Name"
-                ),
-              ),
-            ),
-
-            SizedBox(height: size.height * 0.03),
-
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: "Mobile Number"
-                ),
-              ),
-            ),
-
-            SizedBox(height: size.height * 0.03),
-
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: "Username"
+                  labelText: "Email Id"
                 ),
               ),
             ),
@@ -76,7 +133,6 @@ class RegisterScreen extends StatelessWidget {
             ),
 
             SizedBox(height: size.height * 0.05),
-
             Container(
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -100,7 +156,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(0),
                   child: Text(
-                    "SIGN UP",
+                    "LOGIN",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold
@@ -115,10 +171,10 @@ class RegisterScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()))
                 },
                 child: Text(
-                  "Already Have an Account? Sign in",
+                  "Don't Have an Account? Sign up",
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -133,3 +189,4 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 }
+

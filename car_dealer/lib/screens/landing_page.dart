@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:car_dealer/screens/constants.dart';
 import 'package:car_dealer/screens/home_page.dart';
-import 'package:car_dealer/screens/login_page.dart';
-
+import 'package:car_dealer/screens/auth.dart';
+// import 'package:car_dealer/screens/login_page.dart';
+// import 'package:car_dealer/screens/login.dart';
 
 class LandingPage extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -39,7 +40,7 @@ class LandingPage extends StatelessWidget {
               if(streamSnapshot.connectionState == ConnectionState.active) {
                 User _user = streamSnapshot.data;
                 if(_user == null) {
-                  return LoginPage();
+                  return AuthScreen();
                 } else {
                   return HomePage();
                 }

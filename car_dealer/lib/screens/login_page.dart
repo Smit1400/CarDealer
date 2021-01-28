@@ -5,6 +5,7 @@ import 'package:car_dealer/screens/constants.dart';
 import 'package:car_dealer/screens/register_page.dart';
 import 'package:car_dealer/screens/widgets/custom_button.dart';
 import 'package:car_dealer/screens/widgets/custom_input.dart';
+import 'package:car_dealer/screens/widgets/background.dart';
 
 
 
@@ -93,21 +94,21 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
+      body: Background(
         child: Container(
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.only(
-                  top: 24.0,
-                ),
+                 alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
-                  "Welcome User,\nLogin to your account",
-                  textAlign: TextAlign.center,
-                  style: Constants.boldHeading,
+                  "\nLogin to your account",
+                  style: Constants.mainHead,
+                textAlign: TextAlign.left,
                 ),
               ),
               Column(
@@ -133,32 +134,41 @@ class _LoginPageState extends State<LoginPage> {
                       _submitForm();
                     },
                   ),
-                  CustomBtn(
-                    text: "Login",
-                    onPressed: () {
-                      _submitForm();
-                    },
-                    isLoading: _loginFormLoading,
-                  )
+
+              SubmitBtn(
+                text:"Login",
+                onPressed: (){
+                  _submitForm();
+                },
+                sizeW:size.width,
+                isLoading: _loginFormLoading,
+              ),
+             
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  bottom: 16.0,
+                  bottom: 26.0,
                 ),
-                child: CustomBtn(
-                  text: "Create New Account",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterPage()
-                      ),
-                    );
-                  },
-                  outlineBtn: true,
+                child:Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: GestureDetector(
+                onTap: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
+                },
+                child: Text(
+                  "Don't Have an Account? Sign up",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2661FA)
+                  ),
                 ),
               ),
+            ),
+          ),
+              
             ],
           ),
         ),
