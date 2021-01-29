@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "813561752910",
-    "project_id": "mip-ty",
-    "storage_bucket": "mip-ty.appspot.com"
+    "project_number": "14532864359",
+    "project_id": "car-dealer-project-ac2ef",
+    "storage_bucket": "car-dealer-project-ac2ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:813561752910:android:11ac2e103a5221fbd3021f",
+        "mobilesdk_app_id": "1:14532864359:android:976f629cc1f28a0f0527c2",
         "android_client_info": {
           "package_name": "com.example.car_dealer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "813561752910-cfqpv62nkv92fdof090ipi9lelffia9p.apps.googleusercontent.com",
+          "client_id": "14532864359-h98gh2iuhh2o3t7t7jmiv3m1c131ov9l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMjZ3UlN96wps46zE_lxB-iOGLj5_byRA"
+          "current_key": "AIzaSyC2eZn-8CFLI6w1iSWSR7D00nnmI0lDg_w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "813561752910-cfqpv62nkv92fdof090ipi9lelffia9p.apps.googleusercontent.com",
+              "client_id": "14532864359-h98gh2iuhh2o3t7t7jmiv3m1c131ov9l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

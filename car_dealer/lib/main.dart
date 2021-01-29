@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/home.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:car_dealer/screens/landing_page.dart';
+// import 'package:car_dealer/screens/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,14 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF2661FA),
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
       ),
-      home: HomeScreen(),
+      home: LandingPage(),
     );
   }
 }
