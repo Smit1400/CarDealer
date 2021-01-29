@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:car_dealer/home1.dart';
 import 'package:car_dealer/screens/constants.dart';
 import 'package:car_dealer/screens/register_page.dart';
 import 'package:car_dealer/screens/widgets/custom_button.dart';
 import 'package:car_dealer/screens/widgets/custom_input.dart';
 import 'package:car_dealer/screens/widgets/background.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
         context: context,
@@ -35,8 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               )
             ],
           );
-        }
-    );
+        });
   }
 
   // Create a new user account
@@ -45,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _loginEmail, password: _loginPassword);
       return null;
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
@@ -58,14 +54,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submitForm() async {
-
     setState(() {
       _loginFormLoading = true;
     });
 
     String _loginFeedback = await _loginAccount();
 
-    if(_loginFeedback != null) {
+    if (_loginFeedback != null) {
       _alertDialogBuilder(_loginFeedback);
 
       setState(() {
@@ -103,12 +98,12 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                 alignment: Alignment.centerLeft,
+                alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
                   "\nLogin to your account",
                   style: Constants.mainHead,
-                textAlign: TextAlign.left,
+                  textAlign: TextAlign.left,
                 ),
               ),
               Column(
@@ -134,41 +129,41 @@ class _LoginPageState extends State<LoginPage> {
                       _submitForm();
                     },
                   ),
-
-              SubmitBtn(
-                text:"Login",
-                onPressed: (){
-                  _submitForm();
-                },
-                sizeW:size.width,
-                isLoading: _loginFormLoading,
-              ),
-             
+                  SubmitBtn(
+                    text: "Login",
+                    onPressed: () {
+                      _submitForm();
+                      //HomePage();
+                    },
+                    sizeW: size.width,
+                    isLoading: _loginFormLoading,
+                  ),
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(
                   bottom: 26.0,
                 ),
-                child:Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
-                },
-                child: Text(
-                  "Don't Have an Account? Sign up",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2661FA)
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()))
+                    },
+                    child: Text(
+                      "Don't Have an Account? Sign up",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2661FA)),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-              
             ],
           ),
         ),
