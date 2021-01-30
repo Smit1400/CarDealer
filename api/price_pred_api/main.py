@@ -10,9 +10,6 @@ import pandas as pd
 import datetime
 from sklearn.preprocessing import LabelEncoder
 import torch
-import torch.nn as nn
-import torchvision
-import torch.functional as F
 
 ### Importing model
 
@@ -64,10 +61,6 @@ class UsedCarAttributes(BaseModel):
     power: float
     seats: int
     year: int
-
-@app.get("/")
-def home_root():
-    return {"getting started": "First time using fastapi"}
 
 @app.post("/predict")
 def predict_price(attributes: UsedCarAttributes):
