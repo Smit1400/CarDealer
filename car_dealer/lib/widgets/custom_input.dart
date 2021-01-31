@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/screens/constants.dart';
+import 'package:car_dealer/widgets/constants.dart';
 
 class CustomInput extends StatelessWidget {
   final String hintText;

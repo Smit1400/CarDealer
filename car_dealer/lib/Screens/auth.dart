@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:car_dealer/screens/register_page.dart';
-import 'package:car_dealer/screens/widgets/background1.dart';
+import 'package:car_dealer/widgets/background1.dart';
 import 'package:car_dealer/screens/login_page.dart';
 
 class AuthScreen extends StatelessWidget {

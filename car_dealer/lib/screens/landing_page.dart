@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:car_dealer/screens/constants.dart';
-import 'package:car_dealer/screens/home_page.dart';
+import 'package:car_dealer/widgets/constants.dart';
+import 'package:car_dealer/screens/index_page.dart';
 import 'package:car_dealer/screens/auth.dart';
 // import 'package:car_dealer/screens/login_page.dart';
 // import 'package:car_dealer/screens/login.dart';
@@ -42,7 +42,7 @@ class LandingPage extends StatelessWidget {
                 if(_user == null) {
                   return AuthScreen();
                 } else {
-                  return HomePage();
+                  return IndexPage();
                 }
               }
 

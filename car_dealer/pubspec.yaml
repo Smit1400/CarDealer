@@ -13,6 +13,7 @@ dependencies:
   firebase_core: ^0.7.0
   google_fonts: ^1.1.2
   firebase_auth: ^0.20.0+1
+  cloud_firestore: ^0.16.0
   button3d: ^0.1.1
   cupertino_icons: ^0.1.3
 

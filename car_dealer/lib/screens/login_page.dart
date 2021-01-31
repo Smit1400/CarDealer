@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:car_dealer/home1.dart';
-import 'package:car_dealer/screens/constants.dart';
+
+import 'package:car_dealer/widgets/constants.dart';
 import 'package:car_dealer/screens/register_page.dart';
-import 'package:car_dealer/screens/widgets/custom_button.dart';
-import 'package:car_dealer/screens/widgets/custom_input.dart';
-import 'package:car_dealer/screens/widgets/background.dart';
+import 'package:car_dealer/widgets/custom_button.dart';
+import 'package:car_dealer/widgets/custom_input.dart';
+import 'package:car_dealer/widgets/background.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -64,8 +64,12 @@ class _LoginPageState extends State<LoginPage> {
       _alertDialogBuilder(_loginFeedback);
 
       setState(() {
+        print("hi");
         _loginFormLoading = false;
       });
+    }
+    else{
+      Navigator.pop(context);
     }
   }
 

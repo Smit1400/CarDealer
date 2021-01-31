@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
-//import 'package:car_dealer/widgets/bottom_tabs.dart';
+// import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:flutter/rendering.dart';
-import 'package:car_dealer/bottom_tabs.dart';
+import 'package:car_dealer/widgets/bottom_tabs.dart';
 
-class HomePage extends StatefulWidget {
+class IndexPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _IndexPageState createState() => _IndexPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _IndexPageState extends State<IndexPage> {
   PageController _tabsPageController;
   int _selectedTab = 0;
 

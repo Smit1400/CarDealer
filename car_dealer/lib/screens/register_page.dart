@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:car_dealer/screens/constants.dart';
-import 'package:car_dealer/screens/login_page.dart';
+// import 'package:car_dealer/screens/login_page.dart';
 
-import 'package:car_dealer/screens/widgets/custom_button.dart';
-import 'package:car_dealer/screens/widgets/custom_input.dart';
-import 'package:car_dealer/screens/widgets/background.dart';
+import 'package:car_dealer/widgets/custom_button.dart';
+import 'package:car_dealer/widgets/custom_input.dart';
+import 'package:car_dealer/widgets/background.dart';
+import 'package:car_dealer/widgets/constants.dart';
+
 
 
 class RegisterPage extends StatefulWidget {
