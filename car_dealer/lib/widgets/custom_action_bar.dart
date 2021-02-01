@@ -1,5 +1,9 @@
-import 'package:car_dealer/widgets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:car_dealer/widgets/constants.dart';
+import 'package:car_dealer/services/firebase_auth.dart';
 
 class CustomActionBar extends StatelessWidget {
   final String title;
@@ -8,13 +12,20 @@ class CustomActionBar extends StatelessWidget {
   final bool hasBackground;
   CustomActionBar(
       {this.title, this.hasBackArrrow, this.hasTitle, this.hasBackground});
+  final CollectionReference _userRef =
+      FirebaseFirestore.instance.collection("Users");
+  FirebaseServices _firebaseServices =FirebaseServices();
+  
 
   @override
   Widget build(BuildContext context) {
     bool _hasBackArrow = hasBackArrrow ?? false;
     bool _hasTitle = hasTitle ?? true;
     bool _hasBackground = hasBackground ?? true;
-
+  CollectionReference userList = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(_firebaseServices.getUserId())
+        .collection("Wishlist");
     return Container(
       decoration: BoxDecoration(
           gradient: _hasBackground
@@ -65,22 +76,31 @@ class CustomActionBar extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: Container(
-              width: 42.0,
-              height: 42.0,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "0",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                width: 42.0,
+                height: 42.0,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: userList.snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      int _itemcount = 0;
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        List _documents = snapshot.data.docs;
+                        _itemcount = _documents.length;
+                        print(_itemcount);
+                      }
+                      return Text(
+                        "$_itemcount" ?? "0",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      );
+                    })),
           )
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:car_dealer/tabs/search_tab.dart';
 // import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:flutter/rendering.dart';
 import 'package:car_dealer/widgets/bottom_tabs.dart';
+import 'package:car_dealer/services/firebase_auth.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -12,11 +13,13 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+  FirebaseServices _firebaseServices =FirebaseServices();
   PageController _tabsPageController;
   int _selectedTab = 0;
 
   @override
   void initState() {
+    print("User ID:${_firebaseServices.getUserId()}");
     _tabsPageController = PageController();
     super.initState();
   }
