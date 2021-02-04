@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/screens/show_page.dart';
-
-import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SavedTab extends StatelessWidget {
-
   final FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
@@ -18,7 +15,7 @@ class SavedTab extends StatelessWidget {
           FutureBuilder<QuerySnapshot>(
             future: _firebaseServices.usersRef
                 .doc(_firebaseServices.getUserId())
-                .collection("Saved")
+                .collection("Wishlist")
                 .get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -143,8 +140,7 @@ class SavedTab extends StatelessWidget {
           CustomActionBar(
             title: "Saved",
             hasBackArrrow: false,
-          
-          ),
+          )
         ],
       ),
     );
