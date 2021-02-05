@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// import 'package:car_dealer/screens/login_page.dart';
+import 'package:car_dealer/screens/login_page.dart';
 
 import 'package:car_dealer/widgets/custom_button.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
@@ -165,7 +165,10 @@ class _RegisterPageState extends State<RegisterPage> {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                   Navigator.pop(context)
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginPage()))
                 },
                 child: Text(
                   "Back To Login",

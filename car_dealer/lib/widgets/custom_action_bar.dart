@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:car_dealer/widgets/constants.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:car_dealer/widgets/drawer.dart';
 
 class CustomActionBar extends StatelessWidget {
   final String title;
@@ -47,6 +48,7 @@ class CustomActionBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          
           if (_hasBackArrow)
             GestureDetector(
               onTap: () {

@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 class Constants{
 
+  static const tileSelected=TextStyle(color:Colors.white70,fontSize:20,fontWeight:FontWeight.w600 );
+
+  static const tile=TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.w600 );
+  
+ Color selectedColor = Color(0xFF4AC8EA);
+  Color drawerBackgroundColor = Color(0xFF272D34);
   static const regularHeading =
       TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black);
 

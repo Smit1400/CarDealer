@@ -6,6 +6,8 @@ import 'package:car_dealer/screens/register_page.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background.dart';
+import 'package:car_dealer/widgets/drawer.dart';
+import 'package:car_dealer/screens/landing_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -67,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
         print("hi");
         _loginFormLoading = false;
       });
-    }
-    else{
-      Navigator.pop(context);
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LandingPage()));
     }
   }
 
@@ -95,6 +97,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(title: Text("app")),
+      drawer: CollapsingDrawer(),
       body: Background(
         child: Container(
           width: double.infinity,
