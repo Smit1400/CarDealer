@@ -14,9 +14,9 @@ class CustomActionBar extends StatelessWidget {
   final bool hasBackground;
   CustomActionBar(
       {this.title, this.hasBackArrrow, this.hasTitle, this.hasBackground});
-  final CollectionReference _userRef =
-      FirebaseFirestore.instance.collection("Users");
-  FirebaseServices _firebaseServices = FirebaseServices();
+  // final CollectionReference _userRef =
+  //     FirebaseFirestore.instance.collection("Users");
+  final FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
   Widget build(BuildContext context) {

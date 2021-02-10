@@ -1,6 +1,6 @@
 // import 'dart:html';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +25,7 @@ class _ShowPageState extends State<ShowPage> {
   final CollectionReference _userRef =
       FirebaseFirestore.instance.collection("Users");
 
-  User _user = FirebaseAuth.instance.currentUser;
+  // User _user = FirebaseAuth.instance.currentUser;
   void _addToList() async {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('dd-MM-yyyy');

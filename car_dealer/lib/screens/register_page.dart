@@ -96,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Background(
         child: Container(
           width: double.infinity,
@@ -112,6 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Column(
+                // resizeToAvoidBottomPadding: false,
                 children: [
                   CustomInput(
                     hintText: "Email...",

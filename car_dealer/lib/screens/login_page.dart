@@ -98,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text("app")),
+      resizeToAvoidBottomPadding: false,
       drawer: CollapsingDrawer(),
       body: Background(
         child: Container(

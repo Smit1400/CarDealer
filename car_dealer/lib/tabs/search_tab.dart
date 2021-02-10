@@ -30,10 +30,8 @@ class _SearchTabState extends State<SearchTab> {
             )
           else
             FutureBuilder<QuerySnapshot>(
-              future: _firebaseServices.carRef
-                  .orderBy('search_string')
-                  .startAt([_searchString]).endAt(
-                      ["$_searchString\uf8ff"]).get(),
+              future: _firebaseServices.carRef.orderBy('name').startAt(
+                  [_searchString]).endAt(["$_searchString\uf8ff"]).get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Scaffold(

@@ -17,7 +17,7 @@ class _BottomTabsState extends State<BottomTabs> {
     await _auth.signOut();
   }
 
-  Future<bool> _exitApp(BuildContext context) {
+  Future<bool> _exitApp(BuildContext dialogContext) {
     return showDialog(
           context: context,
           child: AlertDialog(
@@ -27,7 +27,7 @@ class _BottomTabsState extends State<BottomTabs> {
               FlatButton(
                 onPressed: () {
                   print("you choose no");
-                  Navigator.of(context).pop(false);
+                  Navigator.of(dialogContext).pop(false);
                 },
                 child: Text('No'),
               ),
