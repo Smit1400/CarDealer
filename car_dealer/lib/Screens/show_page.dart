@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import 'package:car_dealer/widgets/custom_action_bar.dart';
-import 'package:car_dealer/widgets/constants.dart';
+import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/widgets/image_swipe.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 

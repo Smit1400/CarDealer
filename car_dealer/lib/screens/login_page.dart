@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:car_dealer/widgets/constants.dart';
-import 'package:car_dealer/screens/register_page.dart';
+import 'package:car_dealer/components/constants.dart';
+
 import 'package:car_dealer/widgets/custom_button.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background.dart';
-import 'package:car_dealer/widgets/drawer.dart';
-import 'package:car_dealer/screens/landing_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -70,8 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         _loginFormLoading = false;
       });
     } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LandingPage()));
+     Navigator.pushNamed(context, '/');
     }
   }
 
@@ -99,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(title: Text("app")),
       resizeToAvoidBottomPadding: false,
-      drawer: CollapsingDrawer(),
+      // drawer: CollapsingDrawer(),
       body: Background(
         child: Container(
           width: double.infinity,
@@ -158,10 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: GestureDetector(
                     onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()))
+                      Navigator.pushNamed(context, '/register')
                     },
                     child: Text(
                       "Don't Have an Account? Sign up",

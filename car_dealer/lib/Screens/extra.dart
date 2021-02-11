@@ -1,7 +1,4 @@
-import 'dart:math' as math show pi;
-
 import 'package:flutter/material.dart';
-
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 
 void main() => runApp(MyApp());

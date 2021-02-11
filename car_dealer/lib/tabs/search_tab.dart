@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/widgets/constants.dart';
+import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/product_card.dart';

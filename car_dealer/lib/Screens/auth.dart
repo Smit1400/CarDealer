@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/screens/register_page.dart';
 import 'package:car_dealer/widgets/background1.dart';
-import 'package:car_dealer/screens/login_page.dart';
-import 'package:car_dealer/screens/extra.dart';
+
+
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -42,10 +41,7 @@ class AuthScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SidebarPage()));
+                  Navigator.pushNamed(context, '/login');
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
@@ -75,10 +71,7 @@ class AuthScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage()));
+                  Navigator.pushNamed(context, '/register');
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
