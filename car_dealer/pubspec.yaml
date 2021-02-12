@@ -15,6 +15,7 @@ dependencies:
   firebase_auth: ^0.20.0+1
   cloud_firestore: ^0.16.0
   button3d: ^0.1.1
+  material_design_icons_flutter: 4.0.5855
   cupertino_icons: ^0.1.3
   collapsible_sidebar: ^1.0.7+2
 
@@ -23,8 +24,6 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
-
   uses-material-design: true
   assets:
    - assets/images/
