@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
+import 'package:car_dealer/screens/price_predict.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,16 +49,20 @@ class _SidebarPageState extends State<SidebarPage> {
         onPressed: () => setState(() => _headline = 'Search car'),
       ),
       CollapsibleItem(
-        text: 'Sell car',
-        icon: Icons.car_rental,
-        onPressed: () => setState(() => _headline = 'Sell car'),
-      ),
+          text: 'Sell car',
+          icon: Icons.store,
+          onPressed : () => {
+           Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PricePredict())),
+  },
+          ),
       CollapsibleItem(
         text: 'Wishlist',
-        icon: Icons.fact_check,
+        icon: Icons.check_box,
         onPressed: () => setState(() => _headline = 'Wishlist'),
       ),
-
       CollapsibleItem(
         text: 'Alarm',
         icon: Icons.access_alarm,
@@ -80,25 +85,23 @@ class _SidebarPageState extends State<SidebarPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Material(
-      type: MaterialType.transparency,
-      child:
-    SafeArea(
-      child: CollapsibleSidebar(
-        items: _items,
-        avatarImg: _avatarImg,
-        title: 'xyz prw',
-        // body: _body(size, context),
-        
-        backgroundColor: Colors.black,
-        selectedTextColor: Colors.blue,
-        textStyle: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-        titleStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold),
-        toggleTitleStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-     body:Container(),
-      ),
-    ));
+        type: MaterialType.transparency,
+        child: SafeArea(
+          child: CollapsibleSidebar(
+            items: _items,
+            avatarImg: _avatarImg,
+            title: 'xyz prw',
+            // body: _body(size, context),
+
+            backgroundColor: Colors.black,
+            selectedTextColor: Colors.blue,
+            textStyle: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+            titleStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            toggleTitleStyle:
+                TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            body: Container(),
+          ),
+        ));
   }
 
   // Widget _body(Size size, BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:car_dealer/screens/price_predict.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -8,6 +9,8 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 
 class IndexPage extends StatefulWidget {
   @override
@@ -55,13 +58,18 @@ class _IndexPageState extends State<IndexPage> {
         },
       ),
       CollapsibleItem(
-        text: 'Sell car',
-        icon: Icons.car_rental,
-        onPressed: () => setState(() => _headline = 'Sell car'),
+          text: 'Sell car',
+          icon: MdiIcons.car,
+         onPressed : () => {
+           Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PricePredict())),
+            },
       ),
       CollapsibleItem(
         text: 'Wishlist',
-        icon: Icons.fact_check,
+        icon: Icons.check_box,
         onPressed: () => setState(() => _headline = 'Wishlist'),
       ),
       CollapsibleItem(
