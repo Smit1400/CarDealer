@@ -1,8 +1,11 @@
 import 'package:car_dealer/services/firebase_auth.dart';
-import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:car_dealer/Screens/show_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:car_dealer/widgets/custom_action_bar.dart';
+import 'package:car_dealer/screens/show_page.dart';
+import 'package:car_dealer/widgets/sidebar.dart';
+
 
 
 class WishlistPage extends StatefulWidget {
@@ -15,6 +18,9 @@ class _WishlistPageState extends State<WishlistPage> {
   
   Widget build(BuildContext context) {
     return Scaffold(
+    appBar: AppBar(title: Text("Car Dealer App")),
+      resizeToAvoidBottomPadding: false,
+      drawer: MySideBar(),
       body: Stack(
         children: [
           FutureBuilder<QuerySnapshot>(

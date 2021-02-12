@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class BottomTabs extends StatefulWidget {
   final int selectedTab;
@@ -12,38 +11,7 @@ class BottomTabs extends StatefulWidget {
 }
 
 class _BottomTabsState extends State<BottomTabs> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
 
-  Future<bool> _exitApp(BuildContext dialogContext) {
-    return showDialog(
-          context: context,
-          child: AlertDialog(
-            title: Text('Do you want to exit this application?'),
-            content: Text('See you again...'),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  print("you choose no");
-                  Navigator.of(dialogContext).pop(false);
-                },
-                child: Text('No'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  signOut();
-                  print("Quit");
-                  Navigator.pushNamed(context, "/");
-                },
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
 
   int _selectedTab = 0;
 
@@ -87,14 +55,7 @@ class _BottomTabsState extends State<BottomTabs> {
               widget.tabPressed(2);
             },
           ),
-          BottomTabBtn(
-            imagePath: "assets/images/logout_tab.png",
-            selected: _selectedTab == 3 ? true : false,
-            onPressed: () {
-              _exitApp(context);
-              //FirebaseAuth.instance.signOut();
-            },
-          )
+
         ],
       ),
     );

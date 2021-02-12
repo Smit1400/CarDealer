@@ -101,38 +101,56 @@ class _ShowPageState extends State<ShowPage> {
                         ),
                         Row(
                           children: [
-                            GestureDetector(
+                            // GestureDetector(
+                            //     onTap: () async {
+                            //       _addToList();
+                            //       Scaffold.of(context).showSnackBar(_snackBar);
+                            //     },
+                            //     child: Container(
+                            //       padding: EdgeInsets.all(15),
+                            //       margin: EdgeInsets.all(20),
+                            //       height: 55,
+                            //       width: 55,
+                            //       decoration: BoxDecoration(
+                            //           color: Colors.blueGrey[100],
+                            //           borderRadius: BorderRadius.circular(12)),
+                            //       child: Image(
+                            //           image: AssetImage(
+                            //               "assets/images/saved_tab.png"),
+                            //           height: 22),
+                            //     )),
+                            Expanded(
+                           
+                              // padding: EdgeInsets.only(left: 20),
+                              child:GestureDetector(
                                 onTap: () async {
                                   _addToList();
                                   Scaffold.of(context).showSnackBar(_snackBar);
                                 },
-                                child: Container(
-                                  padding: EdgeInsets.all(15),
-                                  margin: EdgeInsets.all(20),
-                                  height: 55,
-                                  width: 55,
+                              child: Container(
+                                  height: 65,
+                                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 15),
                                   decoration: BoxDecoration(
-                                      color: Colors.blueGrey[100],
+                                      color:  Colors.blueAccent[200],
                                       borderRadius: BorderRadius.circular(12)),
-                                  child: Image(
+                                  alignment: Alignment.center,
+
+                                  child:Row(mainAxisAlignment: MainAxisAlignment.center,
+
+                                    children: [
+                                    Image(
                                       image: AssetImage(
                                           "assets/images/saved_tab.png"),
                                       height: 22),
-                                )),
-                            Expanded(
-                              child: Container(
-                                  height: 65,
-                                  margin: EdgeInsets.symmetric(horizontal: 16),
-                                  decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(12)),
-                                  alignment: Alignment.center,
-                                  child: Text("Add to wishlist",
+                                      SizedBox(width: 20,),
+                                      Text("Add to wishlist",
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w600))),
-                            ),
+                                          fontWeight: FontWeight.w600))
+                                  ],)
+                                  ),
+                            )),
                           ],
                         )
                       ],

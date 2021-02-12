@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
+// import 'package:car_dealer/screens/index_page.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
+// import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background1.dart';
 import 'package:car_dealer/components/constants.dart';
-import 'package:car_dealer/widgets/sidebar.dart';
-
 
 class PricePredict extends StatefulWidget {
   @override
@@ -15,12 +14,9 @@ class _PricePredictState extends State<PricePredict> {
   String name, mileage;
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("Car Dealer App")),
       resizeToAvoidBottomPadding: false,
-      drawer: MySideBar(),
       body: Background(
         child: Container(
           width: double.infinity,

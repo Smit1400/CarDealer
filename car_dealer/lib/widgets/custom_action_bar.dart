@@ -32,7 +32,7 @@ class CustomActionBar extends StatelessWidget {
           gradient: _hasBackground
               ? LinearGradient(
                   colors: [
-                    Colors.white,
+                    Colors.lightBlue[100],
                     Colors.white.withOpacity(0),
                   ],
                   begin: Alignment(0, 0),
@@ -40,7 +40,7 @@ class CustomActionBar extends StatelessWidget {
                 )
               : null),
       padding: EdgeInsets.only(
-        top: 56.0,
+        top: 10.0,
         left: 24.0,
         right: 24.0,
         bottom: 42.0,

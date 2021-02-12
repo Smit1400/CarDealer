@@ -6,11 +6,12 @@ import 'package:car_dealer/screens/index_page.dart';
 import 'package:car_dealer/screens/login_page.dart';
 import 'package:car_dealer/screens/register_page.dart';
 // import 'package:car_dealer/screens/show_page.dart';
-// import 'package:car_dealer/screens/wishlist_page.dart';
+import 'package:car_dealer/screens/wishlist_page.dart';
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
-
+import 'package:car_dealer/screens/price_predict.dart';
+// import 'package:car_dealer/screens/sell_car_page.dart';
 
 
 void main() {
@@ -34,8 +35,9 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/auth':(context) => AuthScreen(),
         '/index':(context)=>IndexPage(),
-        // '/show':(context)=>ShowPage(),
-        // '/wishlist':(context)=>WishlistPage(),
+        '/pedictprice':(context)=>PricePredict(),
+        // '/sellcar':(context)=>SellCar(),
+        '/wishlist':(context)=>WishlistPage(),
         '/hometab':(context)=>HomeTab(),
         '/savedtab':(context)=>SavedTab(),
         '/searchtab':(context)=>SearchTab(),
