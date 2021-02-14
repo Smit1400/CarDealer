@@ -11,7 +11,7 @@ import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/screens/price_predict.dart';
-// import 'package:car_dealer/screens/sell_car_page.dart';
+import 'package:car_dealer/screens/sell_car_page.dart';
 
 
 void main() {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/auth':(context) => AuthScreen(),
         '/index':(context)=>IndexPage(),
         '/pedictprice':(context)=>PricePredict(),
-        // '/sellcar':(context)=>SellCar(),
+        '/sellcar':(context)=>SellCar(),
         '/wishlist':(context)=>WishlistPage(),
         '/hometab':(context)=>HomeTab(),
         '/savedtab':(context)=>SavedTab(),

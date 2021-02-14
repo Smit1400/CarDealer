@@ -8,14 +8,14 @@ class MySideBar extends StatefulWidget {
   @override
   _MySideBarState createState() => _MySideBarState();
 }
+
 class MySidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Container();
   }
 }
+
 class _MySideBarState extends State<MySideBar> {
   FirebaseServices _firebaseServices = FirebaseServices();
   String _username;
@@ -69,14 +69,19 @@ class _MySideBarState extends State<MySideBar> {
   // String _headline;
   NetworkImage _avatarImg =
       NetworkImage('https://www.w3schools.com/howto/img_avatar.png');
-
+  String _select="home";
   List<CollapsibleItem> get _generateItems {
     return [
+      CollapsibleItem(
+        text: 'Extra',
+        icon: Icons.home,
+        isSelected: _select=="home"??true,
+        onPressed: () => Navigator.pushNamed(context, '/index'),
+      ),
       CollapsibleItem(
         text: 'Home',
         icon: Icons.home,
         onPressed: () => Navigator.pushNamed(context, '/index'),
-        isSelected: true,
       ),
       // CollapsibleItem(
       //   text: 'Search car',
@@ -88,7 +93,10 @@ class _MySideBarState extends State<MySideBar> {
       CollapsibleItem(
         text: 'Pedict Price',
         icon: Icons.money,
-        onPressed: () => {Navigator.pushNamed(context, '/pedictprice')},
+        onPressed: () {
+          Navigator.pushNamed(context, '/pedictprice');
+          _select = "predict";
+        },
       ),
       CollapsibleItem(
         text: 'Sell Car',

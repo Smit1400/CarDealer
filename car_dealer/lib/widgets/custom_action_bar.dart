@@ -6,14 +6,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 
-
 class CustomActionBar extends StatelessWidget {
   final String title;
   final bool hasBackArrrow;
   final bool hasTitle;
   final bool hasBackground;
+  final bool hasCount;
   CustomActionBar(
-      {this.title, this.hasBackArrrow, this.hasTitle, this.hasBackground});
+      {this.title,
+      this.hasBackArrrow,
+      this.hasTitle,
+      this.hasBackground,
+      this.hasCount});
   // final CollectionReference _userRef =
   //     FirebaseFirestore.instance.collection("Users");
   final FirebaseServices _firebaseServices = FirebaseServices();
@@ -23,6 +27,7 @@ class CustomActionBar extends StatelessWidget {
     bool _hasBackArrow = hasBackArrrow ?? false;
     bool _hasTitle = hasTitle ?? true;
     bool _hasBackground = hasBackground ?? true;
+    bool _hasCount = hasCount ?? true;
     CollectionReference userList = FirebaseFirestore.instance
         .collection('Users')
         .doc(_firebaseServices.getUserId())
@@ -48,7 +53,6 @@ class CustomActionBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
           if (_hasBackArrow)
             GestureDetector(
               onTap: () {
@@ -75,12 +79,13 @@ class CustomActionBar extends StatelessWidget {
               title ?? "Action Bar",
               style: Constants.boldHeading,
             ),
-          GestureDetector(
+          if(_hasCount)GestureDetector(
             onTap: () {
               Navigator.push(
-                context,MaterialPageRoute(
-                builder: (context) => WishlistPage(),
-              ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WishlistPage(),
+                  ));
             },
             child: Container(
                 width: 42.0,
@@ -108,8 +113,11 @@ class CustomActionBar extends StatelessWidget {
                           color: Colors.white,
                         ),
                       );
-                    })),
+                    }
+                    )
+                    ),
           )
+          else Container(child: Text(""),)
         ],
       ),
     );
