@@ -20,6 +20,7 @@ class _MySideBarState extends State<MySideBar> {
   FirebaseServices _firebaseServices = FirebaseServices();
   String _username;
   List<CollapsibleItem> _items;
+  Map<String, dynamic> userData;
 
   Future<void> user() async {
     await _firebaseServices.usersRef
@@ -28,6 +29,7 @@ class _MySideBarState extends State<MySideBar> {
         .then((result) {
       print(result.data());
       setState(() {
+        userData  = result.data();
         _username = result.data()['username'];
       });
     });
@@ -101,7 +103,7 @@ class _MySideBarState extends State<MySideBar> {
       CollapsibleItem(
         text: 'Sell Car',
         icon: Icons.store,
-        onPressed: () => {Navigator.pushNamed(context, '/sellcar')},
+        onPressed: () => {Navigator.pushNamed(context, '/sellcar', arguments: userData)},
       ),
       CollapsibleItem(
         text: 'Wishlist',

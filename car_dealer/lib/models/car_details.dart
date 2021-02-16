@@ -17,6 +17,8 @@ class CarDetails {
   final String fuel_type;
   final String title;
   final String description;
+  final String imageUrl;
+  bool approved;
 
   CarDetails({
     @required this.brand,
@@ -35,6 +37,8 @@ class CarDetails {
     @required this.title,
     @required this.description,
     @required this.mobileNumber,
+    @required this.imageUrl,
+    this.approved = false,
   });
 
   factory CarDetails.fromMap(Map<String, dynamic> data) {
@@ -55,6 +59,8 @@ class CarDetails {
       description: data["description"],
       title: data["title"],
       mobileNumber: data["mobileNumber"],
+      imageUrl: data["imageUrl"],
+      approved: data["approved"],
     );
   }
 
@@ -76,6 +82,8 @@ class CarDetails {
       "title": this.title,
       "description": this.description,
       "mobileNumber":  this.mobileNumber,
+      "imageUrl": this.imageUrl,
+      "approved": this.approved,
     };
   }
 }

@@ -1,3 +1,4 @@
+import 'package:car_dealer/Screens/sell_car_page.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:car_dealer/screens/landing_page.dart';
@@ -11,7 +12,6 @@ import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/screens/price_predict.dart';
-import 'package:car_dealer/screens/sell_car_page.dart';
 
 
 void main() {
