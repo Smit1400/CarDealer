@@ -12,7 +12,27 @@ class PricePredict extends StatefulWidget {
 }
 
 class _PricePredictState extends State<PricePredict> {
-  String name, mileage;
+  TextEditingController name, fuelType, transmission, ownerType;
+  TextEditingController  _km, _seats, _years;
+  TextEditingController _mileage, _power, _engine;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  
+  bool validateForm() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -39,95 +59,99 @@ class _PricePredictState extends State<PricePredict> {
                     textAlign: TextAlign.left,
                   ),
                 ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Name of the Car',
+                Form(
+                  key: _formKey,
+                  autovalidateMode: _autovalidateMode,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Name of the Car',
+                      ),
                     ),
                   ),
-                ),
-                    Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Mileage offered',
+                      Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Mileage offered',
+                      ),
                     ),
                   ),
-                ),
-                   Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Kilometer Driven',
-                    ),
-                  ),
-                ), 
-                   Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Owner type',
-                    ),
-                  ),
-                ), 
-              Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Engine',
-                    ),
-                  ),
-                ), 
                      Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'No of Seats',
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Kilometer Driven',
+                      ),
                     ),
-                  ),
-                ), 
-                   Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Power',
+                  ), 
+                     Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Owner type',
+                      ),
                     ),
-                  ),
-                ), 
-                    Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    onChanged: (val) {},
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Total years',
+                  ), 
+              Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Engine',
+                      ),
                     ),
+                  ), 
+                       Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'No of Seats',
+                      ),
+                    ),
+                  ), 
+                     Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Power',
+                      ),
+                    ),
+                  ), 
+                      Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextFormField(
+                      onChanged: (val) {},
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Total years',
+                      ),
+                    ),
+                  ), 
+                     
+                      SubmitBtn(
+                        text: "Predict Price",
+                        onPressed: () {},
+                        sizeW: size.width,
+                      )
+                    ],
                   ),
-                ), 
-                   
-                    SubmitBtn(
-                      text: "Predict Price",
-                      onPressed: () {},
-                      sizeW: size.width,
-                    )
-                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
