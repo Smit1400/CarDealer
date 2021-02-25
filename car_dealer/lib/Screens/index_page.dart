@@ -42,7 +42,7 @@ class _IndexPageState extends State<IndexPage> {
     return Scaffold(
       appBar: AppBar(title: Text("Car Dealer App")),
       resizeToAvoidBottomPadding: false,
-      drawer: MySideBar(),
+      // drawer: MySideBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
