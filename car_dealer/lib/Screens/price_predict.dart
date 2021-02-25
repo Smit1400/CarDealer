@@ -38,7 +38,7 @@ class _PricePredictState extends State<PricePredict> {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("Car Dealer App")),
+      // appBar: AppBar(title: Text("Car Dealer App")),
       resizeToAvoidBottomPadding: false,
       drawer: MySideBar(),
       body: Background(

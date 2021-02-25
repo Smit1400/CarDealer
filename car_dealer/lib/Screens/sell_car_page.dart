@@ -300,7 +300,7 @@ class _SellCarState extends State<SellCar> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(title: Text("Car Dealer App")),
+        // appBar: AppBar(title: Text("Car Dealer App")),
         resizeToAvoidBottomPadding: false,
         drawer: MySideBar(),
         body: Stack(children: [

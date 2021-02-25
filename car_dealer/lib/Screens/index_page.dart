@@ -1,3 +1,5 @@
+import 'package:car_dealer/screens/price_predict.dart';
+import 'package:car_dealer/screens/sell_car_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/rendering.dart';
@@ -56,6 +58,8 @@ class _IndexPageState extends State<IndexPage> {
                 HomeTab(),
                 SearchTab(),
                 SavedTab(),
+                PricePredict(),
+                SellCar(),
               ],
             ),
           ),

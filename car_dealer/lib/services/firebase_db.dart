@@ -104,6 +104,7 @@ class FirebaseMethods {
       description: "description",
       title: "title",
       mobileNumber: 9833,
+      imageUrl:"imageUrl"
     );
     FirebaseMethods _methods = FirebaseMethods();
     await _methods.addCarDetailsToDb(car);

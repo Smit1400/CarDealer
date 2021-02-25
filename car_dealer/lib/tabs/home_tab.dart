@@ -2,11 +2,11 @@ import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/car_card.dart';
 import 'package:flutter/material.dart';
-import 'package:car_dealer/widgets/custom_action_bar.dart';
+// import 'package:car_dealer/widgets/custom_action_bar.dart';
 // import 'package:car_dealer/widgets/constants.dart';
 // import 'package:car_dealer/screens/show_page.dart';
-import 'package:car_dealer/widgets/product_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:car_dealer/widgets/product_card.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeTab extends StatelessWidget {
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
@@ -45,11 +45,11 @@ class HomeTab extends StatelessWidget {
               
 
               // Loading State
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              // return Scaffold(
+              //   body: Center(
+              //     child: CircularProgressIndicator(),
+              //   ),
+              // );
             },
           ),
           // CustomActionBar(

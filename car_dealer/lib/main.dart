@@ -1,4 +1,4 @@
-import 'package:car_dealer/Screens/sell_car_page.dart';
+// import 'package:car_dealer/Screens/sell_car_page.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:car_dealer/screens/landing_page.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/auth':(context) => AuthScreen(),
         '/index':(context)=>IndexPage(),
         '/pedictprice':(context)=>PricePredict(),
-        '/sellcar':(context)=>SellCar(),
+        // '/sellcar':(context)=>SellCar(),
         '/wishlist':(context)=>WishlistPage(),
         '/hometab':(context)=>HomeTab(),
         '/savedtab':(context)=>SavedTab(),
