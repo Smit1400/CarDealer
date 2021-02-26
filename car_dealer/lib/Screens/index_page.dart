@@ -9,7 +9,6 @@ import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 
-
 import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:car_dealer/widgets/sidebar.dart';
 

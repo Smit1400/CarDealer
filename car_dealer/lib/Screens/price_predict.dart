@@ -16,7 +16,7 @@ class _PricePredictState extends State<PricePredict> {
   TextEditingController  _km, _seats, _years;
   TextEditingController _mileage, _power, _engine;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+ // AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   
   bool validateForm() {
     if (_formKey.currentState.validate()) {
@@ -61,7 +61,7 @@ class _PricePredictState extends State<PricePredict> {
                 ),
                 Form(
                   key: _formKey,
-                  autovalidateMode: _autovalidateMode,
+                  //autovalidateMode: _autovalidateMode,
                   child: Column(
                     children: <Widget>[
                       Container(

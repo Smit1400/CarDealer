@@ -196,7 +196,7 @@ class _SellCarState extends State<SellCar> {
   int _year, _km, _price, _mileage, _engine, _seats, _power;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  //AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   List<String> _fueltypes = [
     'CNG & hybrids',
@@ -313,7 +313,7 @@ class _SellCarState extends State<SellCar> {
                   children: <Widget>[
                     Form(
                       key: _formKey,
-                      autovalidateMode: AutovalidateMode.disabled,
+                      //autovalidateMode: AutovalidateMode.disabled,
                       child: Column(
                         children: <Widget>[
                           Padding(
