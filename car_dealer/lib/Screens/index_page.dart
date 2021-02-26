@@ -10,7 +10,9 @@ import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 
 import 'package:car_dealer/widgets/bottom_tabs.dart';
-import 'package:car_dealer/widgets/sidebar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// import 'package:car_dealer/widgets/sidebar.dart';
 
 
 class IndexPage extends StatefulWidget {
@@ -19,6 +21,7 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   PageController _tabsPageController;
   int _selectedTab = 0;
@@ -39,7 +42,20 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Car Dealer App")),
+      appBar: AppBar(title: Text("Car Dealer App"),
+      actions: <Widget>[
+          IconButton(
+            padding: EdgeInsets.only(right: 20.0),
+            icon: Icon(Icons.power_settings_new),
+            iconSize: 30,
+            color: Colors.white,
+            onPressed: () {
+              //Confiramtion Dailoag 
+              _exitApp(context);
+            },
+          ),
+        ]),
+     
       resizeToAvoidBottomPadding: false,
       // drawer: MySideBar(),
       body: Column(
@@ -73,5 +89,36 @@ class _IndexPageState extends State<IndexPage> {
         ],
       ),
     );
+  }
+   Future<void> signOut() async {
+    await _auth.signOut();
+  }
+   Future<bool> _exitApp(BuildContext context) {
+    return showDialog(
+          context: context,
+          child: AlertDialog(
+            title: Text('Do you want to exit this application?'),
+            content: Text('See you again...'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  print("you choose no");
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('No'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  signOut();
+                  print("Quit");
+                  Navigator.pushNamed(context, "/");
+                 
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
   }
 }
