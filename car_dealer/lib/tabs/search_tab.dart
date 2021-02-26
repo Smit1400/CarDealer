@@ -30,7 +30,7 @@ class _SearchTabState extends State<SearchTab> {
             )
           else
             FutureBuilder<QuerySnapshot>(
-              future: _firebaseServices.carRef.orderBy('name').startAt(
+              future: _firebaseServices.carRef.orderBy('title').startAt(
                   [_searchString]).endAt(["$_searchString\uf8ff"]).get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -48,9 +48,9 @@ class _SearchTabState extends State<SearchTab> {
                     ),
                     children: snapshot.data.docs.map((document) {
                       return ProductCard(
-                        title: document.data()['name'],
-                        imageUrl: document.data()['images'][0],
-                        price: "\$${document.data()['price']}",
+                        title: document.data()['title'],
+                        imageUrl: document.data()['imageUrl'],
+                        price: "\Rs.${document.data()['price']}",
                         productId: document.id,
                       );
                     }).toList(),

@@ -12,7 +12,7 @@ class FirebaseServices {
 
   final CollectionReference carRef = FirebaseFirestore
       .instance
-      .collection("Products");
+      .collection("Cars");
 
   final CollectionReference usersRef = FirebaseFirestore
       .instance
