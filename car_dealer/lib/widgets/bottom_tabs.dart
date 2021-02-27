@@ -31,7 +31,7 @@ class _BottomTabsState extends State<BottomTabs> {
               blurRadius: 30.0,
             )
           ]),
-      child: Row(
+  child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           BottomTabBtn(
@@ -53,6 +53,20 @@ class _BottomTabsState extends State<BottomTabs> {
             selected: _selectedTab == 2 ? true : false,
             onPressed: () {
               widget.tabPressed(2);
+            },
+          ),
+           BottomTabBtn(
+            imagePath: "assets/images/rupee3.png",
+            selected: _selectedTab == 3 ? true : false,
+            onPressed: () {
+              widget.tabPressed(3);
+            },
+          ),
+           BottomTabBtn(
+            imagePath: "assets/images/sell_car2.png",
+            selected: _selectedTab == 4 ? true : false,
+            onPressed: () {
+              widget.tabPressed(4);
             },
           ),
 

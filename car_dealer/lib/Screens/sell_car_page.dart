@@ -247,6 +247,7 @@ class _SellCarState extends State<SellCar> {
       });
       if (_selectedImage != null) {
         String imageUrl = await _getDownLoadUrl(context);
+        List imageUrls = [imageUrl];
         String carId = "cars_${DateTime.now().toIso8601String()}";
         CarDetails carDetails = CarDetails(
             brand: _selectedbrand,
@@ -265,7 +266,7 @@ class _SellCarState extends State<SellCar> {
             title: _title,
             description: _description,
             mobileNumber: 9999999999,
-            imageUrl: imageUrl);
+            imageUrls: imageUrls);
         _firebaseMethods.addCarDetailsToDb(carDetails);
         print("[INFO] Successfully Registered");
         Toast.show("Car Registered. Wait for approval", context,
@@ -302,7 +303,7 @@ class _SellCarState extends State<SellCar> {
         key: _scaffoldKey,
         appBar: AppBar(title: Text("Car Dealer App")),
         resizeToAvoidBottomPadding: false,
-        drawer: MySideBar(),
+        // drawer: MySideBar(),
         body: Stack(children: [
           Background(
             child: Container(

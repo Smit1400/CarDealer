@@ -17,7 +17,7 @@ class CarDetails {
   final String fuel_type;
   final String title;
   final String description;
-  final String imageUrl;
+  final List<String> imageUrls;
   bool approved;
 
   CarDetails({
@@ -37,7 +37,7 @@ class CarDetails {
     @required this.title,
     @required this.description,
     @required this.mobileNumber,
-    @required this.imageUrl,
+    @required this.imageUrls,
     this.approved = false,
   });
 
@@ -59,7 +59,7 @@ class CarDetails {
       description: data["description"],
       title: data["title"],
       mobileNumber: data["mobileNumber"],
-      imageUrl: data["imageUrl"],
+      imageUrls: data["imageUrls"],
       approved: data["approved"],
     );
   }
@@ -81,8 +81,8 @@ class CarDetails {
       "fuel_type": this.fuel_type,
       "title": this.title,
       "description": this.description,
-      "mobileNumber":  this.mobileNumber,
-      "imageUrl": this.imageUrl,
+      "mobileNumber": this.mobileNumber,
+      "imageUrls": this.imageUrls,
       "approved": this.approved,
     };
   }

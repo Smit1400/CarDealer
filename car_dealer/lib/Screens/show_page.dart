@@ -18,10 +18,10 @@ class ShowPage extends StatefulWidget {
 }
 
 class _ShowPageState extends State<ShowPage> {
-  FirebaseServices _firebaseServices =FirebaseServices();
+  FirebaseServices _firebaseServices = FirebaseServices();
 
   final CollectionReference _carRef =
-      FirebaseFirestore.instance.collection("Products");
+      FirebaseFirestore.instance.collection("Cars");
   final CollectionReference _userRef =
       FirebaseFirestore.instance.collection("Users");
 
@@ -120,36 +120,38 @@ class _ShowPageState extends State<ShowPage> {
                             //           height: 22),
                             //     )),
                             Expanded(
-                           
-                              // padding: EdgeInsets.only(left: 20),
-                              child:GestureDetector(
-                                onTap: () async {
-                                  _addToList();
-                                  Scaffold.of(context).showSnackBar(_snackBar);
-                                },
+
+                                // padding: EdgeInsets.only(left: 20),
+                                child: GestureDetector(
+                              onTap: () async {
+                                _addToList();
+                                Scaffold.of(context).showSnackBar(_snackBar);
+                              },
                               child: Container(
                                   height: 65,
-                                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 15),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 15),
                                   decoration: BoxDecoration(
-                                      color:  Colors.blueAccent[200],
+                                      color: Colors.blueAccent[200],
                                       borderRadius: BorderRadius.circular(12)),
                                   alignment: Alignment.center,
-
-                                  child:Row(mainAxisAlignment: MainAxisAlignment.center,
-
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                    Image(
-                                      image: AssetImage(
-                                          "assets/images/saved_tab.png"),
-                                      height: 22),
-                                      SizedBox(width: 20,),
+                                      Image(
+                                          image: AssetImage(
+                                              "assets/images/saved_tab.png"),
+                                          height: 22),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
                                       Text("Add to wishlist",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600))
-                                  ],)
-                                  ),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600))
+                                    ],
+                                  )),
                             )),
                           ],
                         )

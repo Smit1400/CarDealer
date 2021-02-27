@@ -40,7 +40,7 @@ class _PricePredictState extends State<PricePredict> {
     return Scaffold(
       appBar: AppBar(title: Text("Car Dealer App")),
       resizeToAvoidBottomPadding: false,
-      drawer: MySideBar(),
+      // drawer: MySideBar(),
       body: Background(
         child: Container(
           width: double.infinity,
