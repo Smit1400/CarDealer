@@ -17,7 +17,7 @@ class CarDetails {
   final String fuel_type;
   final String title;
   final String description;
-  final List<String> imageUrls;
+  final List<dynamic> imageUrls;
   bool approved;
 
   CarDetails({

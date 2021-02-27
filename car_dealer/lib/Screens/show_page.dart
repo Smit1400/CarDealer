@@ -62,7 +62,7 @@ class _ShowPageState extends State<ShowPage> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> documentData = snapshot.data.data();
-                List imageList = documentData['images'];
+                List imageList = documentData['imageUrls'];
                 return Padding(
                     padding: EdgeInsets.all(0),
                     child: ListView(
@@ -74,7 +74,7 @@ class _ShowPageState extends State<ShowPage> {
                           padding: EdgeInsets.only(
                               top: 24, bottom: 4, left: 24, right: 24),
                           child: Text(
-                              "${documentData['name']}" ?? "Product name",
+                              "${documentData['brand']}" ?? "Product name",
                               style: Constants.boldHeading),
                         ),
                         Padding(
@@ -96,7 +96,7 @@ class _ShowPageState extends State<ShowPage> {
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                          child: Text("Username",
+                          child: Text("${documentData['ownerName']}",
                               style: Constants.regularDarkText),
                         ),
                         Row(
