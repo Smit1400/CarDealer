@@ -1,7 +1,7 @@
 name: car_dealer
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
@@ -25,6 +25,7 @@ dependencies:
   path: ^1.7.0
   form_field_validator: ^1.0.1
   toast: ^0.1.5
+  multi_image_picker: ^4.7.15
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-   - assets/images/
-
-  
+    - assets/images/
