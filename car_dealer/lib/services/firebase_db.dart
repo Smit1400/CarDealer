@@ -86,27 +86,5 @@ class FirebaseMethods {
     }
   }
 
-  dummySubmit() async {
-    CarDetails car = CarDetails(
-      brand: "brand",
-      engine: 2.0,
-      mileage: 2.0,
-      kilometer_driven: 2.0,
-      power: 2.0,
-      price: 100,
-      seats: 4,
-      owner_type: "owner_type",
-      year: 2011,
-      carId: "1",
-      userId: "userId",
-      ownerName: "ownerName",
-      fuel_type: "fuel_type",
-      description: "description",
-      title: "title",
-      mobileNumber: 9833,
-      imageUrl:"imageUrl"
-    );
-    FirebaseMethods _methods = FirebaseMethods();
-    await _methods.addCarDetailsToDb(car);
-  }
+  
 }

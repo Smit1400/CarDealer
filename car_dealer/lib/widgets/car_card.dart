@@ -1,3 +1,4 @@
+import 'package:car_dealer/Screens/show_page.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class CarCard extends StatelessWidget {
                   height: height * 0.2 * 0.7,
                   width: width * 0.5,
                   child: Image.network(
-                    car.imageUrl,
+                    car.imageUrls[0],
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -55,26 +56,36 @@ class CarCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // crossAxisAlignment: CrossAxisAlignment.,
               children: [
-                Container(
-                  width: width * 0.4,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    gradient: LinearGradient(
-                      begin: FractionalOffset.topLeft,
-                      end: FractionalOffset.bottomRight,
-                      colors: [
-                        Colors.orange,
-                        Colors.orangeAccent,
-                      ],
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.repeated,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShowPage(
+                                  productId: car.carId,
+                                )));
+                  },
+                  child: Container(
+                    width: width * 0.4,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      gradient: LinearGradient(
+                        begin: FractionalOffset.topLeft,
+                        end: FractionalOffset.bottomRight,
+                        colors: [
+                          Colors.orange,
+                          Colors.orangeAccent,
+                        ],
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.repeated,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "View",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    child: Center(
+                      child: Text(
+                        "View",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
