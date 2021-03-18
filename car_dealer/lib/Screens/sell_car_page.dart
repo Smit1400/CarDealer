@@ -349,7 +349,7 @@ class _SellCarState extends State<SellCar> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
         body: Stack(children: [
           Background(

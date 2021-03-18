@@ -82,7 +82,7 @@ class _IndexPageState extends State<IndexPage> {
             ),
           ]),
 
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       // drawer: MySideBar(),
       body: loading == true
           ? Container(
@@ -133,18 +133,18 @@ class _IndexPageState extends State<IndexPage> {
   Future<bool> _exitApp(BuildContext context) {
     return showDialog(
           context: context,
-          child: AlertDialog(
+          builder:(context) => AlertDialog(
             title: Text('Do you want to exit this application?'),
             content: Text('See you again...'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   print("you choose no");
                   Navigator.of(context).pop(false);
                 },
                 child: Text('No'),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   signOut();
                   print("Quit");
