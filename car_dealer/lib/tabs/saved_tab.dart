@@ -53,9 +53,18 @@ class SavedTab extends StatelessWidget {
                               ),
                             );
                           }
-                          if (productSnap.connectionState ==
+                          if (productSnap == null) {
+                            return const Center(
+                              child: Text(
+                                "Not Available",
+                                style: TextStyle(
+                                    fontSize: 30.0, color: Colors.grey),
+                              ),
+                            );
+                          } else if (productSnap.connectionState ==
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
+                            print(_productMap);
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 16.0,
@@ -70,7 +79,7 @@ class SavedTab extends StatelessWidget {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.network(
-                                        "${_productMap['imageUrl']}",
+                                        "${_productMap['imageUrls'][0]}",
                                         fit: BoxFit.cover,
                                       ),
                                     ),

@@ -21,7 +21,7 @@ class _ShowPageState extends State<ShowPage> {
   FirebaseServices _firebaseServices =FirebaseServices();
 
   final CollectionReference _carRef =
-      FirebaseFirestore.instance.collection("Products");
+      FirebaseFirestore.instance.collection("Cars");
   final CollectionReference _userRef =
       FirebaseFirestore.instance.collection("Users");
 
@@ -62,7 +62,7 @@ class _ShowPageState extends State<ShowPage> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> documentData = snapshot.data.data();
-                List imageList = documentData['images'];
+                List imageList = documentData['imageUrls'];
                 return Padding(
                     padding: EdgeInsets.all(0),
                     child: ListView(
