@@ -19,6 +19,7 @@ dependencies:
   collapsible_sidebar: ^1.0.7+2
   provider: ^4.3.2+2
   material_design_icons_flutter: ^4.0.5855
+  font_awesome_flutter: ^9.0.0
   image_picker: ^0.6.7+14
   firebase_storage: ^7.0.0
   permission_handler: ^5.1.0+2
