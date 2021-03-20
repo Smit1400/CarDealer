@@ -16,7 +16,6 @@ class _AdminPageState extends State<AdminPage> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   // showToast(BuildContext context) {
@@ -60,7 +59,7 @@ class _AdminPageState extends State<AdminPage> {
                   );
                 }
                 List<CarDetails> data = snapshot.data;
-                data = data.where((car) => car.approved ==  false).toList();
+                data = data.where((car) => car.approved == false).toList();
                 if (data.length > 0) {
                   return ListView.builder(
                       itemCount: data.length,
@@ -74,7 +73,10 @@ class _AdminPageState extends State<AdminPage> {
                 } else {
                   return Scaffold(
                     body: Center(
-                      child: Text("No Cars", style: TextStyle(fontSize: 22, color: Colors.black),),
+                      child: Text(
+                        "No Cars",
+                        style: TextStyle(fontSize: 22, color: Colors.black),
+                      ),
                     ),
                   );
                 }
