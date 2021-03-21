@@ -55,20 +55,20 @@ class _BottomTabsState extends State<BottomTabs> {
               widget.tabPressed(2);
             },
           ),
-           BottomTabBtn(
-            imagePath: "assets/images/rupee3.png",
-            selected: _selectedTab == 3 ? true : false,
-            onPressed: () {
-              widget.tabPressed(3);
-            },
-          ),
-           BottomTabBtn(
-            imagePath: "assets/images/sell_car2.png",
-            selected: _selectedTab == 4 ? true : false,
-            onPressed: () {
-              widget.tabPressed(4);
-            },
-          ),
+          //  BottomTabBtn(
+          //   imagePath: "assets/images/rupee3.png",
+          //   selected: _selectedTab == 3 ? true : false,
+          //   onPressed: () {
+          //     widget.tabPressed(3);
+          //   },
+          // ),
+          //  BottomTabBtn(
+          //   imagePath: "assets/images/sell_car2.png",
+          //   selected: _selectedTab == 4 ? true : false,
+          //   onPressed: () {
+          //     widget.tabPressed(4);
+          //   },
+          // ),
 
         ],
       ),

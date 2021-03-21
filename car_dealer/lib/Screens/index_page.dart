@@ -10,8 +10,10 @@ import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 
+
 import 'package:car_dealer/widgets/bottom_tabs.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:car_dealer/widgets/appbar.dart';
+
 
 // import 'package:car_dealer/widgets/sidebar.dart';
 
@@ -21,7 +23,7 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   FirebaseServices _firebaseServices = FirebaseServices();
   Map<String, dynamic> user;
   bool loading;
@@ -61,30 +63,15 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Car Dealer App",
-            style: TextStyle(color: Colors.black),
-          ),
-          actions: <Widget>[
-            IconButton(
-              padding: EdgeInsets.only(right: 20.0),
-              icon: Icon(Icons.power_settings_new),
-              iconSize: 30,
-              color: Colors.red,
-              onPressed: () {
-                //Confiramtion Dailoag
-                _exitApp(context);
-              },
-            ),
-          ]),
+      appBar: MyAppBar(),
 
       resizeToAvoidBottomPadding: false,
       // drawer: MySideBar(),
-      body: loading == true
+      body: SafeArea(
+      child:
+      loading == true
           ? Container(
               child: Center(
                 child: CircularProgressIndicator(),
@@ -105,11 +92,11 @@ class _IndexPageState extends State<IndexPage> {
                       HomeTab(),
                       SearchTab(),
                       SavedTab(),
-                      PricePredict(),
-                      SellCar(
-                        email: user["email"],
-                        username: user["username"],
-                      ),
+                      // PricePredict(),
+                      // SellCar(
+                      //   email: user["email"],
+                      //   username: user["username"],
+                      // ),
                     ],
                   ),
                 ),
@@ -123,38 +110,10 @@ class _IndexPageState extends State<IndexPage> {
                 ),
               ],
             ),
-    );
+    ));
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
+ 
 
-  Future<bool> _exitApp(BuildContext context) {
-    return showDialog(
-          context: context,
-          child: AlertDialog(
-            title: Text('Do you want to exit this application?'),
-            content: Text('See you again...'),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  print("you choose no");
-                  Navigator.of(context).pop(false);
-                },
-                child: Text('No'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  signOut();
-                  print("Quit");
-                  Navigator.pushNamed(context, "/");
-                },
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+
 }
