@@ -70,7 +70,7 @@ class SavedTab extends StatelessWidget {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.network(
-                                        "${_productMap['images'][0]}",
+                                        "${_productMap['imageUrls'][0]}",
                                         fit: BoxFit.cover,
                                       ),
                                     ),

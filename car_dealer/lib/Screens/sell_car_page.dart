@@ -75,6 +75,7 @@ import 'package:toast/toast.dart';
 
 //   }
 // }
+import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatelessWidget {
   String imageUrl;
@@ -507,7 +508,7 @@ class _SellCarState extends State<SellCar> {
                             onChanged: (val) {
                               _mileage = int.parse(val);
                             },
-                            labelText: "Mileage in KM/KG",
+                            labelText: "Mileage in kmpl",
                           ),
                           CustomFormField(
                             validator: MultiValidator([

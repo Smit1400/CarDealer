@@ -1,7 +1,7 @@
 import 'package:car_dealer/Screens/show_page.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CarCard extends StatelessWidget {
   final CarDetails car;
@@ -39,12 +39,17 @@ class CarCard extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(10),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             "${car.brand}",
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${car.title}",
+                            style: TextStyle(
+                                color:Colors.black54,fontSize: 15, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(
                             height: 5,

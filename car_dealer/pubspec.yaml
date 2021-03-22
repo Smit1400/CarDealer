@@ -26,8 +26,9 @@ dependencies:
   path: ^1.7.0
   form_field_validator: ^1.0.1
   toast: ^0.1.5
-  http: ^0.13.0
+  http: ^0.12.0+2
   multi_image_picker: ^4.7.15
+ 
 
 dev_dependencies:
   flutter_test:
