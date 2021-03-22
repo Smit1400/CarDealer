@@ -25,7 +25,6 @@ class SavedTab extends StatelessWidget {
                   ),
                 );
               }
-
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
                   padding: EdgeInsets.only(
@@ -76,6 +75,7 @@ class SavedTab extends StatelessWidget {
                                   Container(
                                     width: 90,
                                     height: 90,
+                                    //color:Colors.blueGrey,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.network(
@@ -95,7 +95,8 @@ class SavedTab extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${_productMap['name']}",
+                                          'Name of the Car : '
+                                          "${_productMap['title']}",
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               color: Colors.black,
@@ -106,20 +107,28 @@ class SavedTab extends StatelessWidget {
                                             vertical: 4.0,
                                           ),
                                           child: Text(
-                                            "\$${_productMap['price']}",
+                                            'Price : '
+                                            "\Rs. ${_productMap['price']}",
                                             style: TextStyle(
                                                 fontSize: 16.0,
-                                                color: Theme.of(context)
-                                                    .accentColor,
+                                                color: Colors.black,
+                                                /*Theme.of(context)
+                                                    .accentColor,*/
                                                 fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                         Text(
-                                          "Size - Rs.{document.data()['size']}",
+                                          'No of Seats : '
+                                          "${_productMap['seats']}", //document.data()['seats']
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w600),
+                                        ),
+                                        Divider(
+                                          //height: 50,
+                                          thickness: 10,
+                                          color: Colors.black,
                                         ),
                                       ],
                                     ),
@@ -127,6 +136,7 @@ class SavedTab extends StatelessWidget {
                                 ],
                               ),
                             );
+                        
                           }
                           return Container(
                             child: Center(

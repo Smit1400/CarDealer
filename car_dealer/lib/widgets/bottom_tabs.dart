@@ -55,18 +55,18 @@ class _BottomTabsState extends State<BottomTabs> {
               widget.tabPressed(2);
             },
           ),
-           BottomTabBtn(
-            imagePath: "assets/images/rupee3.png",
-            selected: _selectedTab == 3 ? true : false,
-            onPressed: () {
-              widget.tabPressed(3);
-            },
-          ),
+          //  BottomTabBtn(
+          //   imagePath: "assets/images/rupee3.png",
+          //   selected: _selectedTab == 3 ? true : false,
+          //   onPressed: () {
+          //     widget.tabPressed(3);
+          //   },
+          // ),
            BottomTabBtn(
             imagePath: "assets/images/sell_car2.png",
-            selected: _selectedTab == 4 ? true : false,
+            selected: _selectedTab == 3? true : false,
             onPressed: () {
-              widget.tabPressed(4);
+              widget.tabPressed(3);
             },
           ),
 
@@ -102,7 +102,7 @@ class BottomTabBtn extends StatelessWidget {
         child: Image(
           image: AssetImage(imagePath ?? "assets/images/home_tab.png"),
           width: 22.0,
-          height: 22.0,
+          height: 25.0,
           color: _selected ? Theme.of(context).accentColor : Colors.black,
         ),
       ),

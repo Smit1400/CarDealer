@@ -1,19 +1,19 @@
-import 'package:car_dealer/screens/price_predict.dart';
+import 'package:car_dealer/Screens/admin_page.dart';
+// import 'package:car_dealer/screens/price_predict.dart';
 import 'package:car_dealer/screens/sell_car_page.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/rendering.dart';
-// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
-
 import 'package:car_dealer/widgets/bottom_tabs.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:car_dealer/widgets/loading_page.dart';
+import 'package:car_dealer/widgets/appbar.dart';
 
-// import 'package:car_dealer/widgets/sidebar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -62,35 +62,48 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Car Dealer App",
-            style: TextStyle(color: Colors.black),
-          ),
-          actions: <Widget>[
-            IconButton(
-              padding: EdgeInsets.only(right: 20.0),
-              icon: Icon(Icons.power_settings_new),
-              iconSize: 30,
-              color: Colors.red,
-              onPressed: () {
-                //Confiramtion Dailoag
-                _exitApp(context);
-              },
-            ),
-          ]),
+    return loading
+        ? LoadingPage()
+        : Scaffold(
+            appBar: MyAppBar(),
+            // AppBar(
+            //     backgroundColor: Colors.white,
+            //     title: Text(
+            //       "Car Dealer App",
+            //       style: TextStyle(color: Colors.black),
+            //     ),
+            //     actions: <Widget>[
+            //       IconButton(
+            //         padding: EdgeInsets.only(right: 20.0),
+            //         icon: Icon(Icons.power_settings_new),
+            //         iconSize: 30,
+            //         color: Colors.red,
+            //         onPressed: () {
+            //           //Confiramtion Dailoag
+            //           _exitApp(context);
+            //         },
+            //       ),
+            //       user['admin'] == true
+            //           ? IconButton(
+            //               padding: EdgeInsets.only(right: 20.0),
+            //               icon: Icon(Icons.car_rental),
+            //               iconSize: 30,
+            //               color: Colors.black,
+            //               onPressed: () {
+            //                 Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                     builder: (context) => AdminPage(),
+            //                   ),
+            //                 );
+            //               },
+            //             )
+            //           : Container(),
+            //     ]),
 
-      resizeToAvoidBottomPadding: false,
-      // drawer: MySideBar(),
-      body: loading == true
-          ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : Column(
+            resizeToAvoidBottomInset: false,
+            // drawer: MySideBar(),
+            body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
@@ -105,7 +118,6 @@ class _IndexPageState extends State<IndexPage> {
                       HomeTab(),
                       SearchTab(),
                       SavedTab(),
-                      PricePredict(),
                       SellCar(
                         email: user["email"],
                         username: user["username"],
@@ -123,9 +135,41 @@ class _IndexPageState extends State<IndexPage> {
                 ),
               ],
             ),
-    );
+          );
   }
 
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
+
+  Future<bool> _exitApp(BuildContext context) {
+    return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Do you want to exit this application?'),
+            content: Text('See you again...'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  print("you choose no");
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  signOut();
+                  print("Quit");
+                  Navigator.pushNamed(context, "/");
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+/*
   Future<void> signOut() async {
     await _auth.signOut();
   }
@@ -156,5 +200,5 @@ class _IndexPageState extends State<IndexPage> {
           ),
         ) ??
         false;
-  }
+  }*/
 }

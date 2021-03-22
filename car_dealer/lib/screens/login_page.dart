@@ -95,8 +95,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("app")),
-      resizeToAvoidBottomPadding: false,
+   
+      resizeToAvoidBottomInset: false,
       // drawer: CollapsingDrawer(),
       body: Background(
         child: Container(
