@@ -88,6 +88,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           "Car Dealer App",
         ),
         actions: <Widget>[
+          
           PopupMenuButton(
             // padding: EdgeInsets.all(20),
             itemBuilder: (xcontext) {
@@ -198,7 +199,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Future<bool> _exitApp(BuildContext context) {
     return showDialog(
           context: context,
-          child: AlertDialog(
+          builder: (context) => AlertDialog(
             title: Text('Do you want to exit this application?'),
             content: Text('See you again...'),
             actions: <Widget>[
@@ -210,6 +211,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 child: Text('No'),
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 onPressed: () {
                   signOut();

@@ -43,7 +43,7 @@ class _MySideBarState extends State<MySideBar> {
   Future<bool> _exitApp(BuildContext dialogContext) {
     return showDialog(
           context: context,
-          child: AlertDialog(
+          builder:(context) => AlertDialog(
             title: Text('Do you want to exit this application?'),
             content: Text('See you again...'),
             actions: <Widget>[

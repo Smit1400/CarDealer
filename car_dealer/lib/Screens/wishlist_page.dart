@@ -19,7 +19,7 @@ class _WishlistPageState extends State<WishlistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
     appBar: AppBar(title: Text("Car Dealer App")),
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       drawer: MySideBar(),
       body: Stack(
         children: [

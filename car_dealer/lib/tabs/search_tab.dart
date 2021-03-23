@@ -30,8 +30,11 @@ class _SearchTabState extends State<SearchTab> {
             )
           else
             FutureBuilder<QuerySnapshot>(
-              future: _firebaseServices.carRef.orderBy('title').startAt(
-                  [_searchString]).endAt(["$_searchString\uf8ff"]).get(),
+              future: FirebaseFirestore.instance
+                  .collection("Cars")
+                  .orderBy('title')
+                  .startAt([_searchString]).endAt(
+                      ["$_searchString\uf8ff"]).get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Scaffold(
@@ -41,6 +44,7 @@ class _SearchTabState extends State<SearchTab> {
                   );
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
+                  print(snapshot.data);
                   return ListView(
                     padding: EdgeInsets.only(
                       top: 128.0,
@@ -49,8 +53,8 @@ class _SearchTabState extends State<SearchTab> {
                     children: snapshot.data.docs.map((document) {
                       return ProductCard(
                         title: document.data()['title'],
-                        imageUrl: document.data()['imageUrl'],
-                        price: "\Rs.${document.data()['price']}",
+                        imageUrl: document.data()['imageUrls'][0],
+                        price: "\$${document.data()['price']}",
                         productId: document.id,
                       );
                     }).toList(),
@@ -67,7 +71,7 @@ class _SearchTabState extends State<SearchTab> {
             ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 45.0,
+              top: 25.0,
             ),
             child: CustomInput(
               hintText: "Search here...",

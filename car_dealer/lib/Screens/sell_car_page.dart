@@ -19,8 +19,8 @@ import 'package:car_dealer/widgets/custom_button.dart';
 // import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background1.dart';
 // import 'package:car_dealer/components/constants.dart';
-// import 'package:car_dealer/widgets/sidebar.dart';
-// import 'package:car_dealer/widgets/custom_action_bar.dart';
+import 'package:car_dealer/widgets/sidebar.dart';
+import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:toast/toast.dart';
 
 // class DropDown extends StatefulWidget {
@@ -75,6 +75,7 @@ import 'package:toast/toast.dart';
 
 //   }
 // }
+import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatelessWidget {
   String imageUrl;
@@ -197,23 +198,22 @@ class _SellCarState extends State<SellCar> {
   List<Asset> images = List<Asset>();
   List<File> files = List<File>();
 
-  String _selectedbrand, _selectedfuel, _selectedowner, _title, _description;
+  String _selectedbrand,
+      _selectedfuel,
+      _selectedtransmission,
+      _selectedowner,
+      _title,
+      _description;
   int _year, _km, _price, _mileage, _engine, _seats, _power;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
-  
+  List<String> _fueltypes = ['CNG', 'Diesel', 'Petrol', 'LPG', 'Electric'];
 
-  List<String> _fueltypes = [
-    'CNG & hybrids',
-    'Diesel',
-    'Electric',
-    'LPG',
-    'Petrol'
-  ];
+  List<String> _transmissionTypes = ['Manual', 'Automatic'];
 
-  List<String> _ownwerno = ['1', '2', '3', '4', '4+'];
+  List<String> _ownwerno = ['First', 'Second', 'Fourth & Above', 'Third'];
 
   Map arguments = {};
 
@@ -300,9 +300,9 @@ class _SellCarState extends State<SellCar> {
       });
       if (files != null && files.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
-        // List imageUrls = [imageUrl];
         String carId = "cars_${DateTime.now().toIso8601String()}";
         CarDetails carDetails = CarDetails(
+          transmissionType: _selectedtransmission,
             brand: _selectedbrand,
             carId: carId,
             userId: _firebaseServices.getUserId(),
@@ -349,7 +349,7 @@ class _SellCarState extends State<SellCar> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
         body: Stack(children: [
           Background(
@@ -458,6 +458,38 @@ class _SellCarState extends State<SellCar> {
                               }).toList(),
                             ),
                           ),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.blue[100],
+                            ),
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            margin: EdgeInsets.all(10),
+                            child: DropdownButtonFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              hint: Text("Select Transmission"),
+                              value: _selectedtransmission,
+                              elevation: 0,
+                              isExpanded: true,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.indigo,
+                                  fontWeight: FontWeight.w400),
+                              onChanged: (val) {
+                                setState(() {
+                                  _selectedtransmission = val;
+                                });
+                              },
+                              items: _transmissionTypes.map((fname) {
+                                return DropdownMenuItem(
+                                  child: new Text(fname),
+                                  value: fname,
+                                );
+                              }).toList(),
+                            ),
+                          ),
                           CustomFormField(
                             validator: MultiValidator([
                               RequiredValidator(errorText: "Cannot Be Empty")
@@ -476,7 +508,7 @@ class _SellCarState extends State<SellCar> {
                             onChanged: (val) {
                               _mileage = int.parse(val);
                             },
-                            labelText: "Mileage in KM/KG",
+                            labelText: "Mileage in kmpl",
                           ),
                           CustomFormField(
                             validator: MultiValidator([

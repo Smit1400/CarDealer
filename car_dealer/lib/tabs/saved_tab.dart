@@ -53,18 +53,9 @@ class SavedTab extends StatelessWidget {
                               ),
                             );
                           }
-                          if (productSnap == null) {
-                            return const Center(
-                              child: Text(
-                                "Not Available",
-                                style: TextStyle(
-                                    fontSize: 30.0, color: Colors.grey),
-                              ),
-                            );
-                          } else if (productSnap.connectionState ==
+                          if (productSnap.connectionState ==
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
-                            print(_productMap);
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 16.0,
