@@ -25,12 +25,13 @@ class SavedTab extends StatelessWidget {
                   ),
                 );
               }
-
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 108.0,
+                    top: 80.0,
                     bottom: 12.0,
+                    left:12.0,
+                    right: 12.0,
                   ),
                   children: snapshot.data.docs.map((document) {
                     return GestureDetector(
@@ -53,76 +54,115 @@ class SavedTab extends StatelessWidget {
                               ),
                             );
                           }
-                          if (productSnap.connectionState ==
+                          if (productSnap == null) {
+                            return const Center(
+                              child: Text(
+                                "Not Available",
+                                style: TextStyle(
+                                    fontSize: 30.0, color: Colors.grey),
+                              ),
+                            );
+                          } else if (productSnap.connectionState ==
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 24.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 90,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        "${_productMap['imageUrls'][0]}",
-                                        fit: BoxFit.cover,
+                            print(_productMap);
+                            return Container(
+                              child: Card(
+                                elevation: 0.5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                  20.0,
+                                )),
+                                child: Container(
+                                 
+                                  decoration:
+                                      BoxDecoration(color:Colors.white, boxShadow: [
+                                  new BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 20.0,
+                                  ),
+                                ],),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20.0,
+                                    horizontal: 28.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 90,
+                                        height: 90,
+                                        //color:Colors.blueGrey,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: Image.network(
+                                            "${_productMap['imageUrls'][0]}",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      left: 16.0,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${_productMap['name']}",
-                                          style: TextStyle(
-                                              fontSize: 18.0,
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                          left: 16.0,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              //'Name of the Car : '
+                                              "${_productMap['brand']}",
+                                              style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Colors.blueGrey[800],
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 4.0,
+                                              ),
+                                              child: Text(
+                                                //'Price : '
+                                                "${_productMap['title']}",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.grey[600],
+                                                    /*Theme.of(context)
+                                                    .accentColor,*/
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ),
+                                            Text(
+                                              //'No of Seats : '
+                                              "\Rs. ${_productMap['price']}", //document.data()['seats']
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Divider(
+                                              //height: 50,
+                                              thickness: 10,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0,
-                                          ),
-                                          child: Text(
-                                            "\$${_productMap['price']}",
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Size - Rs.{document.data()['size']}",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             );
                           }
                           return Container(
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                            // child: Center(
+                            //   child: CircularProgressIndicator(),
+                            // ),
                           );
                         },
                       ),

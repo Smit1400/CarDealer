@@ -39,12 +39,7 @@ class HomeTab extends StatelessWidget {
                 }
               
 
-              // Loading State
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+    
             },
           ),
         ],

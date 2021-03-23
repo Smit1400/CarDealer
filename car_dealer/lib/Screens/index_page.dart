@@ -65,7 +65,7 @@ class _IndexPageState extends State<IndexPage> {
     return loading
         ? LoadingPage()
         : Scaffold(
-            appBar: MyAppBar(),
+            appBar: MyAppBar(user:user),
             // AppBar(
             //     backgroundColor: Colors.white,
             //     title: Text(
@@ -118,10 +118,10 @@ class _IndexPageState extends State<IndexPage> {
                       HomeTab(),
                       SearchTab(),
                       SavedTab(),
-                      SellCar(
-                        email: user["email"],
-                        username: user["username"],
-                      ),
+                      // SellCar(
+                      //   email: user["email"],
+                      //   username: user["username"],
+                      // ),
                     ],
                   ),
                 ),
