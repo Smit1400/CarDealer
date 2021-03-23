@@ -28,8 +28,10 @@ class SavedTab extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 108.0,
+                    top: 80.0,
                     bottom: 12.0,
+                    left:12.0,
+                    right: 12.0,
                   ),
                   children: snapshot.data.docs.map((document) {
                     return GestureDetector(
@@ -64,79 +66,98 @@ class SavedTab extends StatelessWidget {
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
                             print(_productMap);
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 24.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 90,
-                                    //color:Colors.blueGrey,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        "${_productMap['imageUrls'][0]}",
-                                        fit: BoxFit.cover,
+                            return Container(
+                              child: Card(
+                                elevation: 0.5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                  20.0,
+                                )),
+                                child: Container(
+                                 
+                                  decoration:
+                                      BoxDecoration(color:Colors.white, boxShadow: [
+                                  new BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 20.0,
+                                  ),
+                                ],),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20.0,
+                                    horizontal: 28.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 90,
+                                        height: 90,
+                                        //color:Colors.blueGrey,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: Image.network(
+                                            "${_productMap['imageUrls'][0]}",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      left: 16.0,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Name of the Car : '
-                                          "${_productMap['title']}",
-                                          style: TextStyle(
-                                              fontSize: 18.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                          left: 16.0,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0,
-                                          ),
-                                          child: Text(
-                                            'Price : '
-                                            "\Rs. ${_productMap['price']}",
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                color: Colors.black,
-                                                /*Theme.of(context)
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              //'Name of the Car : '
+                                              "${_productMap['brand']}",
+                                              style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Colors.blueGrey[800],
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 4.0,
+                                              ),
+                                              child: Text(
+                                                //'Price : '
+                                                "${_productMap['title']}",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.grey[600],
+                                                    /*Theme.of(context)
                                                     .accentColor,*/
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                        Text(
-                                          'No of Seats : '
-                                          "${_productMap['seats']}", //document.data()['seats']
-                                          style: TextStyle(
-                                              fontSize: 16.0,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ),
+                                            Text(
+                                              //'No of Seats : '
+                                              "\Rs. ${_productMap['price']}", //document.data()['seats']
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Divider(
+                                              //height: 50,
+                                              thickness: 10,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
                                         ),
-                                        Divider(
-                                          //height: 50,
-                                          thickness: 10,
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             );
-                        
                           }
                           return Container(
                             child: Center(
@@ -157,7 +178,7 @@ class SavedTab extends StatelessWidget {
             },
           ),
           CustomActionBar(
-            title: "Saved",
+            title: "Wishlist",
             hasBackArrrow: false,
           )
         ],
