@@ -69,7 +69,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               value: 2,
             ));
-            list.add(PopupMenuDivider(height: 10));
+           list.add( user['admin'] == true? PopupMenuDivider(height: 10):null);
             list.add( user['admin'] == true?
               PopupMenuItem(
               child: GestureDetector(

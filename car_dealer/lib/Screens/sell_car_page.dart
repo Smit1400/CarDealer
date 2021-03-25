@@ -250,6 +250,7 @@ class _SellCarState extends State<SellCar> {
       if (files != null && files.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
         String carId = "cars_${DateTime.now().toIso8601String()}";
+      
         CarDetails carDetails = CarDetails(
           transmissionType: _selectedtransmission,
             brand: _selectedbrand,
@@ -265,7 +266,7 @@ class _SellCarState extends State<SellCar> {
             seats: _seats,
             year: _year,
             fuel_type: _selectedfuel,
-            title: _title,
+            title: _title.toLowerCase(),
             description: _description,
             mobileNumber: 9999999999,
             imageUrls: imageUrls);
@@ -297,9 +298,9 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black87,
-      title: Text("Sell your car"),
-      ),
+      // appBar: AppBar(backgroundColor: Colors.black87,
+      // title: Text("Sell your car"),
+      // ),
   
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,

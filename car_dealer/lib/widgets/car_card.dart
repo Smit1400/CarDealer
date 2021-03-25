@@ -7,15 +7,19 @@ const Color mainColor=Color(0xFF436eee);
 
 class CarCard extends StatelessWidget {
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
+  final CarDetails car;
   final SnackBar _snackBar = SnackBar(
     content: Text("Car added to wishlist"),
   );
-  final CarDetails car;
   CarCard({@required this.car});
+ 
+  
   @override
   Widget build(BuildContext context) {
+     String capsTitle = "${car.title}".substring(0, 1).toUpperCase() +"${car.title}".substring(1);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    int pr=(car.price).round();
     return Stack(
       children: [
         Card(
@@ -49,19 +53,25 @@ class CarCard extends StatelessWidget {
                           Text(
                             "${car.brand}",
                             style: TextStyle(
+                              
                                 fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "${car.title}",
+                            capsTitle,
                             style: TextStyle(
-                                color: Colors.black54,
+                               
                                 fontSize: 15,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
                             height: 5,
                           ),
-                          Text('Rs.${car.price}'),
+                         
+                          Text('Rs.$pr',
+                          style: TextStyle(
+                                color: mainColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),),
                         ],
                       ),
                     )
