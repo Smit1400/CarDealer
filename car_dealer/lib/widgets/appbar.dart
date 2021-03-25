@@ -4,11 +4,10 @@ import 'package:car_dealer/screens/sell_car_page.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
 import 'package:car_dealer/Screens/admin_page.dart';
 
-
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Map<String, dynamic> user;
-  
-   MyAppBar({@required this.user});
+
+  MyAppBar({@required this.user});
   @override
   Size get preferredSize => const Size.fromHeight(55);
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: Icon(Icons.car_rental, size: 25),
         backgroundColor: Colors.black87.withOpacity(0.9),
         title: Text(
-          "Car Dealer App",
+          "Car Buddy",
         ),
         actions: <Widget>[
           PopupMenuButton(
@@ -70,6 +69,36 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               value: 2,
             ));
+            list.add(PopupMenuDivider(height: 10));
+            list.add( user['admin'] == true?
+              PopupMenuItem(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(xcontext).pop();
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (context) => new AdminPage(),
+                  ),
+                );
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.check,color: Colors.black,),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Approve selling car",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              value: 4,
+            ) : null
+            );
+           
             list.add(PopupMenuDivider(height: 5));
             list.add(PopupMenuItem(
               child: GestureDetector(
@@ -108,37 +137,18 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new SellCar(
-                        email: user["email"],
-                        username: user["username"],
-                      )
-                ),
+                    builder: (context) => new SellCar(
+                          email: user["email"],
+                          username: user["username"],
+                        )),
               );
             }
             if (value == 3) {
               showDialog(
                   context: context, builder: (context) => CustomAlertDialog());
             }
-            // _exitApp(context);
-
             print("value:$value");
           }),
-          user['admin'] == true
-          ? IconButton(
-              padding: EdgeInsets.only(right: 20.0),
-              icon: Icon(Icons.car_rental),
-              iconSize: 30,
-              color: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AdminPage(),
-                  ),
-                );
-              },
-            )
-          : Container(),
         ]);
   }
 }
