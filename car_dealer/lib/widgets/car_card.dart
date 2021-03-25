@@ -2,8 +2,13 @@ import 'package:car_dealer/Screens/show_page.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:car_dealer/services/firebase_db.dart';
 
 class CarCard extends StatelessWidget {
+  final FirebaseMethods _firebaseMethods = FirebaseMethods();
+  final SnackBar _snackBar = SnackBar(
+    content: Text("Car added to wishlist"),
+  );
   final CarDetails car;
   CarCard({@required this.car});
   @override
@@ -12,7 +17,6 @@ class CarCard extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        
         Card(
           margin: EdgeInsets.all(10),
           child: Container(
@@ -23,7 +27,7 @@ class CarCard extends StatelessWidget {
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       height: height * 0.2 * 0.7,
@@ -34,7 +38,7 @@ class CarCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 20,
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
@@ -49,7 +53,9 @@ class CarCard extends StatelessWidget {
                           Text(
                             "${car.title}",
                             style: TextStyle(
-                                color:Colors.black54,fontSize: 15, fontWeight: FontWeight.w400),
+                                color: Colors.black54,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400),
                           ),
                           SizedBox(
                             height: 5,
@@ -130,11 +136,21 @@ class CarCard extends StatelessWidget {
         Positioned(
           right: 0,
           top: 0,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, right: 20.0),
-            child: Image.asset("assets/images/saved_tab.png", scale: 1.6,),
+          child: GestureDetector(
+            onTap: () async {
+              _firebaseMethods.addCarToWishlist(car.carId);
+              // _addToList();
+              Scaffold.of(context).showSnackBar(_snackBar);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 18.0, right: 20.0),
+              child: Image.asset(
+                "assets/images/saved_tab.png",
+                scale: 1.6,
+              ),
+            ),
           ),
-        ),
+        )
       ],
     );
   }

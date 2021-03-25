@@ -11,6 +11,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:car_dealer/widgets/custom_action_bar.dart';
+
 
 import 'dart:io';
 
@@ -22,60 +24,7 @@ import 'package:car_dealer/widgets/background1.dart';
 // import 'package:car_dealer/widgets/sidebar.dart';
 // import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:toast/toast.dart';
-
-// class DropDown extends StatefulWidget {
-//  List<String> _items;
-//  String _selected;
-//   DropDown(List<String> items,String selected){
-//     this._items=items;
-//     this._selected=selected;
-//   }
-//   @override
-//   _DropDownState createState() => _DropDownState();
-// }
-// class _DropDownState extends State<DropDown> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       // width:50,
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(10.0),
-//         color: Colors.blue[100],
-//         boxShadow: [
-//           BoxShadow(
-//               blurRadius: 10,
-//               color: Colors.black26,
-//               offset: Offset(0, 2))
-//         ],
-//       ),
-//       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-//       margin: EdgeInsets.all(10),
-//       child: DropdownButton(
-//         hint: Text("Select brand"),
-//         value: widget._selected,
-//         elevation: 0,
-//         isExpanded: true,
-//         style: TextStyle(
-//             fontSize: 18,
-//             color: Colors.indigo,
-//             fontWeight: FontWeight.w400),
-//         onChanged: (val) {
-//           setState(() {
-//             widget._selected = val;
-//           });
-//         },
-//         items: widget._items.map((bname) {
-//           return DropdownMenuItem(
-//             child: new Text(bname),
-//             value: bname,
-//           );
-//         }).toList(),
-//       ),
-//     );
-
-//   }
-// }
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatelessWidget {
   String imageUrl;
@@ -208,8 +157,6 @@ class _SellCarState extends State<SellCar> {
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   //AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
-
-  
 
   List<String> _fueltypes = ['CNG', 'Diesel', 'Petrol', 'LPG', 'Electric'];
 
@@ -350,10 +297,15 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.black87,
+      title: Text("Sell your car"),
+      ),
+  
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
-        body: Stack(children: [
+        body: SafeArea(child: 
+        Stack(children: [
           Background(
             child: Container(
               width: double.infinity,
@@ -618,6 +570,10 @@ class _SellCarState extends State<SellCar> {
               ),
             ),
           ),
+          CustomActionBar(
+            title: "Sell Car",
+            hasBackArrrow: true,
+          ),
           _loading == true
               ? Container(
                   color: Colors.black.withOpacity(0.5),
@@ -627,8 +583,12 @@ class _SellCarState extends State<SellCar> {
                     ),
                   ),
                 )
-              : Container()
-        ]));
+              : Container(),
+              
+        ],
+        
+        )
+        ));
   }
 
   Widget imageUploadWidget() {

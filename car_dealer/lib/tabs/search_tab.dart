@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:car_dealer/components/constants.dart';
-import 'package:car_dealer/services/firebase_auth.dart';
+// import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/product_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +11,7 @@ class SearchTab extends StatefulWidget {
 }
 
 class _SearchTabState extends State<SearchTab> {
-  FirebaseServices _firebaseServices = FirebaseServices();
+  // FirebaseServices _firebaseServices = FirebaseServices();
   String _searchString = "";
 
   @override
@@ -54,7 +54,7 @@ class _SearchTabState extends State<SearchTab> {
                       return ProductCard(
                         title: document.data()['title'],
                         imageUrl: document.data()['imageUrls'][0],
-                        price: "\Rs.${document.data()['price']}",
+                        price: "\$${document.data()['price']}",
                         productId: document.id,
                       );
                     }).toList(),

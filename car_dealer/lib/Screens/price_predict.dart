@@ -13,6 +13,8 @@ import 'package:car_dealer/widgets/background1.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
+import 'package:car_dealer/widgets/custom_action_bar.dart';
+
 
 class PricePredict extends StatefulWidget {
   @override
@@ -165,10 +167,14 @@ class _PricePredictState extends State<PricePredict> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      //     appBar: AppBar(backgroundColor: Colors.black87,
+      // title: Text("Predict Car Price"),
+      // ),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
-        body: Stack(children: [
+        body:
+        SafeArea(child:  Stack(children: [
           Background(
             child: Container(
               width: double.infinity,
@@ -410,6 +416,10 @@ class _PricePredictState extends State<PricePredict> {
               ),
             ),
           ),
+           CustomActionBar(
+            title: "Predict Car Price",
+            hasBackArrrow: true,
+          ),
           _loading == true
               ? Container(
                   color: Colors.black.withOpacity(0.5),
@@ -420,6 +430,6 @@ class _PricePredictState extends State<PricePredict> {
                   ),
                 )
               : Container()
-        ]));
+        ])));
   }
 }

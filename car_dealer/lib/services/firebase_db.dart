@@ -1,9 +1,12 @@
 import 'package:car_dealer/models/car_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:intl/intl.dart';
+
 
 class FirebaseMethods {
   static final firestore = FirebaseFirestore.instance;
-
+FirebaseServices _firebaseServices = FirebaseServices();
   Stream<List<CarDetails>> getAllCars() {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
@@ -21,6 +24,30 @@ class FirebaseMethods {
           .doc(carDetails.carId)
           .set(carDetails.toMap());
       print("[INFO] Stored new car details");
+    } on FirebaseException catch (e) {
+      print("[ERROR] ${e.message}");
+      throw FirebaseException(
+        message: e.message,
+        plugin: e.plugin,
+        code: e.code,
+      );
+    } catch (e) {
+      print("[ERROR] ${e.toString()}");
+      throw e.toString();
+    }
+  }
+    Future<void> addCarToWishlist(String CarId) async {
+    try {
+      print("[INFO] Storing car id to wishlist");
+         final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String formatted = formatter.format(now);
+          await _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserId())
+        .collection("Wishlist")
+        .doc(CarId)
+        .set({"date": formatted});
+      print("[INFO] Stored car id in wishlist");
     } on FirebaseException catch (e) {
       print("[ERROR] ${e.message}");
       throw FirebaseException(

@@ -65,7 +65,7 @@ class _IndexPageState extends State<IndexPage> {
     return loading
         ? LoadingPage()
         : Scaffold(
-            appBar: MyAppBar(),
+            appBar: MyAppBar(user:user),
             // AppBar(
             //     backgroundColor: Colors.white,
             //     title: Text(
@@ -118,10 +118,10 @@ class _IndexPageState extends State<IndexPage> {
                       HomeTab(),
                       SearchTab(),
                       SavedTab(),
-                      SellCar(
-                        email: user["email"],
-                        username: user["username"],
-                      ),
+                      // SellCar(
+                      //   email: user["email"],
+                      //   username: user["username"],
+                      // ),
                     ],
                   ),
                 ),
@@ -169,36 +169,4 @@ class _IndexPageState extends State<IndexPage> {
         ) ??
         false;
   }
-/*
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
-
-  Future<bool> _exitApp(BuildContext context) {
-    return showDialog(
-          context: context,
-          child: AlertDialog(
-            title: Text('Do you want to exit this application?'),
-            content: Text('See you again...'),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  print("you choose no");
-                  Navigator.of(context).pop(false);
-                },
-                child: Text('No'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  signOut();
-                  print("Quit");
-                  Navigator.pushNamed(context, "/");
-                },
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }*/
 }
