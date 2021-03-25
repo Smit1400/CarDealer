@@ -14,7 +14,7 @@ class CustomAlertDialog extends StatelessWidget {
           padding: EdgeInsets.only(right: 16.0),
           height: 150,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.grey.shade100,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(75),
               bottomLeft: Radius.circular(75),
@@ -25,10 +25,14 @@ class CustomAlertDialog extends StatelessWidget {
           child: Row(
             children: <Widget>[
               SizedBox(width: 20.0),
-              CircleAvatar(radius: 45, backgroundColor: Colors.grey.shade200, 
+              CircleAvatar(radius: 50, 
+              backgroundColor: Colors.white, 
               child: 
-              Icon(Icons.car_rental,size: 60,)
+              // Icon(Icons.car_rental,size: 60,)
+       Image.asset("assets/images/main2.PNG", fit: BoxFit.contain,width:95,),
+
               ),
+
               SizedBox(width: 20.0),
               Expanded(
                 child: Column(

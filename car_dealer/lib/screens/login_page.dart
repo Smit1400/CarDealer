@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:car_dealer/components/constants.dart';
+// import 'package:car_dealer/components/constants.dart';
 
 import 'package:car_dealer/widgets/custom_button.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background.dart';
 
+const Color mainColor=Color(0xFF436eee);
 
 class LoginPage extends StatefulWidget {
   @override
@@ -100,16 +101,22 @@ class _LoginPageState extends State<LoginPage> {
       // drawer: CollapsingDrawer(),
       body: Background(
         child: Container(
+          
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(height:size.height * 0.07),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
                   "\nLogin to your account",
-                  style: Constants.mainHead,
+                 style: TextStyle(
+                  fontFamily: "Alegreya",
+                    fontWeight: FontWeight.bold,
+                    color: mainColor,
+                    fontSize: 40),
                   textAlign: TextAlign.left,
                 ),
               ),

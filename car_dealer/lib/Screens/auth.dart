@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:car_dealer/widgets/background1.dart';
+import 'package:car_dealer/widgets/background2.dart';
+
+// const Color mainColor=Color(0xFF5a5aff);
+const Color mainColor=Color(0xFF436eee);
 
 
 class AuthScreen extends StatelessWidget {
@@ -11,22 +14,25 @@ class AuthScreen extends StatelessWidget {
       body: Background(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+             SizedBox(height: size.height * 0.05+50),
             Container(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                "CAR DEALER",
+                "Car Buddy",
                 style: TextStyle(
+                  fontFamily: "Alegreya",
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2661FA),
-                    fontSize: 40),
+                    color: mainColor,
+                    fontSize: 45),
                 textAlign: TextAlign.left,
               ),
             ),
             
             
-            SizedBox(height: size.height * 0.03),
+            SizedBox(height: size.height * 0.01),
 
             Container(
               alignment: Alignment.center,
@@ -37,7 +43,7 @@ class AuthScreen extends StatelessWidget {
             
           
             Container(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () {
@@ -67,7 +73,7 @@ class AuthScreen extends StatelessWidget {
               ),
             ),
             Container(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () {
