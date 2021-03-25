@@ -37,3 +37,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+  fonts:
+    - family: Sansita
+      fonts:
+        - asset: assets/fonts/SansitaSwashed-SemiBold.ttf
+    - family: Alegreya
+      fonts:
+        - asset: assets/fonts/Alegreya-MediumItalic.ttf
+          style: italic
+        - asset: assets/fonts/Alegreya-Black.ttf
+    

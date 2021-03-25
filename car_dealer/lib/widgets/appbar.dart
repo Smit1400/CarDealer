@@ -13,8 +13,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     print(user["username"]);
     return AppBar(
-        // leading:Image.asset("assets/images/appicon.png", fit: BoxFit.contain,width:15,height: 15,),
-        leading: Icon(Icons.car_rental, size: 25),
+        leading:Image.asset("assets/images/logo5.png", fit: BoxFit.contain,height: 19,),
+        // leading: Icon(Icons.car_rental, size: 25),
         backgroundColor: Colors.black87.withOpacity(0.9),
         title: Text(
           "Car Buddy",

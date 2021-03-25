@@ -3,6 +3,7 @@ import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:car_dealer/services/firebase_db.dart';
+const Color mainColor=Color(0xFF436eee);
 
 class CarCard extends StatelessWidget {
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
@@ -34,11 +35,11 @@ class CarCard extends StatelessWidget {
                       width: width * 0.5,
                       child: Image.network(
                         car.imageUrls[0],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
@@ -109,16 +110,17 @@ class CarCard extends StatelessWidget {
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        gradient: LinearGradient(
-                          begin: FractionalOffset.topLeft,
-                          end: FractionalOffset.bottomRight,
-                          colors: [
-                            Colors.green,
-                            Colors.greenAccent,
-                          ],
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.repeated,
-                        ),
+                        color: mainColor,
+                        // gradient: LinearGradient(
+                        //   begin: FractionalOffset.topLeft,
+                        //   end: FractionalOffset.bottomRight,
+                        //   colors: [
+                        //     Colors.green,
+                        //     Colors.greenAccent,
+                        //   ],
+                        //   stops: [0.0, 1.0],
+                        //   tileMode: TileMode.repeated,
+                        // ),
                       ),
                       child: Center(
                         child: Text(

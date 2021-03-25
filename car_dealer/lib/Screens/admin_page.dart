@@ -3,6 +3,8 @@ import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/admin_card.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
+import 'package:car_dealer/widgets/loading_page.dart';
+
 
 class AdminPage extends StatefulWidget {
   @override
@@ -70,7 +72,7 @@ class _AdminPageState extends State<AdminPage> {
                               )
                             : Container();
                       });
-                } else {
+                } else if (data.length <= 0) {
                   return Scaffold(
                     body: Center(
                       child: Text(
@@ -80,13 +82,13 @@ class _AdminPageState extends State<AdminPage> {
                     ),
                   );
                 }
-
+                return LoadingPage();
                 // Loading State
-                return Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
+                // return Scaffold(
+                //   body: Center(
+                //     child: CircularProgressIndicator(),
+                //   ),
+                // );
               },
             ),
           ],
