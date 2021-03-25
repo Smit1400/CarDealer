@@ -142,7 +142,7 @@ class SavedTab extends StatelessWidget {
                                               "\Rs. ${_productMap['price']}", //document.data()['seats']
                                               style: TextStyle(
                                                   fontSize: 16.0,
-                                                  color: Colors.grey,
+                                                  color: Colors.grey[800],
                                                   fontWeight: FontWeight.w400),
                                             ),
                                             Divider(

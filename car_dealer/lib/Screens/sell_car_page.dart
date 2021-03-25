@@ -297,9 +297,9 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black87,
-      title: Text("Sell your car"),
-      ),
+      //appBar: AppBar(backgroundColor: Colors.black87,
+      //title: Text("Sell your car"),
+      //),
   
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,

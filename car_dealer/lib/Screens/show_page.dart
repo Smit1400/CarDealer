@@ -5,14 +5,27 @@ import 'package:car_dealer/widgets/bordered_container.dart';
 import 'package:car_dealer/widgets/custom_block.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/services/firebase_db.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+_callNumber(String phoneNumber) async {
+  String number = phoneNumber;
+  await FlutterPhoneDirectCaller.callNumber(number);
+}
+_launchPhoneURL(String phoneNumber) async {
+  String url = 'tel:' + phoneNumber;
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 class ShowPage extends StatefulWidget {
   final String productId;
   ShowPage({this.productId});
   @override
   _ShowPageState createState() => _ShowPageState();
 }
-
+TextEditingController textEditingController = TextEditingController();
 class _ShowPageState extends State<ShowPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
@@ -293,14 +306,34 @@ Widget userDescListItem(
                 value: vals[0],
                 color: Colors.white70.withOpacity(0.8),
               ),
-              BorderedContainer(
-                title: "Contact",
-                value: vals[1],
-                color: Colors.white70.withOpacity(0.8),
-              ),
+              Card(
+      elevation: 0.5,
+      color:Colors.white70.withOpacity(0.8),
+     
+      // margin: margin ??  const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        // width: 100,
+        padding:  EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        child:GestureDetector(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          Text('Contact'),
+          Text(vals[1],style: TextStyle( fontWeight: FontWeight.bold, ),),
+          ],
+        ),
+       
+        /*onTap:(){
+          _launchPhoneURL(textEditingController.value[1]);
+          }, */
+        ),
+      ),
+          
+    ),
             ],
           ),
-        )),
+        ),
+        ),
   );
 }
 Widget descListItem(
