@@ -1,31 +1,23 @@
 import 'dart:ui';
-import 'package:car_dealer/models/car_details.dart';
-import 'package:car_dealer/services/firebase_auth.dart';
-import 'package:car_dealer/services/firebase_db.dart';
-import 'package:car_dealer/widgets/custom_form_field.dart';
+import 'dart:io';
+import 'package:car_dealer/widgets/dialog_box.dart';
+import 'package:toast/toast.dart';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path/path.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'package:car_dealer/models/car_details.dart';
+import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:car_dealer/services/firebase_db.dart';
+import 'package:car_dealer/widgets/custom_form_field.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
-
-import 'dart:io';
-
-// import 'package:car_dealer/screens/index_page.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
-// import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background1.dart';
-// import 'package:car_dealer/components/constants.dart';
-// import 'package:car_dealer/widgets/sidebar.dart';
-// import 'package:car_dealer/widgets/custom_action_bar.dart';
-import 'package:toast/toast.dart';
-
-import '../widgets/dialog_box.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatelessWidget {
   String imageUrl;
@@ -157,7 +149,7 @@ class _SellCarState extends State<SellCar> {
   int _year, _km, _price, _mileage, _engine, _seats, _power;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  //AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   List<String> _fueltypes = ['CNG', 'Diesel', 'Petrol', 'LPG', 'Electric'];
 
@@ -251,6 +243,7 @@ class _SellCarState extends State<SellCar> {
       if (files != null && files.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
         String carId = "cars_${DateTime.now().toIso8601String()}";
+      
         CarDetails carDetails = CarDetails(
             transmissionType: _selectedtransmission,
             brand: _selectedbrand,
@@ -266,7 +259,7 @@ class _SellCarState extends State<SellCar> {
             seats: _seats,
             year: _year,
             fuel_type: _selectedfuel,
-            title: _title,
+            title: _title.toLowerCase(),
             description: _description,
             mobileNumber: 9999999999,
             imageUrls: imageUrls);
@@ -327,10 +320,10 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black87,
-          title: Text("Sell your car"),
-        ),
+      //appBar: AppBar(backgroundColor: Colors.black87,
+      //title: Text("Sell your car"),
+      //),
+  
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),

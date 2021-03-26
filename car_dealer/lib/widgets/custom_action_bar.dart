@@ -81,11 +81,11 @@ class CustomActionBar extends StatelessWidget {
             ),
           if(_hasCount)GestureDetector(
             onTap: () {
-              Navigator.push(
+              /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WishlistPage(),
-                  ));
+                  ));*/
             },
             child: Container(
                 width: 42.0,

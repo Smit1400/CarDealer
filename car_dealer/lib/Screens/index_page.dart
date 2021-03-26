@@ -1,6 +1,6 @@
-import 'package:car_dealer/Screens/admin_page.dart';
+
 // import 'package:car_dealer/screens/price_predict.dart';
-import 'package:car_dealer/screens/sell_car_page.dart';
+
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -138,35 +138,5 @@ class _IndexPageState extends State<IndexPage> {
           );
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
-
-  Future<bool> _exitApp(BuildContext context) {
-    return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Do you want to exit this application?'),
-            content: Text('See you again...'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  print("you choose no");
-                  Navigator.of(context).pop(false);
-                },
-                child: Text('No'),
-              ),
-              TextButton(
-                onPressed: () {
-                  signOut();
-                  print("Quit");
-                  Navigator.pushNamed(context, "/");
-                },
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+ 
 }

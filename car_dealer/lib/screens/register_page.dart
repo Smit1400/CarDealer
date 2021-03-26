@@ -5,7 +5,8 @@ import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/background.dart';
-import 'package:car_dealer/components/constants.dart';
+// import 'package:car_dealer/components/constants.dart';
+const Color mainColor=Color(0xFF436eee);
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -128,12 +129,17 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(height:size.height * 0.09),
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 50),
+                padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
-                  "\nSign Up",
-                  style: Constants.mainHead,
+                  "\nCreate  new account",
+                 style: TextStyle(
+                  fontFamily: "Alegreya",
+                    fontWeight: FontWeight.bold,
+                    color: mainColor,
+                    fontSize: 37),
                   textAlign: TextAlign.left,
                 ),
               ),
