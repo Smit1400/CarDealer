@@ -86,7 +86,6 @@ def predict_price(attributes: UsedCarAttributes):
     cat_array = np.array([lbl_encoders["Fuel_Type"].transform(np.array([attributes.fuel_type])), lbl_encoders["Transmission"].transform(np.array([attributes.transmission])), lbl_encoders["Owner_Type"].transform(np.array([attributes.owner_type]))])
     print(cat_array)
     cat_array = torch.tensor(cat_array.reshape(1, 3), dtype=torch.int64)
-    # tot_year = datetime.datetime.now().year - attributes.year
     cont_array = np.array([[attributes.year, attributes.km_driven, attributes.mileage, attributes.engine, attributes.power, attributes.seats]])
     print(cont_array)
     cont_array = norm.transform(cont_array)[0]
@@ -95,5 +94,5 @@ def predict_price(attributes: UsedCarAttributes):
     predicted_value = price_predict_model(cat_array,cont_array).item()
     return {
         "task": "Successfully Predicted",
-        "predicted_value": predicted_value * 100000
+        "predicted_value": int(predicted_value * 100000)
     }
