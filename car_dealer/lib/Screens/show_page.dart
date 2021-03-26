@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
-
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/widgets/image_swipe.dart';
 import 'package:car_dealer/widgets/bordered_container.dart';
 import 'package:car_dealer/widgets/custom_block.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/services/firebase_db.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
+_callNumber(String phoneNumber) async {
+  String number = phoneNumber;
+  await FlutterPhoneDirectCaller.callNumber(number);
+}
+
+_launchPhoneURL(String phoneNumber) async {
+  String url = 'tel:' + phoneNumber;
+  print(url);
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 class ShowPage extends StatefulWidget {
   final String productId;
@@ -13,6 +29,8 @@ class ShowPage extends StatefulWidget {
   @override
   _ShowPageState createState() => _ShowPageState();
 }
+
+TextEditingController textEditingController = TextEditingController();
 
 class _ShowPageState extends State<ShowPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
@@ -42,6 +60,7 @@ class _ShowPageState extends State<ShowPage> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> documentData = snapshot.data.data();
+                 String capsTitle = documentData['title'].substring(0, 1).toUpperCase() +documentData['title'].substring(1);
                 List imageList = documentData['imageUrls'];
                 return Container(
                     color: Colors.grey[200],
@@ -59,7 +78,7 @@ class _ShowPageState extends State<ShowPage> {
                         SizedBox(height: 20),
                         Center(
                           child: Text(
-                              "${documentData['title']}" ?? "Product title",
+                              "$capsTitle" ?? "Product title",
                               style: TextStyle(
                                 color: Colors.black87,
                                 fontSize: 28,
@@ -84,15 +103,16 @@ class _ShowPageState extends State<ShowPage> {
                                       // fontStyle: FontStyle.
                                     )),
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
+                              Container(
+                                // scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0, vertical: 4.0),
-                                child: Row(
+                                child:
+                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    SpecsBlock(
+                                    Expanded(child:SpecsBlock(
                                       label: "Engine",
                                       value:
                                           ("${documentData['engine']}" + " cc"),
@@ -100,22 +120,23 @@ class _ShowPageState extends State<ShowPage> {
                                         Icons.directions_car,
                                       ),
                                     ),
-                                    SpecsBlock(
+                                    ),
+                                    Expanded(child:SpecsBlock(
                                       label: "Mileage",
                                       value: (" ${documentData['mileage']}" +
                                           " kmpl"),
                                       icon: Icon(
                                         Icons.directions_car,
                                       ),
-                                    ),
-                                    SpecsBlock(
+                                    ),),
+                                   Expanded(child:SpecsBlock(
                                       label: "Power",
                                       value: (" ${documentData['power']}" +
                                           " bhp"),
                                       icon: Icon(
                                         Icons.directions_car,
                                       ),
-                                    ),
+                                    ),),
                                   ],
                                 ),
                               ),
@@ -134,8 +155,8 @@ class _ShowPageState extends State<ShowPage> {
                                     " ${documentData['fuel_type']}",
                                     " ${documentData['year']}",
                                     " ${documentData['seats']}",
-                                    " ${documentData['transimission_type']}",
-                                    " ${documentData['km_driven']}",
+                                    " ${documentData['transmissionType']}",
+                                    " ${documentData['kilometer_driven']}",
                                     " ${documentData['owner_type']}"
                                   ]),
                               userDescListItem(
@@ -146,17 +167,7 @@ class _ShowPageState extends State<ShowPage> {
                                     " ${documentData['ownerName']}",
                                     " ${documentData['mobileNumber']}"
                                   ]),
-                              Card(
-                                  elevation: 0.5,
-                                  child: ListTile(
-                                      leading: Icon(
-                                        Icons.open_in_new_rounded,
-                                        size: 40,
-                                      ),
-                                      title: Text(
-                                        "Share",
-                                        style: TextStyle(fontSize: 17),
-                                      ))),
+
                             ],
                           ),
                         ),
@@ -277,32 +288,54 @@ Widget userDescListItem(
   return Material(
     color: Colors.transparent,
     child: Theme(
-        data: ThemeData(accentColor: Colors.black),
-        child: Card(
-          elevation: 0.5,
-          child: ExpansionTile(
-            leading: Icon(
-              icon,
-              size: 40,
-            ),
-            title: Text(
-              title,
-              style: TextStyle(fontSize: 17),
-            ),
-            children: <Widget>[
-              BorderedContainer(
-                title: "Owner name",
-                value: vals[0],
-                color: Colors.white70.withOpacity(0.8),
-              ),
-              BorderedContainer(
-                title: "Contact",
-                value: vals[1],
-                color: Colors.white70.withOpacity(0.8),
-              ),
-            ],
+      data: ThemeData(accentColor: Colors.black),
+      child: Card(
+        elevation: 0.5,
+        child: ExpansionTile(
+          leading: Icon(
+            icon,
+            size: 40,
           ),
-        )),
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 17),
+          ),
+          children: <Widget>[
+            BorderedContainer(
+              title: "Owner name",
+              value: vals[0],
+              color: Colors.white70.withOpacity(0.8),
+            ),
+            Card(
+              elevation: 0.5,
+              color: Colors.white70.withOpacity(0.8),
+              child: GestureDetector(
+                onTap: () {
+                  print("open phone");
+                  _launchPhoneURL(vals[1].toString());
+                },
+                // width: 100,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Contact'),
+                      Text(
+                        vals[1],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
   );
 }
 

@@ -102,7 +102,7 @@ class BottomTabBtn extends StatelessWidget {
         child: Image(
           image: AssetImage(imagePath ?? "assets/images/home_tab.png"),
           width: 22.0,
-          height: 22.0,
+          height: 25.0,
           color: _selected ? Theme.of(context).accentColor : Colors.black,
         ),
       ),

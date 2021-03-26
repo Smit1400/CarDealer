@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 
@@ -94,7 +94,8 @@ class _MySideBarState extends State<MySideBar> {
       // ),
       CollapsibleItem(
         text: 'Pedict Price',
-        icon: Icons.money,
+        //icon:  MdiIcons.attach_money,
+        icon: Icons.attach_money,
         onPressed: () {
           Navigator.pushNamed(context, '/pedictprice');
           _select = "predict";
@@ -117,7 +118,7 @@ class _MySideBarState extends State<MySideBar> {
       ),
       CollapsibleItem(
         text: 'Log out',
-        icon: Icons.logout,
+        icon:  MdiIcons.logout,
         onPressed: () => _exitApp(context),
       ),
     ];

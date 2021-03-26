@@ -44,12 +44,16 @@ class ProductCard extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
+              
               child: Padding(
+               
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
+                 
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
                   children: [
+                    //SizedBox(height: 20.0,),
                     Text(
                       title,
                       style: Constants.regularHeading,
@@ -58,7 +62,7 @@ class ProductCard extends StatelessWidget {
                       price,
                       style: TextStyle(
                           fontSize: 18.0,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.black,/*Theme.of(context).accentColor,*/
                           fontWeight: FontWeight.w600
                       ),
                     ),
