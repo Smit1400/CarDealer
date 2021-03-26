@@ -13,7 +13,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 
-
 import 'dart:io';
 
 // import 'package:car_dealer/screens/index_page.dart';
@@ -24,6 +23,8 @@ import 'package:car_dealer/widgets/background1.dart';
 // import 'package:car_dealer/widgets/sidebar.dart';
 // import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:toast/toast.dart';
+
+import '../widgets/dialog_box.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatelessWidget {
@@ -251,7 +252,7 @@ class _SellCarState extends State<SellCar> {
         List imageUrls = await _getDownLoadUrl(context);
         String carId = "cars_${DateTime.now().toIso8601String()}";
         CarDetails carDetails = CarDetails(
-          transmissionType: _selectedtransmission,
+            transmissionType: _selectedtransmission,
             brand: _selectedbrand,
             carId: carId,
             userId: _firebaseServices.getUserId(),
@@ -275,15 +276,44 @@ class _SellCarState extends State<SellCar> {
             duration: Toast.LENGTH_LONG,
             gravity: Toast.TOP,
             textColor: Colors.white,
-            backgroundColor: Colors.black.withOpacity(0.6));
+            backgroundColor: Colors.green);
+        Navigator.pop(context);
       } else {
         _scaffoldKey.currentState
             .showSnackBar(SnackBar(content: Text("No Image was selected")));
       }
     } on FirebaseException catch (e) {
       print("[FIREBASE ERROR] ${e.message}");
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return DialogBox(
+              title: "ERROR",
+              buttonText1: 'OK',
+              button1Func: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icons.clear,
+              description: '${e.message}',
+              iconColor: Colors.red,
+            );
+          });
     } catch (e) {
       print("[ERROR N] ${e.toString()}");
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return DialogBox(
+              title: "ERROR",
+              buttonText1: 'OK',
+              button1Func: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icons.clear,
+              description: '${e.toString()}',
+              iconColor: Colors.red,
+            );
+          });
     } finally {
       setState(() {
         _loading = false;
@@ -297,298 +327,301 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black87,
-      title: Text("Sell your car"),
-      ),
-  
+        appBar: AppBar(
+          backgroundColor: Colors.black87,
+          title: Text("Sell your car"),
+        ),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
-        body: SafeArea(child: 
-        Stack(children: [
-          Background(
-            child: Container(
-              width: double.infinity,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 15),
-                      width: size.width,
-                      child: Center(
-                        child: Text("Enter Car Details",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
+        body: SafeArea(
+            child: Stack(
+          children: [
+            Background(
+              child: Container(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 15),
+                        width: size.width,
+                        child: Center(
+                          child: Text("Enter Car Details",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                        ),
                       ),
-                    ),
-                    Form(
-                      key: _formKey,
-                      autovalidateMode: AutovalidateMode.disabled,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(top: 25),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //       blurRadius: 10,
-                              //       color: Colors.black26,
-                              //       offset: Offset(0, 2))
-                              // ],
+                      Form(
+                        key: _formKey,
+                        autovalidateMode: AutovalidateMode.disabled,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 25),
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                            margin: EdgeInsets.all(10),
-                            child: DropdownButtonFormField(
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.blue[100],
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //       blurRadius: 10,
+                                //       color: Colors.black26,
+                                //       offset: Offset(0, 2))
+                                // ],
+                              ),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              margin: EdgeInsets.all(10),
+                              child: DropdownButtonFormField(
+                                validator: MultiValidator([
+                                  RequiredValidator(
+                                      errorText: "Cannot Be Empty")
+                                ]),
+                                hint: Text("Select brand"),
+                                value: _selectedbrand,
+                                elevation: 0,
+                                isExpanded: true,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.w400),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedbrand = val;
+                                  });
+                                },
+                                items: _brandnames.map((bname) {
+                                  return DropdownMenuItem(
+                                    child: new Text(bname),
+                                    value: bname,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            CustomFormField(
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
                               ]),
-                              hint: Text("Select brand"),
-                              value: _selectedbrand,
-                              elevation: 0,
-                              isExpanded: true,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w400),
+                              keyBoardType: TextInputType.number,
                               onChanged: (val) {
-                                setState(() {
-                                  _selectedbrand = val;
-                                });
+                                _year = int.parse(val);
                               },
-                              items: _brandnames.map((bname) {
-                                return DropdownMenuItem(
-                                  child: new Text(bname),
-                                  value: bname,
-                                );
-                              }).toList(),
+                              labelText: "Year",
                             ),
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _year = int.parse(val);
-                            },
-                            labelText: "Year",
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.blue[100],
+                              ),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              margin: EdgeInsets.all(10),
+                              child: DropdownButtonFormField(
+                                validator: MultiValidator([
+                                  RequiredValidator(
+                                      errorText: "Cannot Be Empty")
+                                ]),
+                                hint: Text("Select fuel"),
+                                value: _selectedfuel,
+                                elevation: 0,
+                                isExpanded: true,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.w400),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedfuel = val;
+                                  });
+                                },
+                                items: _fueltypes.map((fname) {
+                                  return DropdownMenuItem(
+                                    child: new Text(fname),
+                                    value: fname,
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                            margin: EdgeInsets.all(10),
-                            child: DropdownButtonFormField(
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.blue[100],
+                              ),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              margin: EdgeInsets.all(10),
+                              child: DropdownButtonFormField(
+                                validator: MultiValidator([
+                                  RequiredValidator(
+                                      errorText: "Cannot Be Empty")
+                                ]),
+                                hint: Text("Select Transmission"),
+                                value: _selectedtransmission,
+                                elevation: 0,
+                                isExpanded: true,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.w400),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedtransmission = val;
+                                  });
+                                },
+                                items: _transmissionTypes.map((fname) {
+                                  return DropdownMenuItem(
+                                    child: new Text(fname),
+                                    value: fname,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            CustomFormField(
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
                               ]),
-                              hint: Text("Select fuel"),
-                              value: _selectedfuel,
-                              elevation: 0,
-                              isExpanded: true,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w400),
+                              keyBoardType: TextInputType.number,
                               onChanged: (val) {
-                                setState(() {
-                                  _selectedfuel = val;
-                                });
+                                _km = int.parse(val);
                               },
-                              items: _fueltypes.map((fname) {
-                                return DropdownMenuItem(
-                                  child: new Text(fname),
-                                  value: fname,
-                                );
-                              }).toList(),
+                              labelText: "KM Driven",
                             ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
-                            ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                            margin: EdgeInsets.all(10),
-                            child: DropdownButtonFormField(
+                            CustomFormField(
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
                               ]),
-                              hint: Text("Select Transmission"),
-                              value: _selectedtransmission,
-                              elevation: 0,
-                              isExpanded: true,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w400),
+                              keyBoardType: TextInputType.number,
                               onChanged: (val) {
-                                setState(() {
-                                  _selectedtransmission = val;
-                                });
+                                _mileage = int.parse(val);
                               },
-                              items: _transmissionTypes.map((fname) {
-                                return DropdownMenuItem(
-                                  child: new Text(fname),
-                                  value: fname,
-                                );
-                              }).toList(),
+                              labelText: "Mileage in kmpl",
                             ),
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _km = int.parse(val);
-                            },
-                            labelText: "KM Driven",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _mileage = int.parse(val);
-                            },
-                            labelText: "Mileage in kmpl",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _engine = int.parse(val);
-                            },
-                            labelText: "Engine in CC",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _power = int.parse(val);
-                            },
-                            labelText: "Power in bhp",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _seats = int.parse(val);
-                            },
-                            labelText: "Seats",
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
-                            ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                            margin: EdgeInsets.all(10),
-                            child: DropdownButtonFormField(
+                            CustomFormField(
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
                               ]),
-                              hint: Text("Owner type"),
-                              value: _selectedowner,
-                              elevation: 0,
-                              isExpanded: true,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w400),
+                              keyBoardType: TextInputType.number,
                               onChanged: (val) {
-                                setState(() {
-                                  _selectedowner = val;
-                                });
+                                _engine = int.parse(val);
                               },
-                              items: _ownwerno.map((fname) {
-                                return DropdownMenuItem(
-                                  child: new Text(fname),
-                                  value: fname,
-                                );
-                              }).toList(),
+                              labelText: "Engine in CC",
                             ),
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.name,
-                            onChanged: (val) {
-                              _title = val;
-                            },
-                            labelText: "Title",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.multiline,
-                            onChanged: (val) {
-                              _description = val;
-                            },
-                            labelText: "Description",
-                          ),
-                          CustomFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "Cannot Be Empty")
-                            ]),
-                            keyBoardType: TextInputType.number,
-                            onChanged: (val) {
-                              _price = int.parse(val);
-                            },
-                            labelText: "Price",
-                          ),
-                          imageUploadWidget(),
-                          SubmitBtn(
-                            text: "Register Car",
-                            onPressed: () => _submit(context),
-                            sizeW: size.width,
-                          )
-                        ],
+                            CustomFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              keyBoardType: TextInputType.number,
+                              onChanged: (val) {
+                                _power = int.parse(val);
+                              },
+                              labelText: "Power in bhp",
+                            ),
+                            CustomFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              keyBoardType: TextInputType.number,
+                              onChanged: (val) {
+                                _seats = int.parse(val);
+                              },
+                              labelText: "Seats",
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.blue[100],
+                              ),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              margin: EdgeInsets.all(10),
+                              child: DropdownButtonFormField(
+                                validator: MultiValidator([
+                                  RequiredValidator(
+                                      errorText: "Cannot Be Empty")
+                                ]),
+                                hint: Text("Owner type"),
+                                value: _selectedowner,
+                                elevation: 0,
+                                isExpanded: true,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.w400),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedowner = val;
+                                  });
+                                },
+                                items: _ownwerno.map((fname) {
+                                  return DropdownMenuItem(
+                                    child: new Text(fname),
+                                    value: fname,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            CustomFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              keyBoardType: TextInputType.name,
+                              onChanged: (val) {
+                                _title = val;
+                              },
+                              labelText: "Title",
+                            ),
+                            CustomFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              keyBoardType: TextInputType.multiline,
+                              onChanged: (val) {
+                                _description = val;
+                              },
+                              labelText: "Description",
+                            ),
+                            CustomFormField(
+                              validator: MultiValidator([
+                                RequiredValidator(errorText: "Cannot Be Empty")
+                              ]),
+                              keyBoardType: TextInputType.number,
+                              onChanged: (val) {
+                                _price = int.parse(val);
+                              },
+                              labelText: "Price",
+                            ),
+                            imageUploadWidget(),
+                            SubmitBtn(
+                              text: "Register Car",
+                              onPressed: () => _submit(context),
+                              sizeW: size.width,
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          CustomActionBar(
-            title: "Sell Car",
-            hasBackArrrow: true,
-          ),
-          _loading == true
-              ? Container(
-                  color: Colors.black.withOpacity(0.5),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            CustomActionBar(
+              title: "Sell Car",
+              hasBackArrrow: true,
+              hasCount: false,
+            ),
+            _loading == true
+                ? Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
-              
-        ],
-        
-        )
-        ));
+                  )
+                : Container(),
+          ],
+        )));
   }
 
   Widget imageUploadWidget() {

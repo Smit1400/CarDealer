@@ -124,7 +124,7 @@ class _PricePredictState extends State<PricePredict> {
                 Navigator.of(context).pop();
               },
               icon: Icons.check,
-              description: 'The predicted price for your car is ${finalData['predicted_value']}',
+              description: 'The predicted price for your car is \nRs. ${finalData['predicted_value']}',
               iconColor: Colors.green,
             );
           });
@@ -152,8 +152,36 @@ class _PricePredictState extends State<PricePredict> {
       }
     } on FirebaseException catch (e) {
       print("[FIREBASE ERROR] ${e.message}");
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return DialogBox(
+              title: "ERROR",
+              buttonText1: 'OK',
+              button1Func: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icons.clear,
+              description: '${e.message}',
+              iconColor: Colors.red,
+            );
+          });
     } catch (e) {
       print("[ERROR N] ${e.toString()}");
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return DialogBox(
+              title: "ERROR",
+              buttonText1: 'OK',
+              button1Func: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icons.clear,
+              description: '${e.toString()}',
+              iconColor: Colors.red,
+            );
+          });
     } finally {
       setState(() {
         _loading = false;
@@ -419,6 +447,7 @@ class _PricePredictState extends State<PricePredict> {
            CustomActionBar(
             title: "Predict Car Price",
             hasBackArrrow: true,
+            hasCount: false,
           ),
           _loading == true
               ? Container(

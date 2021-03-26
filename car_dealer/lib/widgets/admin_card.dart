@@ -66,7 +66,7 @@ class _AdminCardState extends State<AdminCard> {
                 Navigator.of(context).pop(false);
               },
               icon: Icons.clear,
-              description: 'Do you want delet the car?',
+              description: 'Do you want delete the car?',
               iconColor: Colors.red,
             );
           });
