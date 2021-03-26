@@ -8,7 +8,7 @@ from pydantic import BaseModel
 import numpy as np
 import pandas as pd
 import datetime
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 import torch
 
 ### Importing model
@@ -34,11 +34,30 @@ train_data["Engine"].fillna(train_data["Engine"].median(), inplace=True)
 train_data["Mileage"] = train_data["Mileage"].apply(lambda val: convert_to_float(val))
 train_data.dropna(inplace=True)
 train_data.drop(["Name", "Location"], axis=1, inplace=True)
-train_data['Total Years'] = datetime.datetime.now().year - train_data["Year"]
-train_data.drop('Year', axis=1, inplace=True)
-train_data["Price"] = train_data["Price"] * 100000
+# train_data['Total Years'] = datetime.datetime.now().year - train_data["Year"]
+# train_data.drop('Year', axis=1, inplace=True)
+# train_data["Price"] = train_data["Price"] * 100000
 
+norm = MinMaxScaler()
+cont_features = ['Year', 'Kilometers_Driven', 'Mileage', 'Engine', 'Power', 'Seats']
+
+cont_features = np.stack([train_data[i].values for i in cont_features], axis = 1)
+cont_features= norm.fit_transform(cont_features)
+# cont_features = torch.tensor(cont_features, dtype = torch.float)
 cat_features = ['Fuel_Type', 'Transmission', 'Owner_Type']
+
+## Fuel Type
+
+#  CNG, Diesel, Petrol, LPG, Electric
+
+## Transmission
+
+#  Manual, Automatic
+
+## Owner_Type
+
+# 
+
 lbl_encoders = {}
 for features in cat_features:
     lbl_encoders[features] = LabelEncoder()
@@ -65,14 +84,16 @@ class UsedCarAttributes(BaseModel):
 @app.post("/predict")
 def predict_price(attributes: UsedCarAttributes):
     cat_array = np.array([lbl_encoders["Fuel_Type"].transform(np.array([attributes.fuel_type])), lbl_encoders["Transmission"].transform(np.array([attributes.transmission])), lbl_encoders["Owner_Type"].transform(np.array([attributes.owner_type]))])
+    print(cat_array)
     cat_array = torch.tensor(cat_array.reshape(1, 3), dtype=torch.int64)
-    tot_year = datetime.datetime.now().year - attributes.year
-    cont_array = np.array([attributes.km_driven, attributes.mileage, attributes.engine, attributes.power, attributes.seats, tot_year])
+    # tot_year = datetime.datetime.now().year - attributes.year
+    cont_array = np.array([[attributes.year, attributes.km_driven, attributes.mileage, attributes.engine, attributes.power, attributes.seats]])
+    print(cont_array)
+    cont_array = norm.transform(cont_array)[0]
+    print(cont_array)
     cont_array = torch.tensor(cont_array.reshape(1,6), dtype = torch.float)
-    # predicted_value = price_predict_model(cat_array, cont_array)
-    
     predicted_value = price_predict_model(cat_array,cont_array).item()
     return {
         "task": "Successfully Predicted",
-        "predicted_value": predicted_value
+        "predicted_value": predicted_value * 100000
     }
