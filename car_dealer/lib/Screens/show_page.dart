@@ -6,8 +6,11 @@ import 'package:car_dealer/widgets/custom_block.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 
+import 'package:car_dealer/components/constants.dart';
+
 
 class ShowPage extends StatefulWidget {
+
   final String productId;
   ShowPage({this.productId});
   @override
@@ -47,7 +50,8 @@ class _ShowPageState extends State<ShowPage> {
                  String capsTitle = documentData['title'].substring(0, 1).toUpperCase() +documentData['title'].substring(1);
                 List imageList = documentData['imageUrls'];
                 return Container(
-                    color: Colors.grey[200],
+                    // color: Constants.backgroundColor,
+                    color: Colors.white,
                     padding: EdgeInsets.all(0),
                     child: ListView(
                       shrinkWrap: true,
@@ -64,9 +68,12 @@ class _ShowPageState extends State<ShowPage> {
                           child: Text(
                               "$capsTitle" ?? "Product title",
                               style: TextStyle(
-                                color: Colors.black87,
+                                 fontFamily: "Alegreya",
+                              // fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w600,
+                                color: Constants.secColor,
                                 fontSize: 28,
-                                fontWeight: FontWeight.bold,
+                             
                                 // fontStyle: FontStyle.
                               )),
                         ),
@@ -110,7 +117,7 @@ class _ShowPageState extends State<ShowPage> {
                                       value: (" ${documentData['mileage']}" +
                                           " kmpl"),
                                       icon: Icon(
-                                        Icons.directions_car,
+                                        Icons.local_gas_station,
                                       ),
                                     ),),
                                    Expanded(child:SpecsBlock(
@@ -118,7 +125,7 @@ class _ShowPageState extends State<ShowPage> {
                                       value: (" ${documentData['power']}" +
                                           " bhp"),
                                       icon: Icon(
-                                        Icons.directions_car,
+                                        Icons.flash_on,
                                       ),
                                     ),),
                                   ],
@@ -165,9 +172,19 @@ class _ShowPageState extends State<ShowPage> {
                               height: 65,
                               margin: EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 15),
-                              decoration: BoxDecoration(
-                                  color: Colors.black54,
-                                  borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          gradient: LinearGradient(
+                            begin: FractionalOffset.topLeft,
+                            end: FractionalOffset.bottomRight,
+                            colors: [
+                              Constants.secColor,
+                              Constants.mainColor,
+                            
+                            ],
+                             stops: [0.0, 1.0],
+                            tileMode: TileMode.repeated,
+                          )),
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -180,6 +197,7 @@ class _ShowPageState extends State<ShowPage> {
                                   SizedBox(
                                     width: 20,
                                   ),
+                                  
                                   Text("Add to wishlist",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -219,6 +237,8 @@ Widget specListItem(
             leading: Icon(
               icon,
               size: 40,
+              color:Constants.secColor
+
             ),
             title: Text(
               title,
@@ -279,6 +299,7 @@ Widget userDescListItem(
           leading: Icon(
             icon,
             size: 40,
+            color:Constants.secColor
           ),
           title: Text(
             title,
@@ -324,7 +345,7 @@ Widget userDescListItem(
 Widget descListItem(
     {String title, IconData icon, BuildContext context, String txt}) {
   return Material(
-    color: Colors.transparent,
+    // color: Colors.transparent,
     child: Theme(
       data: ThemeData(accentColor: Colors.black),
       child: Card(
@@ -335,6 +356,7 @@ Widget descListItem(
             leading: Icon(
               icon,
               size: 40,
+              color:Constants.secColor
             ),
             title: Text(
               title,

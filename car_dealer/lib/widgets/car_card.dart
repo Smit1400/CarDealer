@@ -3,6 +3,8 @@ import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:car_dealer/services/firebase_db.dart';
+import 'package:car_dealer/components/constants.dart';
+
 const Color mainColor=Color(0xFF436eee);
 
 class CarCard extends StatelessWidget {
@@ -100,10 +102,10 @@ class CarCard extends StatelessWidget {
                             begin: FractionalOffset.topLeft,
                             end: FractionalOffset.bottomRight,
                             colors: [
-                              Colors.orange,
-                              Colors.orangeAccent,
+                              Constants.mainColor,
+                            Constants.secColor
                             ],
-                            stops: [0.0, 1.0],
+                             stops: [0.0, 1.0],
                             tileMode: TileMode.repeated,
                           ),
                         ),
@@ -121,16 +123,16 @@ class CarCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         color: mainColor,
-                        // gradient: LinearGradient(
-                        //   begin: FractionalOffset.topLeft,
-                        //   end: FractionalOffset.bottomRight,
-                        //   colors: [
-                        //     Colors.green,
-                        //     Colors.greenAccent,
-                        //   ],
-                        //   stops: [0.0, 1.0],
-                        //   tileMode: TileMode.repeated,
-                        // ),
+                        gradient: LinearGradient(
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.bottomRight,
+                          colors: [
+                            Constants.mainColor,
+                            Constants.secColor
+                          ],
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.repeated,
+                        ),
                       ),
                       child: Center(
                         child: Text(

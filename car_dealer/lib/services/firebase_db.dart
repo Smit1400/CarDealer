@@ -6,7 +6,13 @@ import 'package:intl/intl.dart';
 
 class FirebaseMethods {
   static final firestore = FirebaseFirestore.instance;
+
+
 FirebaseServices _firebaseServices = FirebaseServices();
+ String getUserId() {
+    return _firebaseServices.getUserId();
+  }
+
   Stream<List<CarDetails>> getAllCars() {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
@@ -15,6 +21,7 @@ FirebaseServices _firebaseServices = FirebaseServices();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
+ 
 
   Future<void> addCarDetailsToDb(CarDetails carDetails) async {
     try {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:car_dealer/components/constants.dart';
 
 class BottomTabs extends StatefulWidget {
   final int selectedTab;
@@ -96,14 +97,14 @@ class BottomTabBtn extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border(
                 top: BorderSide(
-          color: _selected ? Theme.of(context).accentColor : Colors.transparent,
+          color: _selected ?Constants.secColor: Colors.transparent,
           width: 2.0,
         ))),
         child: Image(
           image: AssetImage(imagePath ?? "assets/images/home_tab.png"),
           width: 22.0,
           height: 25.0,
-          color: _selected ? Theme.of(context).accentColor : Colors.black,
+          color: _selected ? Constants.secColor : Colors.black,
         ),
       ),
     );

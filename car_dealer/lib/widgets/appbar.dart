@@ -3,6 +3,7 @@ import 'package:car_dealer/screens/price_predict.dart';
 import 'package:car_dealer/screens/sell_car_page.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
 import 'package:car_dealer/Screens/admin_page.dart';
+import 'package:car_dealer/components/constants.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Map<String, dynamic> user;
@@ -13,11 +14,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     print(user["username"]);
     return AppBar(
-        leading:Image.asset("assets/images/logo5.png", fit: BoxFit.contain,height: 19,),
+        leading: Image.asset(
+          "assets/images/logo5.png",
+          fit: BoxFit.contain,
+          height: 19,
+        ),
         // leading: Icon(Icons.car_rental, size: 25),
-        backgroundColor: Colors.black87.withOpacity(0.9),
+        backgroundColor: Constants.secColor,
         title: Text(
           "Car Buddy",
+          style: TextStyle(
+              fontFamily: "Alegreya",
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w600,
+              fontSize: 24),
         ),
         actions: <Widget>[
           PopupMenuButton(
@@ -69,36 +79,40 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               value: 2,
             ));
-           list.add( user['admin'] == true? PopupMenuDivider(height: 10):null);
-            list.add( user['admin'] == true?
-              PopupMenuItem(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(xcontext).pop();
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => new AdminPage(),
-                  ),
-                );
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.check,color: Colors.black,),
-                    SizedBox(
-                      width: 10,
+            list.add(
+                user['admin'] == true ? PopupMenuDivider(height: 10) : null);
+            list.add(user['admin'] == true
+                ? PopupMenuItem(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(xcontext).pop();
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new AdminPage(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.check,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Approve selling car",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "Approve selling car",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-              value: 4,
-            ) : null
-            );
-           
+                    value: 4,
+                  )
+                : null);
+
             list.add(PopupMenuDivider(height: 5));
             list.add(PopupMenuItem(
               child: GestureDetector(

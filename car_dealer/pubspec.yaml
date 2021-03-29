@@ -28,6 +28,7 @@ dependencies:
   toast: ^0.1.5
   http: ^0.13.0
   multi_image_picker: ^4.8.0
+  
 
 dev_dependencies:
   flutter_test:

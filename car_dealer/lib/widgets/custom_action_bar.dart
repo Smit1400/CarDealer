@@ -62,7 +62,7 @@ class CustomActionBar extends StatelessWidget {
                 width: 42.0,
                 height: 42.0,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Constants.blackColor,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 alignment: Alignment.center,
@@ -91,7 +91,7 @@ class CustomActionBar extends StatelessWidget {
                 width: 42.0,
                 height: 42.0,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Constants.blackColor,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 alignment: Alignment.center,

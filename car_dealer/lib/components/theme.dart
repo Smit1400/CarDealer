@@ -32,7 +32,7 @@ class MyAppTheme {
     /// Now that we have ColorScheme and TextTheme, we can create the ThemeData
     var t = ThemeData.from(textTheme: txtTheme, colorScheme: colorScheme)
         // We can also add on some extra properties that ColorScheme seems to miss
-        .copyWith(buttonColor: accent1, cursorColor: accent1, highlightColor: accent1, toggleableActiveColor: accent1);
+        .copyWith(buttonColor: accent1,  highlightColor: accent1, toggleableActiveColor: accent1);
  
     /// Return the themeData which MaterialApp can now use
     return t;

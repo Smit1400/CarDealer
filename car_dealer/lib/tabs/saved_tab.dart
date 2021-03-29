@@ -30,7 +30,7 @@ class SavedTab extends StatelessWidget {
                   padding: EdgeInsets.only(
                     top: 80.0,
                     bottom: 12.0,
-                    left:12.0,
+                    left: 12.0,
                     right: 12.0,
                   ),
                   children: snapshot.data.docs.map((document) {
@@ -66,104 +66,118 @@ class SavedTab extends StatelessWidget {
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
                             print(_productMap);
-                            return Container(
-                              child: Card(
-                                elevation: 0.5,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                  20.0,
-                                )),
-                                child: Container(
-                                 
-                                  decoration:
-                                      BoxDecoration(color:Colors.white, boxShadow: [
-                                  new BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: 20.0,
-                                  ),
-                                ],),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 20.0,
-                                    horizontal: 28.0,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 90,
-                                        height: 90,
-                                        //color:Colors.blueGrey,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          child: Image.network(
-                                            "${_productMap['imageUrls'][0]}",
-                                            fit: BoxFit.cover,
+                            if (_productMap == null) {
+                              return const Center(
+                              child: Text(
+                                "Car Sold!",
+                                style: TextStyle(
+                                    fontSize: 25.0, color: Colors.grey),
+                              ),
+                            );
+                            } else {
+                              return Container(
+                                child: Card(
+                                  elevation: 0.5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                    20.0,
+                                  )),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        new BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 20.0,
+                                        ),
+                                      ],
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 20.0,
+                                      horizontal: 28.0,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 90,
+                                          height: 90,
+                                          //color:Colors.blueGrey,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.network(
+                                              "${_productMap['imageUrls'][0]}",
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                          left: 16.0,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              //'Name of the Car : '
-                                              "${_productMap['brand']}",
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  color: Colors.blueGrey[800],
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 4.0,
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            left: 16.0,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                //'Name of the Car : '
+                                                "${_productMap['brand']}",
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Colors.blueGrey[800],
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
-                                              child: Text(
-                                                //'Price : '
-                                                "${_productMap['title']}",
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 4.0,
+                                                ),
+                                                child: Text(
+                                                  //'Price : '
+                                                  "${_productMap['title']}",
+                                                  style: TextStyle(
+                                                      fontSize: 16.0,
+                                                      color: Colors.grey[600],
+                                                      /*Theme.of(context)
+                                                    .accentColor,*/
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ),
+                                              Text(
+                                                //'No of Seats : '
+                                                "\Rs. ${_productMap['price']}", //document.data()['seats']
                                                 style: TextStyle(
                                                     fontSize: 16.0,
-                                                    color: Colors.grey[600],
-                                                    /*Theme.of(context)
-                                                    .accentColor,*/
+                                                    color: Colors.grey[800],
                                                     fontWeight:
                                                         FontWeight.w400),
                                               ),
-                                            ),
-                                            Text(
-                                              //'No of Seats : '
-                                              "\Rs. ${_productMap['price']}", //document.data()['seats']
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: Colors.grey[800],
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                            Divider(
-                                              //height: 50,
-                                              thickness: 10,
-                                              color: Colors.black,
-                                            ),
-                                          ],
+                                              Divider(
+                                                //height: 50,
+                                                thickness: 10,
+                                                color: Colors.black,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                           return Container(
-                            // child: Center(
-                            //   child: CircularProgressIndicator(),
-                            // ),
-                          );
+                              // child: Center(
+                              //   child: CircularProgressIndicator(),
+                              // ),
+                              );
                         },
                       ),
                     );

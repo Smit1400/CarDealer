@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:car_dealer/components/constants.dart';
+
 
 class ImageSwipe extends StatefulWidget {
   final List imageList;
@@ -30,8 +32,8 @@ class _ImageSwipeState extends State<ImageSwipe> {
               ],
             ),
             Positioned(
-                bottom: 30,
-                left: 150,
+                bottom: 40,
+                left: 140,
                 right: 50.0,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +48,7 @@ class _ImageSwipeState extends State<ImageSwipe> {
                         // color: Colors.blue,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.black.withOpacity(0.7)),
+                            color: Constants.secColor.withOpacity(0.9)),
                       )
                   ],
                 )),
@@ -57,8 +59,11 @@ class _ImageSwipeState extends State<ImageSwipe> {
                 elevation: 0,
                 labelStyle:
                 TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                backgroundColor: Colors.black54,
-                label: Text("Rs."+this.widget.price),
+                backgroundColor: Constants.backgroundColor,
+                label: Text("Rs."+this.widget.price,
+                style: TextStyle(
+                  color:Colors.black
+                ),),
               ),
             )
           ],
