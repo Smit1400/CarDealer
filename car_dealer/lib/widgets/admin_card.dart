@@ -1,10 +1,12 @@
 import 'package:car_dealer/Screens/show_page.dart';
+import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AdminCard extends StatefulWidget {
@@ -94,6 +96,13 @@ class _AdminCardState extends State<AdminCard> {
                     )));
       },
       child: Card(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          ),
+          // side: BorderSide(width: 1, color: Colors.green),
+        ),
         margin: EdgeInsets.all(10),
         child: Container(
           width: width,
@@ -108,9 +117,14 @@ class _AdminCardState extends State<AdminCard> {
                   Container(
                     height: height * 0.2 * 0.7,
                     width: width * 0.5,
-                    child: Image.network(
-                      widget.car.imageUrls[0],
-                      fit: BoxFit.fill,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      child: Image.network(
+                        widget.car.imageUrls[0],
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -121,15 +135,21 @@ class _AdminCardState extends State<AdminCard> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          "${widget.car.brand}",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
+                        Text("${widget.car.brand}",
+                            style: GoogleFonts.oswald(
+                              textStyle: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            )),
                         SizedBox(
                           height: 5,
                         ),
-                        Text('Rs.${widget.car.price}'),
+                        Text('Rs.${widget.car.price}',
+                            style: GoogleFonts.oswald(
+                              textStyle: TextStyle(
+                                  color: Constants.secColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            )),
                       ],
                     ),
                   )

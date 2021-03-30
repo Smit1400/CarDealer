@@ -1,3 +1,4 @@
+import 'package:car_dealer/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -21,16 +22,27 @@ class CustomFormField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: TextFormField(
+      maxLines: keyBoardType == TextInputType.multiline ? 5 : 1,
+        cursorColor: Constants.secColor,
+        style: TextStyle(color: Constants.secColor),
         validator: validator,
         keyboardType: keyBoardType,
         onChanged: onChanged,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
+          enabledBorder: new OutlineInputBorder(
+            borderRadius: new BorderRadius.circular(20.0),
+            borderSide: BorderSide(color: Constants.mainColor),
+          ),
+          errorBorder: new OutlineInputBorder(
+            borderRadius: new BorderRadius.circular(20.0),
+            borderSide: BorderSide(color: Colors.red),
+          ),
           focusedBorder: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(20.0),
-            borderSide: BorderSide(color: Colors.indigoAccent),
+            borderSide: BorderSide(color: Constants.mainColor),
           ),
-          labelStyle: new TextStyle(color: Colors.indigo),
+          labelStyle: new TextStyle(color: Constants.secColor),
           labelText: labelText,
         ),
 

@@ -1,9 +1,12 @@
 import 'package:car_dealer/Screens/show_page.dart';
+import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:car_dealer/services/firebase_db.dart';
-const Color mainColor=Color(0xFF436eee);
+import 'package:google_fonts/google_fonts.dart';
+
+const Color mainColor = Color(0xFF436eee);
 
 class CarCard extends StatelessWidget {
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
@@ -12,17 +15,25 @@ class CarCard extends StatelessWidget {
     content: Text("Car added to wishlist"),
   );
   CarCard({@required this.car});
- 
-  
+
   @override
   Widget build(BuildContext context) {
-     String capsTitle = "${car.title}".substring(0, 1).toUpperCase() +"${car.title}".substring(1);
+    String capsTitle = "${car.title}".substring(0, 1).toUpperCase() +
+        "${car.title}".substring(1);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    int pr=(car.price).round();
+    int pr = (car.price).round();
     return Stack(
       children: [
+
         Card(
+          elevation: 10.0,
+          // color: Colors.green.withOpacity(0.1),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(25),),
+              // side: BorderSide(width: 1, color: Colors.green),
+          ),
           margin: EdgeInsets.all(10),
           child: Container(
             width: width,
@@ -37,9 +48,15 @@ class CarCard extends StatelessWidget {
                     Container(
                       height: height * 0.2 * 0.7,
                       width: width * 0.5,
-                      child: Image.network(
-                        car.imageUrls[0],
-                        fit: BoxFit.contain,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: Image.network(
+                          car.imageUrls[0],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -50,28 +67,26 @@ class CarCard extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            "${car.brand}",
-                            style: TextStyle(
-                              
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            capsTitle,
-                            style: TextStyle(
-                               
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
+                          Text("${car.brand}",
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              )),
+                          Text(capsTitle,
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w500),
+                              )),
                           SizedBox(
                             height: 5,
                           ),
-                         
                           Text('Rs.$pr',
-                          style: TextStyle(
-                                color: mainColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),),
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    color: Constants.secColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
+                              )),
                         ],
                       ),
                     )
@@ -96,22 +111,14 @@ class CarCard extends StatelessWidget {
                         height: 35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
-                          gradient: LinearGradient(
-                            begin: FractionalOffset.topLeft,
-                            end: FractionalOffset.bottomRight,
-                            colors: [
-                              Colors.orange,
-                              Colors.orangeAccent,
-                            ],
-                            stops: [0.0, 1.0],
-                            tileMode: TileMode.repeated,
-                          ),
+                          color: Constants.mainColor,
                         ),
                         child: Center(
-                          child: Text(
-                            "View",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
+                          child: Text("View",
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    color: Constants.secColor, fontSize: 18),
+                              )),
                         ),
                       ),
                     ),
@@ -120,7 +127,7 @@ class CarCard extends StatelessWidget {
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: mainColor,
+                        color: Constants.mainColor,
                         // gradient: LinearGradient(
                         //   begin: FractionalOffset.topLeft,
                         //   end: FractionalOffset.bottomRight,
@@ -133,10 +140,11 @@ class CarCard extends StatelessWidget {
                         // ),
                       ),
                       child: Center(
-                        child: Text(
-                          "Chat",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
+                        child: Text("Chat",
+                            style: GoogleFonts.oswald(
+                              textStyle:
+                                  TextStyle(color: Constants.secColor, fontSize: 18),
+                            )),
                       ),
                     ),
                   ],

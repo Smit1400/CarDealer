@@ -1,6 +1,10 @@
 import 'dart:ui';
 import 'dart:io';
+import 'package:car_dealer/components/constants.dart';
+import 'package:car_dealer/widgets/custom_background.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:toast/toast.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +163,8 @@ class _SellCarState extends State<SellCar> {
 
   Map arguments = {};
 
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
@@ -243,7 +249,6 @@ class _SellCarState extends State<SellCar> {
       if (files != null && files.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
         String carId = "cars_${DateTime.now().toIso8601String()}";
-      
         CarDetails carDetails = CarDetails(
             transmissionType: _selectedtransmission,
             brand: _selectedbrand,
@@ -320,17 +325,18 @@ class _SellCarState extends State<SellCar> {
     print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //appBar: AppBar(backgroundColor: Colors.black87,
-      //title: Text("Sell your car"),
-      //),
-  
+        //appBar: AppBar(backgroundColor: Colors.black87,
+        //title: Text("Sell your car"),
+        //),
+
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         // drawer: MySideBar(),
         body: SafeArea(
             child: Stack(
           children: [
-            Background(
+            CustomBackground(
+              path: "assets/images/sell-car.json",
               child: Container(
                 width: double.infinity,
                 child: SingleChildScrollView(
@@ -338,19 +344,11 @@ class _SellCarState extends State<SellCar> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.only(top: 15),
-                        width: size.width,
-                        child: Center(
-                          child: Text("Enter Car Details",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                        padding: EdgeInsets.only(top: 35),
                       ),
                       Form(
                         key: _formKey,
-                        autovalidateMode: AutovalidateMode.disabled,
+                        autovalidateMode: _autovalidateMode,
                         child: Column(
                           children: <Widget>[
                             Padding(
@@ -358,18 +356,18 @@ class _SellCarState extends State<SellCar> {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue[100],
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //       blurRadius: 10,
-                                //       color: Colors.black26,
-                                //       offset: Offset(0, 2))
-                                // ],
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Constants.mainColor,
                               ),
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                               margin: EdgeInsets.all(10),
                               child: DropdownButtonFormField(
+                                dropdownColor: Constants.mainColor,
+                                autovalidateMode: _autovalidateMode,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Constants.mainColor,
+                                    enabledBorder: InputBorder.none),
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "Cannot Be Empty")
@@ -407,12 +405,18 @@ class _SellCarState extends State<SellCar> {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue[100],
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Constants.mainColor,
                               ),
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                               margin: EdgeInsets.all(10),
                               child: DropdownButtonFormField(
+                                dropdownColor: Constants.mainColor,
+                                autovalidateMode: _autovalidateMode,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Constants.mainColor,
+                                    enabledBorder: InputBorder.none),
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "Cannot Be Empty")
@@ -440,12 +444,18 @@ class _SellCarState extends State<SellCar> {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue[100],
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Constants.mainColor,
                               ),
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                               margin: EdgeInsets.all(10),
                               child: DropdownButtonFormField(
+                                dropdownColor: Constants.mainColor,
+                                autovalidateMode: _autovalidateMode,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Constants.mainColor,
+                                    enabledBorder: InputBorder.none),
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "Cannot Be Empty")
@@ -523,12 +533,18 @@ class _SellCarState extends State<SellCar> {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue[100],
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Constants.mainColor,
                               ),
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                               margin: EdgeInsets.all(10),
                               child: DropdownButtonFormField(
+                                dropdownColor: Constants.mainColor,
+                                autovalidateMode: _autovalidateMode,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Constants.mainColor,
+                                    enabledBorder: InputBorder.none),
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "Cannot Be Empty")
@@ -602,13 +618,17 @@ class _SellCarState extends State<SellCar> {
               title: "Sell Car",
               hasBackArrrow: true,
               hasCount: false,
+              hasBackground: false,
             ),
             _loading == true
                 ? Container(
                     color: Colors.black.withOpacity(0.5),
                     child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      child: Lottie.asset(
+                        "assets/images/3532-car.json",
+                        width: double.infinity,
+                        height: 250,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   )
@@ -644,20 +664,22 @@ class _SellCarState extends State<SellCar> {
         height: 20.0,
       ),
       RaisedButton(
-        child: Text("Upload Image",
-            style: TextStyle(
-                color: Colors.white,
+        child: Text(
+          "Upload Image",
+          style: GoogleFonts.oswald(
+            textStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20)),
+                fontSize: 20),
+          ),
+        ),
         onPressed: () {
           loadAssets();
         },
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: BorderSide(color: Colors.blue)),
+            borderRadius: BorderRadius.circular(18.0),),
         elevation: 5.0,
-        color: Colors.blue,
-        textColor: Colors.white,
+        color: Constants.mainColor,
+        textColor: Constants.secColor,
         padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
         splashColor: Colors.grey,
       ),

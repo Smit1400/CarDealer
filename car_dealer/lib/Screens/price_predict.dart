@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/services/firebase_db.dart';
+import 'package:car_dealer/widgets/custom_background.dart';
 import 'package:car_dealer/widgets/custom_form_field.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +16,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:car_dealer/widgets/custom_action_bar.dart';
-
+import 'package:lottie/lottie.dart';
 
 class PricePredict extends StatefulWidget {
   @override
@@ -115,36 +117,36 @@ class _PricePredictState extends State<PricePredict> {
           var finalData = jsonDecode(response.body);
           print(finalData);
           await showDialog(
-          context: context,
-          builder: (context) {
-            return DialogBox(
-              title: "Price Prediction",
-              buttonText1: 'OK',
-              button1Func: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icons.check,
-              description: 'The predicted price for your car is \nRs. ${finalData['predicted_value']}',
-              iconColor: Colors.green,
-            );
-          });
-
+              context: context,
+              builder: (context) {
+                return DialogBox(
+                  title: "Prediction",
+                  buttonText1: 'OK',
+                  button1Func: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icons.check,
+                  description:
+                      'Rs. ${finalData['predicted_value']}',
+                  iconColor: Colors.green,
+                );
+              });
         } else {
           print(response.statusCode);
           await showDialog(
-          context: context,
-          builder: (context) {
-            return DialogBox(
-              title: "ERROR",
-              buttonText1: 'OK',
-              button1Func: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icons.clear,
-              description: 'Some error occured!',
-              iconColor: Colors.red,
-            );
-          });
+              context: context,
+              builder: (context) {
+                return DialogBox(
+                  title: "ERROR",
+                  buttonText1: 'OK',
+                  button1Func: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icons.clear,
+                  description: 'Some error occured!',
+                  iconColor: Colors.red,
+                );
+              });
         }
       } else {
         _scaffoldKey.currentState
@@ -191,19 +193,14 @@ class _PricePredictState extends State<PricePredict> {
 
   @override
   Widget build(BuildContext context) {
-    arguments = ModalRoute.of(context).settings.arguments as Map;
-    print("[INFO] $arguments");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //     appBar: AppBar(backgroundColor: Colors.black87,
-      // title: Text("Predict Car Price"),
-      // ),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
-        // drawer: MySideBar(),
-        body:
-        SafeArea(child:  Stack(children: [
-          Background(
+        body: SafeArea(
+            child: Stack(children: [
+          CustomBackground(
+            path: "assets/images/old-car-moving-animation.json",
             child: Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -211,15 +208,7 @@ class _PricePredictState extends State<PricePredict> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(top: 15),
-                      width: size.width,
-                      child: Center(
-                        child: Text("Enter Car Details",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
+                      padding: EdgeInsets.only(top: 35),
                     ),
                     Form(
                       key: _formKey,
@@ -231,19 +220,17 @@ class _PricePredictState extends State<PricePredict> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //       blurRadius: 10,
-                              //       color: Colors.black26,
-                              //       offset: Offset(0, 2))
-                              // ],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Constants.mainColor,
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                             margin: EdgeInsets.all(10),
                             child: DropdownButtonFormField(
+                              dropdownColor: Constants.mainColor,
+                              autovalidateMode: _autovalidateMode,
                               decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Constants.mainColor,
                                   enabledBorder: InputBorder.none),
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
@@ -254,7 +241,7 @@ class _PricePredictState extends State<PricePredict> {
                               isExpanded: true,
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.indigo,
+                                  color: Constants.secColor,
                                   fontWeight: FontWeight.w400),
                               onChanged: (val) {
                                 setState(() {
@@ -281,13 +268,17 @@ class _PricePredictState extends State<PricePredict> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Constants.mainColor,
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                             margin: EdgeInsets.all(10),
                             child: DropdownButtonFormField(
+                              dropdownColor: Constants.mainColor,
+                              autovalidateMode: _autovalidateMode,
                               decoration: InputDecoration(
+                                  fillColor: Constants.mainColor,
+                                  filled: true,
                                   enabledBorder: InputBorder.none),
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
@@ -315,13 +306,17 @@ class _PricePredictState extends State<PricePredict> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Constants.mainColor,
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                             margin: EdgeInsets.all(10),
                             child: DropdownButtonFormField(
+                              dropdownColor: Constants.mainColor,
+                              autovalidateMode: _autovalidateMode,
                               decoration: InputDecoration(
+                                  fillColor: Constants.mainColor,
+                                  filled: true,
                                   enabledBorder: InputBorder.none),
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
@@ -399,13 +394,17 @@ class _PricePredictState extends State<PricePredict> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Constants.mainColor,
                             ),
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                             margin: EdgeInsets.all(10),
                             child: DropdownButtonFormField(
+                              dropdownColor: Constants.mainColor,
+                              autovalidateMode: _autovalidateMode,
                               decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Constants.mainColor,
                                   enabledBorder: InputBorder.none),
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "Cannot Be Empty")
@@ -444,17 +443,21 @@ class _PricePredictState extends State<PricePredict> {
               ),
             ),
           ),
-           CustomActionBar(
+          CustomActionBar(
             title: "Predict Car Price",
             hasBackArrrow: true,
             hasCount: false,
+            hasBackground: false,
           ),
           _loading == true
               ? Container(
                   color: Colors.black.withOpacity(0.5),
                   child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    child: Lottie.asset(
+                      "assets/images/3532-car.json",
+                      width: double.infinity,
+                      height: 250,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 )
