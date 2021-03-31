@@ -20,6 +20,7 @@ class CarDetails {
   final String description;
   final List<dynamic> imageUrls;
   bool approved;
+  bool isSold;
 
   CarDetails({
     @required this.brand,
@@ -40,7 +41,9 @@ class CarDetails {
     @required this.mobileNumber,
     @required this.imageUrls,
     @required this.transmissionType,
-    this.approved : false,
+    this.approved: false,
+    this.isSold: false,
+
   });
 
   factory CarDetails.fromMap(Map<String, dynamic> data) {
@@ -63,6 +66,7 @@ class CarDetails {
       mobileNumber: data["mobileNumber"],
       imageUrls: data["imageUrls"],
       approved: data["approved"],
+      isSold: data["isSold"],
       transmissionType: data['transmissionType'],
     );
   }
@@ -87,6 +91,7 @@ class CarDetails {
       "mobileNumber": this.mobileNumber,
       "imageUrls": this.imageUrls,
       "approved": this.approved,
+      "isSold": this.isSold,
       'transmissionType': this.transmissionType,
     };
   }

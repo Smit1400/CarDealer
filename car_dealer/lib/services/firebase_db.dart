@@ -150,11 +150,20 @@ class FirebaseMethods {
     }
   }
 
+    Stream<List<CarDetails>> getSoldCarsUser() {
+    print("[INFO] Getting all the cars from the database for particular user.");
+    String path = "Cars/";
+    String userId = _firebaseServices.getUserId();
+    final reference = FirebaseFirestore.instance.collection(path).where("userId",isEqualTo:userId,).where("isSold",isEqualTo:true,);
+    final snapshots = reference.snapshots();
+    return snapshots.map((snapshot) =>
+        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
+  }
     Stream<List<CarDetails>> getSellCarsUser() {
     print("[INFO] Getting all the cars from the database for particular user.");
     String path = "Cars/";
     String userId = _firebaseServices.getUserId();
-    final reference = FirebaseFirestore.instance.collection(path).where("userId",isEqualTo:userId);
+    final reference = FirebaseFirestore.instance.collection(path).where("userId",isEqualTo:userId,).where("isSold",isEqualTo:false,);
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
