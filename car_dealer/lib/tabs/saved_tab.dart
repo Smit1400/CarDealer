@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:car_dealer/services/firebase_db.dart';
+
 import 'package:car_dealer/screens/show_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:car_dealer/models/car_details.dart';
 
-class SavedTab extends StatelessWidget {
+import 'package:car_dealer/components/constants.dart';
+
+
+class SavedTab extends StatefulWidget {
+  @override
+  _SavedTabState createState() => _SavedTabState();
+}
+
+class _SavedTabState extends State<SavedTab> {
+
   final FirebaseServices _firebaseServices = FirebaseServices();
-
+  final FirebaseMethods _firebaseMethods = FirebaseMethods();
+  final SnackBar _snackBar = SnackBar(
+    content: Text("Car removed from wishlist"),
+  );
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Stack(
         children: [
-          FutureBuilder<QuerySnapshot>(
+           FutureBuilder<dynamic>(
             future: _firebaseServices.usersRef
                 .doc(_firebaseServices.getUserId())
                 .collection("Wishlist")
@@ -65,17 +80,24 @@ class SavedTab extends StatelessWidget {
                           } else if (productSnap.connectionState ==
                               ConnectionState.done) {
                             Map _productMap = productSnap.data.data();
-                            print(_productMap);
+                            // print(_productMap);
                             if (_productMap == null) {
                               return const Center(
-                              child: Text(
-                                "Car Sold!",
-                                style: TextStyle(
-                                    fontSize: 25.0, color: Colors.grey),
-                              ),
-                            );
+                                child: Text(
+                                  "Car Sold!",
+                                  style: TextStyle(
+                                      fontSize: 25.0, color: Constants.secColor),
+                                ),
+                              );
                             } else {
                               return Container(
+                                // child:Dismissible(
+                                //      key: Key(_productMap['carId']),
+                                //       onDismissed: (direction) {
+                                //         setState(() {
+                                //           items.removeAt(index);
+                                //         });
+                                //       },       
                                 child: Card(
                                   elevation: 0.5,
                                   shape: RoundedRectangleBorder(
@@ -128,7 +150,7 @@ class SavedTab extends StatelessWidget {
                                                 "${_productMap['brand']}",
                                                 style: TextStyle(
                                                     fontSize: 18.0,
-                                                    color: Colors.blueGrey[800],
+                                                    color: Constants.secColor,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -142,22 +164,32 @@ class SavedTab extends StatelessWidget {
                                                   "${_productMap['title']}",
                                                   style: TextStyle(
                                                       fontSize: 16.0,
-                                                      color: Colors.grey[600],
-                                                      /*Theme.of(context)
-                                                    .accentColor,*/
+                                                      color: Colors.black87,
                                                       fontWeight:
                                                           FontWeight.w400),
                                                 ),
                                               ),
                                               Text(
-                                                //'No of Seats : '
-                                                "\Rs. ${_productMap['price']}", //document.data()['seats']
+                                                "\Rs. ${_productMap['price']}", 
                                                 style: TextStyle(
                                                     fontSize: 16.0,
                                                     color: Colors.grey[800],
                                                     fontWeight:
                                                         FontWeight.w400),
                                               ),
+                                              GestureDetector(
+                                                  onTap: () async {
+                                                    print("${_productMap['carId']}");
+                                                    _firebaseMethods
+                                                        .deleteCarFromWishlist(
+                                                            "${_productMap['carId']}");
+                                                    Scaffold.of(context)
+                                                        .showSnackBar(
+                                                            _snackBar);
+                                                  },
+                                                  child: Container(
+                                                      child: Icon(
+                                                          Icons.delete))),
                                               Divider(
                                                 //height: 50,
                                                 thickness: 10,
@@ -169,7 +201,8 @@ class SavedTab extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                ),
+                                )
+                                // ,)
                               );
                             }
                           }

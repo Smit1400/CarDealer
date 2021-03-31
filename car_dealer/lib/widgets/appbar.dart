@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:car_dealer/screens/price_predict.dart';
 import 'package:car_dealer/screens/sell_car_page.dart';
+import 'package:car_dealer/screens/my_sell_cars.dart';
+
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
 import 'package:car_dealer/Screens/admin_page.dart';
 import 'package:car_dealer/components/constants.dart';
@@ -48,7 +50,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                         width: 10,
                       ),
                       Text(
-                        "Predict Car Price",
+                        "My sell cars",
                         style: TextStyle(color: Colors.black),
                       ),
                     ],
@@ -143,7 +145,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new PricePredict(),
+                  builder: (context) => new MySellCars(),
                 ),
               );
             }
