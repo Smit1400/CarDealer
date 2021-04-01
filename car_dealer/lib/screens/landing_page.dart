@@ -1,10 +1,12 @@
+import 'package:car_dealer/screens/auth.dart';
+import 'package:car_dealer/screens/auth2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/index_page.dart';
-import 'package:car_dealer/screens/auth.dart';
+import 'package:car_dealer/screens/auth2.dart';
 
 
 class LandingPage extends StatelessWidget {
