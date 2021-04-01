@@ -18,7 +18,7 @@ class AuthScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: size.height * 0.05 + 50),
+          SizedBox(height: size.height * 0.05 ),
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 40),
@@ -64,7 +64,7 @@ class AuthScreen extends StatelessWidget {
                 child: Text(
                   "Get Started",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold,color: mainColor),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white),
                 ),
               ),
             ),
