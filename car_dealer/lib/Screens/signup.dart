@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
 
           // 42
         })
-        .then((value) => Navigator.pushNamed(context, '/admin'))
+        .then((value) => Navigator.pushReplacementNamed(context, '/admin'))
         .catchError((error) => print("Failed to add user: $error"));
     return str;
   }

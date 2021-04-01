@@ -14,7 +14,7 @@ class FirebaseMethods {
   Stream<List<CarDetails>> getAllCars() {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
-    final reference = FirebaseFirestore.instance.collection(path);
+    final reference = FirebaseFirestore.instance.collection(path).where("isSold",isEqualTo:true,);
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());

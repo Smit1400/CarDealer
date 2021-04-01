@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:car_dealer/components/constants.dart';
+// import 'package:car_dealer/components/constants.dart';
 
 class BottomTabs extends StatefulWidget {
   final int selectedTab;
@@ -21,10 +21,12 @@ class _BottomTabsState extends State<BottomTabs> {
     _selectedTab = widget.selectedTab ?? 0;
 
     return Container(
+      height: 60,
       decoration: BoxDecoration(
-          color: Colors.white,
+
+          color: Colors.green.withOpacity(0.9),
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12.0), topRight: Radius.circular(12.0)),
+              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -36,40 +38,29 @@ class _BottomTabsState extends State<BottomTabs> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           BottomTabBtn(
-            imagePath: "assets/images/home_tab.png",
+
+            icon: Icons.home_outlined,
             selected: _selectedTab == 0 ? true : false,
             onPressed: () {
               widget.tabPressed(0);
             },
+
           ),
           BottomTabBtn(
-            imagePath: "assets/images/search_tab.png",
+            icon: Icons.search_outlined,
             selected: _selectedTab == 1 ? true : false,
             onPressed: () {
               widget.tabPressed(1);
             },
           ),
           BottomTabBtn(
-            imagePath: "assets/images/saved_tab.png",
+            icon: Icons.save_alt_outlined,
             selected: _selectedTab == 2 ? true : false,
             onPressed: () {
               widget.tabPressed(2);
             },
           ),
-          //  BottomTabBtn(
-          //   imagePath: "assets/images/rupee3.png",
-          //   selected: _selectedTab == 3 ? true : false,
-          //   onPressed: () {
-          //     widget.tabPressed(3);
-          //   },
-          // ),
-          //  BottomTabBtn(
-          //   imagePath: "assets/images/sell_car2.png",
-          //   selected: _selectedTab == 3? true : false,
-          //   onPressed: () {
-          //     widget.tabPressed(3);
-          //   },
-          // ),
+
 
         ],
       ),
@@ -78,10 +69,10 @@ class _BottomTabsState extends State<BottomTabs> {
 }
 
 class BottomTabBtn extends StatelessWidget {
-  final String imagePath;
+  final IconData icon;
   final bool selected;
   final Function onPressed;
-  BottomTabBtn({this.imagePath, this.selected, this.onPressed});
+  BottomTabBtn({this.icon, this.selected, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -91,20 +82,18 @@ class BottomTabBtn extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: 28.0,
+          vertical: 10.0,
           horizontal: 24.0,
         ),
-        decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-          color: _selected ?Constants.secColor: Colors.transparent,
-          width: 2.0,
-        ))),
-        child: Image(
-          image: AssetImage(imagePath ?? "assets/images/home_tab.png"),
-          width: 22.0,
-          height: 25.0,
-          color: _selected ? Constants.secColor : Colors.black,
+        // child: Image(
+        //   image: AssetImage(imagePath ?? "assets/images/home_tab.png",),
+        //   width: 30.0,
+        //   height: 30.0,
+        //   color: _selected ? Colors.white : Colors.black,
+        // ),
+        child: Icon(icon,
+        size: _selected ? 40 : 30,
+          color: _selected ? Colors.white : Colors.black,
         ),
       ),
     );

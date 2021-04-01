@@ -1,13 +1,8 @@
-// import 'package:car_dealer/screens/sell_car_page.dart';
 import 'package:car_dealer/screens/auth2.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:car_dealer/screens/landing_page.dart';
-//import 'package:car_dealer/screens/auth2.dart';
 import 'package:car_dealer/screens/index_page.dart';
-//import 'package:car_dealer/screens/login_page.dart';
-//import 'package:car_dealer/screens/register_page.dart';
-// import 'package:car_dealer/screens/show_page.dart';
 import 'package:car_dealer/screens/wishlist_page.dart';
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
@@ -15,7 +10,9 @@ import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/screens/price_predict.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -32,9 +29,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/':(context) =>LandingPage(),
-        //'/login': (context) => LoginPage(),
-        //'/register': (context) => RegisterPage(),
         '/auth':(context) => HomePage(),
+        // '/':(context) =>NewHomeScreen(),
+        // '/login': (context) => LoginPage(),
+        // '/register': (context) => RegisterPage(),
+        // '/auth':(context) => AuthScreen(),
         '/index':(context)=>IndexPage(),
         '/pedictprice':(context)=>PricePredict(),
         // '/sellcar':(context)=>SellCar(),

@@ -4,6 +4,7 @@ import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/widgets/custom_input.dart';
 import 'package:car_dealer/widgets/product_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lottie/lottie.dart';
 
 class SearchTab extends StatefulWidget {
   @override
@@ -21,11 +22,11 @@ class _SearchTabState extends State<SearchTab> {
         children: [
           if (_searchString.isEmpty)
             Center(
-              child: Container(
-                child: Text(
-                  "Search Results",
-                  style: Constants.regularDarkText,
-                ),
+              child: Lottie.asset(
+                "assets/images/52959-search-eye.json",
+                height: 200,
+                // width: 200,
+                fit: BoxFit.fitHeight,
               ),
             )
           else

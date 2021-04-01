@@ -1,4 +1,6 @@
+import 'package:car_dealer/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomBtn extends StatelessWidget {
   final String text;
@@ -71,7 +73,6 @@ class SubmitBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     bool _isLoading = isLoading ?? false;
     double _sizeW = sizeW ?? 40;
 
@@ -88,7 +89,7 @@ class SubmitBtn extends StatelessWidget {
                   onPressed: onPressed,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(80.0)),
-                  textColor: Colors.white,
+                  textColor: Constants.secColor,
                   padding: const EdgeInsets.all(0),
                   child: Container(
                     alignment: Alignment.center,
@@ -96,15 +97,15 @@ class SubmitBtn extends StatelessWidget {
                     width: _sizeW * 0.5,
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.circular(80.0),
-                        gradient: new LinearGradient(colors: [
-                          Color.fromARGB(255, 255, 136, 34),
-                          Color.fromARGB(255, 255, 177, 41)
-                        ])),
+                        color: Constants.mainColor),
                     padding: const EdgeInsets.all(0),
                     child: Text(
                       text ?? "Text",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.oswald(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

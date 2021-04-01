@@ -3,19 +3,9 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class Constants{
-  static const blackColor=Colors.black;
-
-
-
   static const mainColor=Color(0xFFAFEADC);
   static const secColor=Color(0xFF041E42);
   static const backgroundColor=Color(0xFFAFEADC);
-
-// //2
-//  static const mainColor=  Color(0xFFc6d7eb);
-//   static const secColor=Color(0xFF1868ae);
-//   static const backgroundColor=Color(0xFFd9a5b3);
-  
 
   static const tileSelected=TextStyle(color:Colors.white70,fontSize:20,fontWeight:FontWeight.w600 );
 
@@ -27,7 +17,7 @@ class Constants{
       TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black);
 
   static const boldHeading =
-      TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600, color: Colors.black);
+      TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600, color: secColor);
 
   static const regularDarkText =
       TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);

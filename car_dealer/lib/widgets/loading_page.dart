@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
+import 'package:lottie/lottie.dart';
 
 class LoadingPage extends StatelessWidget {
   @override
@@ -7,32 +9,17 @@ class LoadingPage extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 100,
-          width: width * 0.6,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.black.withOpacity(0.5),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            "assets/images/old-car-moving-animation.json",
+            width: double.infinity,
+            height: 250,
+            fit: BoxFit.cover,
           ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Loading...",
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+        ],
+      )),
     );
   }
 }

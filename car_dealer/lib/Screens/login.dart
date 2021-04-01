@@ -66,7 +66,7 @@ Future<void> _alertDialogBuilder(String error) async {
         _loginFormLoading = false;
       });
     } else {
-     Navigator.pushNamed(context, '/');
+     Navigator.pushReplacementNamed(context, '/');
     }
   }
 

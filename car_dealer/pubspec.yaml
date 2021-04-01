@@ -28,7 +28,9 @@ dependencies:
   toast: ^0.1.5
   http: ^0.13.0
   multi_image_picker: ^4.8.0
-  
+  loading_animations: ^2.2.0
+  lottie: ^1.0.1
+  convex_bottom_bar: ^3.0.0
 
 dev_dependencies:
   flutter_test:

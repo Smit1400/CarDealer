@@ -65,7 +65,7 @@ class _IndexPageState extends State<IndexPage> {
     return loading
         ? LoadingPage()
         : Scaffold(
-            appBar: MyAppBar(user:user),
+            appBar: MyAppBar(),
             // AppBar(
             //     backgroundColor: Colors.white,
             //     title: Text(
@@ -108,6 +108,7 @@ class _IndexPageState extends State<IndexPage> {
               children: [
                 Expanded(
                   child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: _tabsPageController,
                     onPageChanged: (num) {
                       setState(() {
