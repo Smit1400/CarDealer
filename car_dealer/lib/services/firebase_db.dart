@@ -14,7 +14,10 @@ class FirebaseMethods {
   Stream<List<CarDetails>> getAllCars() {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
-    final reference = FirebaseFirestore.instance.collection(path).where("isSold",isEqualTo:true,);
+    final reference = FirebaseFirestore.instance.collection(path).where(
+          "isSold",
+          isEqualTo: true,
+        );
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
@@ -41,7 +44,6 @@ class FirebaseMethods {
     }
   }
 
- 
   Future<void> getACarDetail(String carId) async {
     try {
       print("[INFO] Fetching car details for carId $carId");
@@ -94,25 +96,39 @@ class FirebaseMethods {
     }
   }
 
-
   //Wislist operations
-    Stream<List<CarDetails>> getAllCarsWishlist() {
-    print("[INFO] Getting all the cars from the database.");
+  getAllCarsWishlist() {
+    print("[INFO] Getting all the cars of wishlist from the database.");
     String path = "Users/";
-    final reference = FirebaseFirestore.instance.collection(path).doc(_firebaseServices.getUserId()).collection("Wishlist");
+    final reference = FirebaseFirestore.instance
+        .collection(path)
+        .doc(_firebaseServices.getUserId())
+        .collection("Wishlist");
     final snapshots = reference.snapshots();
-    return snapshots.map((snapshot) =>
-        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
+    return snapshots;
+    // return snapshots.map((snapshot) =>
+    //     snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
-    Future<void> deleteCarFromWishlist(String carId) async {
+
+  //   Stream<List<CarDetails>> getAllCarsWishlist() {
+  //   print("[INFO] Getting all the cars from the database.");
+  //   String path = "Users/";
+  //   final reference = FirebaseFirestore.instance.collection(path).doc(_firebaseServices.getUserId()).collection("Wishlist");
+  //   final snapshots = reference.snapshots();
+  //   return snapshots.map((snapshot) =>
+  //       snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
+  // }
+
+
+  Future<void> deleteCarFromWishlist(String carId) async {
     try {
       print("[INFO] Deleting car id from wishlist");
       print("[INFO] Car id = $carId");
       String userId = _firebaseServices.getUserId();
-       print("[INFO] User id = $userId");
+      print("[INFO] User id = $userId");
       String path = "Users/$userId/Wishlist/$carId/";
-       print("[INFO] Path = $path");
+      print("[INFO] Path = $path");
       await FirebaseFirestore.instance.doc(path).delete();
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while deleting ${e.code}");
@@ -125,7 +141,8 @@ class FirebaseMethods {
       throw e.toString();
     }
   }
-   Future<void> addCarToWishlist(String CarId) async {
+
+  Future<void> addCarToWishlist(String CarId) async {
     try {
       print("[INFO] Storing car id to wishlist");
       final DateTime now = DateTime.now();
@@ -150,20 +167,39 @@ class FirebaseMethods {
     }
   }
 
-    Stream<List<CarDetails>> getSoldCarsUser() {
+  Stream<List<CarDetails>> getSoldCarsUser() {
     print("[INFO] Getting all the cars from the database for particular user.");
     String path = "Cars/";
     String userId = _firebaseServices.getUserId();
-    final reference = FirebaseFirestore.instance.collection(path).where("userId",isEqualTo:userId,).where("isSold",isEqualTo:true,);
+    final reference = FirebaseFirestore.instance
+        .collection(path)
+        .where(
+          "userId",
+          isEqualTo: userId,
+        )
+        .where(
+          "isSold",
+          isEqualTo: true,
+        );
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
-    Stream<List<CarDetails>> getSellCarsUser() {
+
+  Stream<List<CarDetails>> getSellCarsUser() {
     print("[INFO] Getting all the cars from the database for particular user.");
     String path = "Cars/";
     String userId = _firebaseServices.getUserId();
-    final reference = FirebaseFirestore.instance.collection(path).where("userId",isEqualTo:userId,).where("isSold",isEqualTo:false,);
+    final reference = FirebaseFirestore.instance
+        .collection(path)
+        .where(
+          "userId",
+          isEqualTo: userId,
+        )
+        .where(
+          "isSold",
+          isEqualTo: false,
+        );
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
