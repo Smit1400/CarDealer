@@ -31,6 +31,7 @@ dependencies:
   loading_animations: ^2.2.0
   lottie: ^1.0.1
   convex_bottom_bar: ^3.0.0
+  carousel_slider: ^2.3.1
 
 dev_dependencies:
   flutter_test:
