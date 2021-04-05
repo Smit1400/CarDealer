@@ -25,6 +25,7 @@ class _MySellCarsState extends State<MySellCars> {
       child: Scaffold(
       // key: _scaffoldKey,
         appBar: AppBar(
+          
       //      leading: Padding(
       //   padding: const EdgeInsets.only(left: 8.0),
       //   child: Image.asset(
@@ -38,7 +39,7 @@ class _MySellCarsState extends State<MySellCars> {
         "Car Buddy",
         style: GoogleFonts.oswald(),
       ),
-          iconTheme: IconThemeData(color: Constants.secColor),
+          iconTheme: IconThemeData(color: Constants.mainColor),
           // title: Text('Car Buddy',
           //     style: TextStyle(
           //         fontSize: screenHeight*0.028,
@@ -97,9 +98,11 @@ class _MySellCarsState extends State<MySellCars> {
                 else{
                   return Scaffold(
                 body: Center(
-                  child: Text("No Products"),
+                  child: Text("No Products", style: GoogleFonts.oswald(
+                    textStyle: TextStyle(color: Constants.secColor, fontSize: 24,
+                  ),),
                 ),
-              );
+              ));
             }
             },
           )
@@ -139,7 +142,10 @@ class _MySellCarsState extends State<MySellCars> {
                 else{
                   return Scaffold(
                 body: Center(
-                  child: Text("No Products"),
+                  child: Text("No Products", style: GoogleFonts.oswald(
+                    textStyle: TextStyle(color: Constants.secColor, fontSize: 24,
+                  ),),
+                ),
                 ),
               );
             }

@@ -82,7 +82,8 @@ class FirebaseMethods {
   Future<void> carSold(String carId) async {
     try {
       print("[INFO] Updating car with id = $carId}");
-      String path = "Cars/$carId}";
+      String path = "Cars/$carId";
+      print(path);
       // print("[INFO] Updated car data = ${carDetails.toMap()}");
       await FirebaseFirestore.instance.doc(path).update({"isSold": true});
     } on FirebaseException catch (e) {

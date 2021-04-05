@@ -3,6 +3,7 @@
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/show_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
@@ -45,8 +46,8 @@ class ProductCard extends StatelessWidget {
                 button2Func: () {
                   Navigator.of(context).pop(false);
                 },
-                icon: Icons.clear,
-                description: 'Is your car is sold?',
+                icon: FontAwesomeIcons.question,
+                description: 'Do you agree your car is sold?',
                 iconColor: Colors.red,
               );
             });

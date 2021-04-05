@@ -4,9 +4,9 @@ import 'package:car_dealer/widgets/admin_card.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/widgets/custom_background.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:toast/toast.dart';
 import 'package:car_dealer/widgets/loading_page.dart';
-
 
 class AdminPage extends StatefulWidget {
   @override
@@ -34,78 +34,70 @@ class _AdminPageState extends State<AdminPage> {
   //     });
   //   }
   // }
-
+  // assets/images/approval-waiting.json
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Stack(
-            children: [
-              CustomBackground(
-                path: "assets/images/approval-waiting.json",
-                child: Container(
-                  // width: double.infinity,
-                  child: SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding:EdgeInsets.only(top: 55),
+        child: Stack(
+          children: [
+            Center(
+              child: Opacity(
+                opacity: 0.3,
+                child: Lottie.asset(
+                  "assets/images/approval-waiting.json",
+                  width: double.infinity,
+                ),
+              )
+          ),
+            Container(
+              padding: EdgeInsets.only(top: 55),
+              // width: double.infinity,
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: StreamBuilder<List<CarDetails>>(
+                  initialData: [],
+                  stream: _firebaseMethods.getAllCars(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Scaffold(
+                        body: Center(
+                          child: Text("Error: ${snapshot.error}"),
                         ),
-                        StreamBuilder<List<CarDetails>>(
-                          initialData: [],
-                          stream: _firebaseMethods.getAllCars(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Scaffold(
-                                body: Center(
-                                  child: Text("Error: ${snapshot.error}"),
-                                ),
-                              );
-                            }
-                            List<CarDetails> data = snapshot.data;
-                            data = data.where((car) => car.approved == false).toList();
-                            if (data.length > 0) {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                  itemCount: data.length,
-                                  itemBuilder: (context, index) {
-                                    return data[index].approved == false
-                                        ? AdminCard(
-                                      car: data[index],
-                                    )
-                                        : Container();
-                                  });
-                            } else if (data.length <= 0) {
-                              return Scaffold(
-                                body: Center(
-                                  child: Text(
-                                    "No Cars",
-                                    style: TextStyle(fontSize: 22, color: Colors.black),
-                                  ),
-                                ),
-                              );
-                            }
-                            return LoadingPage();
-                          },
+                      );
+                    }
+                    List<CarDetails> data = snapshot.data;
+                    data =
+                        data.where((car) => car.approved == false).toList();
+                    if (data.length > 0) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return AdminCard(
+                              car: data[index],
+                            );
+                          });
+                    } else if (data.length <= 0) {
+                      return Center(
+                        child: Text(
+                          "No Cars",
+                          style: TextStyle(fontSize: 22, color: Colors.black),
                         ),
-                      ],
-                    ),
-                  ),
+                      );
+                    }
+                    return LoadingPage();
+                  },
                 ),
               ),
-
-
-              CustomActionBar(
-                title: "Car Approval",
-                hasBackArrrow: true,
-                hasCount: false,
-                hasBackground: false,
-              ),
-            ],
-          ),
+            ),
+            CustomActionBar(
+              title: "Car Approval",
+              hasBackArrrow: true,
+              hasCount: false,
+              hasBackground: false,
+            ),
+          ],
         ),
       ),
     );
