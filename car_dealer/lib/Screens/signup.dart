@@ -1,3 +1,4 @@
+import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,19 +22,15 @@ class _SignUpState extends State<SignUp> {
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Container(
-              child: Text(error),
-            ),
-            actions: [
-              FlatButton(
-                child: Text("Close Dialog"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
+          return DialogBox(
+            title: "Error",
+            buttonText1: "Close Dialog",
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            description: error,
+            iconColor: Colors.red,
+            icon: Icons.clear,
           );
         });
   }

@@ -37,20 +37,19 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
-    // showToast(context);
     return Scaffold(
       body: SafeArea(
         child: Container(
-
           child: Stack(
             children: [
               CustomBackground(
                 path: "assets/images/approval-waiting.json",
                 child: Container(
-                  width: double.infinity,
+                  // width: double.infinity,
                   child: SingleChildScrollView(
                     physics: NeverScrollableScrollPhysics(),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           padding:EdgeInsets.only(top: 55),
@@ -90,12 +89,6 @@ class _AdminPageState extends State<AdminPage> {
                               );
                             }
                             return LoadingPage();
-                            // Loading State
-                            // return Scaffold(
-                            //   body: Center(
-                            //     child: CircularProgressIndicator(),
-                            //   ),
-                            // );
                           },
                         ),
                       ],
