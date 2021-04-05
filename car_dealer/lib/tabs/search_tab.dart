@@ -31,7 +31,9 @@ class _SearchTabState extends State<SearchTab> {
             )
           else
             FutureBuilder<QuerySnapshot>(
-              future: _firebaseServices.carRef.orderBy('title').startAt(
+              future: _firebaseServices.carRef
+          //  .where("isSold", isEqualTo: false,).where( "approved", isEqualTo: true,)
+           .orderBy('title').startAt(
                   [_searchString]).endAt(["$_searchString\uf8ff"]).get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -51,12 +53,13 @@ class _SearchTabState extends State<SearchTab> {
                     children: snapshot.data.docs.map((document) {
                       String capsTitle = document.data()['title'].substring(0, 1).toUpperCase() + document.data()['title'].substring(1);
                       print(document.data());
-                      return ProductCard(
+                      return document.data()['approved'] &&  !document.data()['isSold'] ?
+                       ProductCard(
                         title: capsTitle,
                         imageUrl: document.data()['imageUrls'][0],
                         price: "\Rs.${document.data()['price']}",
                         productId: document.id,
-                      );
+                      ):Container();
                     }).toList(),
                   );
                 }

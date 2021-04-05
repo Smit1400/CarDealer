@@ -9,9 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:car_dealer/models/car_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 // 
-import 'package:google_fonts/google_fonts.dart';
-import 'package:car_dealer/widgets/custom_wishlist_card.dart';
-import 'package:align_positioned/align_positioned.dart';
+
+// import 'package:car_dealer/widgets/custom_wishlist_card.dart';
+// import 'package:align_positioned/align_positioned.dart';
 import 'package:car_dealer/components/constants.dart';
 
 class SavedTab extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SavedTabState extends State<SavedTab> {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView(
               padding: EdgeInsets.only(
-                top: 80.0,
+                top: 20.0,
                 bottom: 12.0,
                 left: 12.0,
                 right: 12.0,
@@ -91,6 +91,8 @@ class _SavedTabState extends State<SavedTab> {
                             ),
                           );
                         } else {
+                             String capsTitle = "${_productMap['title']}".substring(0, 1).toUpperCase() +
+        "${_productMap['title']}".substring(1);
                           // return WishlsitCard(car: _productMap)
                           return Stack(
                             children:[
@@ -111,6 +113,7 @@ class _SavedTabState extends State<SavedTab> {
                             )),
                             child: Container(
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
                                 boxShadow: [
                                   new BoxShadow(
@@ -150,30 +153,32 @@ class _SavedTabState extends State<SavedTab> {
                                         Text(
                                           //'Name of the Car : '
                                           "${_productMap['brand']}",
-                                          style: TextStyle(
+                                           style: GoogleFonts.oswald(
+                                          textStyle: TextStyle(
                                               fontSize: 18.0,
-                                              color: Constants.secColor,
-                                              fontWeight: FontWeight.w600),
+                                              color:Colors.grey[800],
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 4.0,
                                           ),
                                           child: Text(
-                                            //'Price : '
-                                            "${_productMap['title']}",
+                               
+                                            capsTitle,
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 color: Colors.black87,
-                                                fontWeight: FontWeight.w400),
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                         Text(
-                                          "\Rs. ${_productMap['price']}",
+                                          "\Rs. ${_productMap['price'].round()}",
                                           style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.grey[800],
-                                              fontWeight: FontWeight.w400),
+                                              fontSize: 18.0,
+                                              color: Constants.secColor,
+                                              fontWeight: FontWeight.w700),
                                         ),
                                        
                                             Divider(
@@ -192,8 +197,11 @@ class _SavedTabState extends State<SavedTab> {
                           Positioned(
                             right:10,
                             top: 20,
-                          child: GestureDetector(
-                              onTap: () async {
+                          child: ElevatedButton(
+                            style:ButtonStyle(
+                               backgroundColor: MaterialStateProperty.all<Color>(Constants.mainColor),
+                              ),
+                              onPressed: () async {
                                 print("${_productMap['carId']}");
                                 _firebaseMethods
                                     .deleteCarFromWishlist(
@@ -202,16 +210,18 @@ class _SavedTabState extends State<SavedTab> {
                                     .showSnackBar(_snackBar);
                               },
                               child: Container(
-                                  child: Icon(Icons.delete))),
+                                  child: Icon(Icons.delete,color: Constants.secColor,)
+                                  )
+                                  ),
                             ),
                        
                         _productMap['isSold']?
                           Positioned(
-                            left:40,
-                            bottom: 50,
-                            child: Text("Out of stock",
+                            left:50,
+                            bottom: 30,
+                            child: Text(" SOLD ",
                               style:GoogleFonts.notoSans(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color:Colors.white,
                               backgroundColor: Colors.red,
                               ),

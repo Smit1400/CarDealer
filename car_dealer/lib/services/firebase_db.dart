@@ -79,6 +79,22 @@ class FirebaseMethods {
     }
   }
 
+  Future<void> carSold(String carId) async {
+    try {
+      print("[INFO] Updating car with id = $carId}");
+      String path = "Cars/$carId}";
+      // print("[INFO] Updated car data = ${carDetails.toMap()}");
+      await FirebaseFirestore.instance.doc(path).update({"isSold": true});
+    } on FirebaseException catch (e) {
+      print("[ERROR] Erro while updating ${e.code}");
+      throw FirebaseException(
+          plugin: e.plugin, code: e.code, message: e.message);
+    } catch (e) {
+      print("[ERROR] Erro while updating ${e.toString()}");
+      throw e.toString();
+    }
+  }
+
   Future<void> deleteCar(String carId) async {
     try {
       print("[INFO] Car id = $carId");
@@ -110,7 +126,6 @@ class FirebaseMethods {
     //     snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
-
   //   Stream<List<CarDetails>> getAllCarsWishlist() {
   //   print("[INFO] Getting all the cars from the database.");
   //   String path = "Users/";
@@ -119,7 +134,6 @@ class FirebaseMethods {
   //   return snapshots.map((snapshot) =>
   //       snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   // }
-
 
   Future<void> deleteCarFromWishlist(String carId) async {
     try {

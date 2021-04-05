@@ -20,6 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         "Car Buddy",
         style: GoogleFonts.oswald(),
       ),
-    );
+    )
+    ;
   }
 }
