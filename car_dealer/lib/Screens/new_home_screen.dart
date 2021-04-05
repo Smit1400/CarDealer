@@ -226,18 +226,6 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                   ),
                                 ),
                               ),
-                              ListTile(
-                                leading: Icon(Icons.person,
-                                    size: 35, color: Colors.white),
-                                title: Text(
-                                  "Profile Page",
-                                  style: GoogleFonts.oswald(
-                                    textStyle: TextStyle(
-                                        color: Constants.secColor,
-                                        fontSize: 22),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         )

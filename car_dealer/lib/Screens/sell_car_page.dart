@@ -273,8 +273,8 @@ class _SellCarState extends State<SellCar> {
         Toast.show("Car Registered. Wait for approval", context,
             duration: Toast.LENGTH_LONG,
             gravity: Toast.TOP,
-            textColor: Colors.white,
-            backgroundColor: Colors.green);
+            textColor: Constants.secColor,
+            backgroundColor: Constants.mainColor);
         Navigator.pop(context);
       } else {
         _scaffoldKey.currentState
