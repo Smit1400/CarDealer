@@ -16,7 +16,7 @@ class FirebaseMethods {
     String path = "Cars/";
     final reference = FirebaseFirestore.instance.collection(path).where(
           "isSold",
-          isEqualTo: true,
+          isEqualTo: false,
         );
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
