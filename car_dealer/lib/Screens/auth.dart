@@ -189,16 +189,18 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [Colors.grey[300],Colors.grey[700],]
-        ),
-      ),
-      child: Column(
+    return 
+    // Container(
+    //   decoration: BoxDecoration(
+    //     gradient: LinearGradient(
+    //       begin: Alignment.topLeft,
+    //       end: Alignment.bottomRight,
+    //       stops: [0.3, 1],
+    //       colors: [Colors.grey[300],Colors.grey[700],]
+    //     ),
+    //   ),
+    //   child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
@@ -207,7 +209,7 @@ class _AuthScreenState extends State<AuthScreen> {
             fit: BoxFit.cover,
           )
         ],
-      ),
+      // ),
     );
   }
 }
@@ -216,16 +218,18 @@ class Item1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [Colors.grey[300],Colors.grey[700],]
-        ),
-      ),
-      child: Column(
+    return
+    //  Container(
+    //   decoration: BoxDecoration(
+    //     gradient: LinearGradient(
+    //       begin: Alignment.topLeft,
+    //       end: Alignment.bottomRight,
+    //       stops: [0.3, 1],
+    //       colors: [Colors.grey[300],Colors.grey[700],]
+    //     ),
+    //   ),
+    //   child:
+       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
@@ -235,7 +239,7 @@ class Item1 extends StatelessWidget {
             fit: BoxFit.cover,
           )
         ],
-      ),
+      // ),
     );
   }
 }
@@ -244,16 +248,18 @@ class Item2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-     decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [Colors.grey[300],Colors.grey[700],]
-        ),
-      ),
-      child: Column(
+    return 
+    // Container(
+    //  decoration: BoxDecoration(
+    //     gradient: LinearGradient(
+    //       begin: Alignment.topLeft,
+    //       end: Alignment.bottomRight,
+    //       stops: [0.3, 1],
+    //       colors: [Colors.grey[300],Colors.grey[700],]
+    //     ),
+    //   ),
+      // child:
+       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
@@ -262,7 +268,7 @@ class Item2 extends StatelessWidget {
             fit: BoxFit.cover,
           )
         ],
-      ),
+      // ),
     );
   }
 }
@@ -271,25 +277,27 @@ class Item4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [Colors.grey[300],Colors.grey[700],]
-        ),
-      ),
-      child: Column(
+    return 
+    // Container(
+    //   decoration: BoxDecoration(
+    //     gradient: LinearGradient(
+    //       begin: Alignment.topLeft,
+    //       end: Alignment.bottomRight,
+    //       stops: [0.3, 1],
+    //       colors: [Colors.grey[300],Colors.grey[700],]
+    //     ),
+    //   ),
+      // child:
+       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
             'assets/images/img2.jpg',
             height: 220.0,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           )
         ],
-      ),
+      // ),
     );
   }
 }
