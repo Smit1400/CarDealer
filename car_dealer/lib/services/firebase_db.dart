@@ -23,6 +23,62 @@ class FirebaseMethods {
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
+  Stream<List<CarDetails>> getAllFilteredCars(
+      {int minPrice,
+      int maxPrice,
+      List brands,
+      int minYear,
+      int maxYear,
+      String ownerType,
+      String transmissionType,
+      String fuelType}) {
+    print("[INFO] Getting all the filtered cars from the database.");
+    String path = "Cars/";
+    CollectionReference col = FirebaseFirestore.instance.collection(path);
+    //   ownerType = "second";
+    // transmissionType="Manual";
+      //  fuelType="Diesel";
+    print("minprice:" + minPrice.toString());
+    print("maxprice:" + maxPrice.toString());
+
+    Query query1 = col
+        .where("isSold", isEqualTo: false)
+        .where("approved", isEqualTo: true)
+        .where("price", isGreaterThanOrEqualTo: minPrice.toDouble())
+        .where("price", isLessThanOrEqualTo: maxPrice.toDouble());
+
+    if (ownerType != "") {
+      query1 = query1.where("owner_type", isEqualTo: ownerType);
+    }
+    if (transmissionType != "") {
+      query1 = query1.where("transmissionType", isEqualTo: transmissionType);
+    }
+    if (fuelType != "") {
+      query1 = query1.where("fuel_type", isEqualTo: fuelType);
+    }
+
+    if (brands.isNotEmpty) {
+      query1 = query1.where("brand", whereIn: brands);
+    }
+
+    query1 = query1.orderBy("price");
+    // print(query1.toString());
+    Query query2 = col
+        .where("year", isGreaterThanOrEqualTo: minYear)
+        .where("year", isLessThanOrEqualTo: maxYear);
+
+    // if(minPrice!=null){
+    //    query = query.where('price', isGreaterThanOrEqualTo: 10000);
+    // }
+
+    final snapshots1 = query1.snapshots();
+    // final snapshots2 = query2.snapshots();
+    // final snapshots = snapshots1+snapshots2;
+
+    return snapshots1.map((snapshot) =>
+        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
+  }
+
   Future<void> addCarDetailsToDb(CarDetails carDetails) async {
     try {
       print("[INFO] Storing new car details");
