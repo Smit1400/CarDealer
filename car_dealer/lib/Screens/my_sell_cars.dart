@@ -1,11 +1,8 @@
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_db.dart';
-import 'package:car_dealer/widgets/car_card.dart';
-import 'package:car_dealer/widgets/product_card.dart';
-
-import 'package:car_dealer/widgets/appbar.dart';
-
+import 'package:car_dealer/widgets/product_card_my_cars.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 
@@ -15,7 +12,7 @@ class MySellCars extends StatefulWidget {
 }
 
 class _MySellCarsState extends State<MySellCars> {
-
+// final _scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
   @override
   Widget build(BuildContext context) {
@@ -26,14 +23,29 @@ class _MySellCarsState extends State<MySellCars> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+      // key: _scaffoldKey,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Constants.secColor),
-          title: Text('Car Buddy',
-              style: TextStyle(
-                  fontSize: screenHeight*0.028,
-                  color: Constants.secColor,
-                  fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.white,
+          
+      //      leading: Padding(
+      //   padding: const EdgeInsets.only(left: 8.0),
+      //   child: Image.asset(
+      //     "assets/images/logo5.png",
+      //     fit: BoxFit.contain,
+      //     height: 19,
+      //   ),
+      // ),
+      backgroundColor: Color(0xFF041E42),
+      title: Text(
+        "Car Buddy",
+        style: GoogleFonts.oswald(),
+      ),
+          iconTheme: IconThemeData(color: Constants.mainColor),
+          // title: Text('Car Buddy',
+          //     style: TextStyle(
+          //         fontSize: screenHeight*0.028,
+          //         color: Constants.secColor,
+          //         fontWeight: FontWeight.bold)),
+          // backgroundColor: Colors.white,
           bottom: TabBar(
             isScrollable: true,
             indicator: UnderlineTabIndicator(
@@ -41,10 +53,10 @@ class _MySellCarsState extends State<MySellCars> {
             tabs: <Widget>[
               Tab(
                   child:
-                      Text('   SOLD  ', style: TextStyle(color:  Constants.secColor))),
+                      Text('   SOLD  ',)),
               Tab(
                   child:
-                      Text('   NOT SOLD   ', style: TextStyle(color: Constants.secColor))),
+                      Text('   NOT SOLD   ',)),
      
             ],
           ),
@@ -75,8 +87,9 @@ class _MySellCarsState extends State<MySellCars> {
                         ProductCard(
                         title: data[index].title,
                         imageUrl: data[index].imageUrls[0],
-                        price: "\Rs.${data[index].price}",
+                        price: data[index].price,
                         productId: data[index].carId,
+                        isSold:true
                       )
                         // ProductCard(car: data[index],)
                         : Container();
@@ -85,9 +98,11 @@ class _MySellCarsState extends State<MySellCars> {
                 else{
                   return Scaffold(
                 body: Center(
-                  child: Text("No Products"),
+                  child: Text("No Products", style: GoogleFonts.oswald(
+                    textStyle: TextStyle(color: Constants.secColor, fontSize: 24,
+                  ),),
                 ),
-              );
+              ));
             }
             },
           )
@@ -113,10 +128,12 @@ class _MySellCarsState extends State<MySellCars> {
                       itemBuilder: (context, index) {
                         return data[index].approved == true ? 
                         ProductCard(
+                          carId:data[index].carId,
                         title: data[index].title,
                         imageUrl: data[index].imageUrls[0],
-                        price: "\Rs.${data[index].price}",
+                        price: data[index].price,
                         productId: data[index].carId,
+                        isSold:false
                       )
                         // ProductCard(car: data[index],)
                         : Container();
@@ -125,7 +142,10 @@ class _MySellCarsState extends State<MySellCars> {
                 else{
                   return Scaffold(
                 body: Center(
-                  child: Text("No Products"),
+                  child: Text("No Products", style: GoogleFonts.oswald(
+                    textStyle: TextStyle(color: Constants.secColor, fontSize: 24,
+                  ),),
+                ),
                 ),
               );
             }

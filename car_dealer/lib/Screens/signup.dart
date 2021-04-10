@@ -212,43 +212,7 @@ class _SignUpState extends State<SignUp> {
           height: 24,
         ),
 
-        /* Text(
-          "Or Signup with",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFFF3D657),
-            height: 1,
-          ),
-        ),
-
-        SizedBox(
-          height: 16,
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-            Icon(
-              Entypo.facebook_with_circle,
-              size: 32,
-              color: Color(0xFFF3D657),
-            ),
-
-            SizedBox(
-              width: 24,
-            ),
-
-            Icon(
-              Entypo.google__with_circle,
-              size: 32,
-              color: Color(0xFFF3D657),
-            ),
-
-          ],
-        )
-*/
+        
       ],
     );
   }

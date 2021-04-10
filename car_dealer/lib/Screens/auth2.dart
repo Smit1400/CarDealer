@@ -44,7 +44,7 @@ static const backgroundColor=Color(0xFFAFEADC);
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          child: login 
+                          child: login
                           ? Login()
                           : LoginOption(),
                         ),
