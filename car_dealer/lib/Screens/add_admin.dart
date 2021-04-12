@@ -78,7 +78,7 @@ class _AdminRegisterPageState extends State<AdminRegisterPage> {
           // 42
         })
         .then((value) => Navigator.pushNamed(context, '/admin'))
-        .catchError((error) => print("Failed to add admin user: $error"));
+        .catchError((error) => print("Failed to add admin user : $error"));
     return str;
   }
 
