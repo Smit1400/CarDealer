@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:car_dealer/components/constants.dart';
-import 'package:car_dealer/services/firebase_auth.dart';
-import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/custom_background.dart';
 import 'package:car_dealer/widgets/custom_form_field.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
@@ -11,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
-import 'package:car_dealer/widgets/background1.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
@@ -26,13 +21,10 @@ class PricePredict extends StatefulWidget {
 class _PricePredictState extends State<PricePredict> {
   String name, mileage, imageUrl;
 
-  File _selectedImage;
   bool _loading = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  FirebaseServices _firebaseServices = FirebaseServices();
-  FirebaseMethods _firebaseMethods = FirebaseMethods();
 
   List<String> _brandnames = [
     ' Maruti',
@@ -150,6 +142,7 @@ class _PricePredictState extends State<PricePredict> {
         }
       } else {
         _scaffoldKey.currentState
+            // ignore: deprecated_member_use
             .showSnackBar(SnackBar(content: Text("Some fields are empty")));
       }
     } on FirebaseException catch (e) {

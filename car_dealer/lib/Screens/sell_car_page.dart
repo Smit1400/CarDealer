@@ -21,10 +21,16 @@ import 'package:car_dealer/widgets/custom_form_field.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
-import 'package:car_dealer/widgets/background1.dart';
 
-class ImageUpload extends StatelessWidget {
-  String imageUrl;
+
+class ImageUpload extends StatefulWidget {
+  @override
+  _ImageUploadState createState() => _ImageUploadState();
+}
+
+class _ImageUploadState extends State<ImageUpload> {
+ String imageUrl;
+
   uploadImage() async {
     final _firebaseStorage = FirebaseStorage.instance;
     final _imagePicker = ImagePicker();
@@ -82,6 +88,7 @@ class ImageUpload extends StatelessWidget {
       SizedBox(
         height: 20.0,
       ),
+      // ignore: deprecated_member_use
       RaisedButton(
         child: Text("Upload Image",
             style: TextStyle(
@@ -115,7 +122,7 @@ class SellCar extends StatefulWidget {
 class _SellCarState extends State<SellCar> {
   String name, mileage, imageUrl;
 
-  File _selectedImage;
+
   bool _loading = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -141,7 +148,9 @@ class _SellCarState extends State<SellCar> {
     'Ferrari'
   ];
 
+  // ignore: deprecated_member_use
   List<Asset> images = List<Asset>();
+  // ignore: deprecated_member_use
   List<File> files = List<File>();
 
   String _selectedbrand,
@@ -166,6 +175,7 @@ class _SellCarState extends State<SellCar> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   Future<void> loadAssets() async {
+    // ignore: deprecated_member_use
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
 
@@ -206,12 +216,7 @@ class _SellCarState extends State<SellCar> {
     }
   }
 
-  _uploadImage() async {
-    var tempImage = await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImage = File(tempImage.path);
-    });
-  }
+
 
   Future<List<dynamic>> _getDownLoadUrl(BuildContext context) async {
     try {
@@ -278,6 +283,7 @@ class _SellCarState extends State<SellCar> {
         Navigator.pop(context);
       } else {
         _scaffoldKey.currentState
+            // ignore: deprecated_member_use
             .showSnackBar(SnackBar(content: Text("No Image was selected")));
       }
     } on FirebaseException catch (e) {
@@ -663,6 +669,7 @@ class _SellCarState extends State<SellCar> {
       SizedBox(
         height: 20.0,
       ),
+      // ignore: deprecated_member_use
       RaisedButton(
         child: Text(
           "Upload Image",

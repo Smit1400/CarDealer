@@ -1,4 +1,4 @@
-import 'package:car_dealer/screens/auth2.dart';
+import 'package:car_dealer/screens/auth screens/auth2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/screens/landing_page.dart';

@@ -1,11 +1,8 @@
-import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_dealer/widgets/alert.dart';
-import 'package:car_dealer/screens/database.dart';
-import 'package:car_dealer/screens/phone_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:car_dealer/models/users.dart';
+import 'package:car_dealer/services/database.dart';
+import 'package:car_dealer/services/phone_auth.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,9 +12,26 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   static const mainColor = Color(0xFFAFEADC);
   static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
 
   TextEditingController _phoneController = TextEditingController();
+  Future<void> _alertDialogBuilder(String error) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return DialogBox(
+            title: "Error",
+            buttonText1: "Close Dialog",
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            description: error,
+            iconColor: Colors.red,
+            icon: Icons.clear,
+          );
+        });
+  }
+
   bool phoneError = false;
   bool clickedOnSignIn = false;
   bool validation() {
@@ -128,8 +142,8 @@ class _LoginState extends State<Login> {
               setState(() {});
             } else {
               // first check in cloud firestore whether user is registered
-              bool userExist = await Database()
-                  .userExists( "+91" + _phoneController.text);
+              bool userExist =
+                  await Database().userExists("+91" + _phoneController.text);
               if (userExist == true) {
                 // if user exists then we perform OTP verification
                 setState(() {
@@ -138,8 +152,10 @@ class _LoginState extends State<Login> {
                 await PhoneAuth().phoneNumberVerificationLogin(
                     "+91" + _phoneController.text, context);
               } else {
-                AlertMessage().showAlertDialog(context,
+                _alertDialogBuilder(
                     "Error! You are not a registered user! You can register on the Sign Up page");
+                // AlertMessage().showAlertDialog(context,
+                //     "Error! You are not a registered user! You can register on the Sign Up page");
               }
             }
           },

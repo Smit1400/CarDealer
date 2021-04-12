@@ -85,6 +85,7 @@ class SubmitBtn extends StatelessWidget {
             Visibility(
               visible: _isLoading ? false : true,
               child: Center(
+                // ignore: deprecated_member_use
                 child: RaisedButton(
                   onPressed: onPressed,
                   shape: RoundedRectangleBorder(

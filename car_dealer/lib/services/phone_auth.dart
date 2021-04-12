@@ -2,10 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:car_dealer/models/users.dart';
-import 'package:car_dealer/screens/database.dart';
+import 'package:car_dealer/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:car_dealer/components/constants.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
+import 'package:path/path.dart';
+
 
 class PhoneAuth {
+
   Future<void> phoneNumberVerificationLogin(
       String phoneNumber, BuildContext context) async {
     final TextEditingController _codeController = TextEditingController();
@@ -16,7 +21,8 @@ class PhoneAuth {
         verificationCompleted: null,
         verificationFailed: (FirebaseAuthException authException) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Verification Falied')));
+              .showSnackBar(SnackBar(content: Text('Verification Falied'))
+              );
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
           showDialog(
@@ -29,6 +35,7 @@ class PhoneAuth {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextField(
+                        keyboardType: TextInputType.number,
                         controller: _codeController,
                       ),
                     ],
@@ -63,7 +70,7 @@ class PhoneAuth {
                       ),
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xFFFF785B)),
+                            MaterialStateProperty.all<Color>( Constants.secColor),
                       ),
                     )
                   ],
@@ -96,6 +103,7 @@ class PhoneAuth {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextField(
+                        keyboardType:TextInputType.number,
                         controller: _codeController,
                       ),
                     ],
@@ -124,7 +132,7 @@ class PhoneAuth {
                       ),
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xFFFF785B)),
+                            MaterialStateProperty.all<Color>(Constants.secColor),
                       ),
                     )
                   ],

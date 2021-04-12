@@ -1,9 +1,10 @@
-import 'package:car_dealer/screens/database.dart';
-import 'package:car_dealer/screens/phone_auth.dart';
+import 'package:car_dealer/services/database.dart';
+import 'package:car_dealer/services/phone_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_dealer/widgets/alert.dart';
-import 'package:car_dealer/services/firebase_auth.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
+
+// import 'package:car_dealer/services/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -11,9 +12,26 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  Future<void> _alertDialogBuilder(String error) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return DialogBox(
+            title: "Error",
+            buttonText1: "Close Dialog",
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            description: error,
+            iconColor: Colors.red,
+            icon: Icons.clear,
+          );
+        });
+  }
+
   static const mainColor = Color(0xFFAFEADC);
   static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -97,7 +115,6 @@ class _SignUpState extends State<SignUp> {
           height: 16,
         ),
         TextField(
-         
           controller: _emailController,
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.text,
@@ -202,7 +219,9 @@ class _SignUpState extends State<SignUp> {
                     admin,
                     context);
               } else {
-                AlertMessage().showAlertDialog(context, "Error , an user with this phone number already exists!");
+                _alertDialogBuilder( "Error , an user with this phone number already exists!");
+                // AlertMessage().showAlertDialog(context,
+                //     "Error , an user with this phone number already exists!");
               }
             }
           },
@@ -211,8 +230,6 @@ class _SignUpState extends State<SignUp> {
         SizedBox(
           height: 24,
         ),
-
-        
       ],
     );
   }

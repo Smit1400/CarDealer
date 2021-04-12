@@ -2,10 +2,8 @@ import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/admin_card.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
-import 'package:car_dealer/widgets/custom_background.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:toast/toast.dart';
 import 'package:car_dealer/widgets/loading_page.dart';
 
 class AdminPage extends StatefulWidget {

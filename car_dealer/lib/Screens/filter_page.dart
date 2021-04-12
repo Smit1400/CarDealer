@@ -134,10 +134,12 @@ class _FiltersState extends State<Filters> {
           iconTheme: IconThemeData(color: Constants.mainColor),
         ),
         body: Container(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 40),
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: SingleChildScrollView(
             child: Column(
+
               children: [
+                SizedBox(height:25),
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(boxShadow: [

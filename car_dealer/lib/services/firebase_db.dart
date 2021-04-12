@@ -63,9 +63,9 @@ class FirebaseMethods {
 
     query1 = query1.orderBy("price");
     // print(query1.toString());
-    Query query2 = col
-        .where("year", isGreaterThanOrEqualTo: minYear)
-        .where("year", isLessThanOrEqualTo: maxYear);
+    // Query query2 = col
+    //     .where("year", isGreaterThanOrEqualTo: minYear)
+    //     .where("year", isLessThanOrEqualTo: maxYear);
 
     // if(minPrice!=null){
     //    query = query.where('price', isGreaterThanOrEqualTo: 10000);

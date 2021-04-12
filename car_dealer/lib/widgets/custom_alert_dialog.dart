@@ -49,6 +49,7 @@ class CustomAlertDialog extends StatelessWidget {
                     SizedBox(height: 10.0),
                     Row(children: <Widget>[
                       Expanded(
+                        // ignore: deprecated_member_use
                         child: RaisedButton(
                           child: Text("No"),
                           color: Colors.red,
@@ -62,6 +63,7 @@ class CustomAlertDialog extends StatelessWidget {
                       ),
                       SizedBox(width: 10.0),
                       Expanded(
+                        // ignore: deprecated_member_use
                         child: RaisedButton(
                           child: Text("Yes"),
                           color: Colors.green,

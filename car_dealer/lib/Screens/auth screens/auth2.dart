@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:car_dealer/screens/login.dart';
-import 'package:car_dealer/screens/login_option.dart';
-import 'package:car_dealer/screens/signup.dart';
-import 'package:car_dealer/screens/signup_option.dart';
+import 'package:car_dealer/screens/auth screens/login.dart';
+import 'package:car_dealer/screens/auth screens/login_option.dart';
+import 'package:car_dealer/screens/auth screens/signup.dart';
+import 'package:car_dealer/screens/auth screens/signup_option.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,7 +20,8 @@ static const backgroundColor=Color(0xFFAFEADC);
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: secColor,//Color(0xFF1C1C1C),
-      body: SingleChildScrollView(
+      body: 
+      SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
