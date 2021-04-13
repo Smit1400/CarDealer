@@ -3,8 +3,9 @@ class User {
   final String name;
   final String email;
   final bool admin;
+  final String token;
 
-  User({this.uid, this.name, this.email, this.admin: false});
+  User({this.uid, this.name, this.email, this.admin: false, this.token});
 
   factory User.fromMap(Map<dynamic, dynamic> value) {
     return User(
@@ -12,6 +13,7 @@ class User {
       name: value['name'],
       email: value["email"],
       admin: value['admin'],
+      token: value['token'],
     );
   }
 
@@ -21,6 +23,7 @@ class User {
       'name': this.name,
       'email': this.email,
       'admin': this.admin,
+      'token': this.token,
     };
   }
 }

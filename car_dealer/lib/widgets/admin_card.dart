@@ -4,6 +4,7 @@ import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,11 @@ class AdminCard extends StatefulWidget {
 
 class _AdminCardState extends State<AdminCard> {
   FirebaseMethods _firebaseMethods = FirebaseMethods();
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  Future<void> sendNotification()async{
+
+  }
 
   Future<void> approveCars(CarDetails car) async {
     try {

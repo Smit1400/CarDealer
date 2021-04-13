@@ -36,6 +36,7 @@ dependencies:
   syncfusion_flutter_sliders: ^19.1.55-beta
   multiselect_formfield: ^0.1.6
   dropdown_formfield: ^0.1.3
+  firebase_messaging: ^9.1.1
 
 dev_dependencies:
   flutter_test:

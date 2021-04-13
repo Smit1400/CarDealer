@@ -1,4 +1,5 @@
 import 'package:car_dealer/widgets/dialog_box.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -63,11 +64,14 @@ class _SignUpState extends State<SignUp> {
     print(_user.uid);
 
     // Call the user's CollectionReference to add a new user
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String token = await messaging.getToken();
     await _firebaseServices.usersRef
         .doc(_user.uid)
         .set({
           'username': _registerName,
           'email': _registerEmail,
+          'token': token,
 
           // 42
         })
