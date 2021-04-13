@@ -1,4 +1,5 @@
-import 'package:car_dealer/screens/auth2.dart';
+import 'package:car_dealer/Screens/admin_analysis.dart';
+import 'package:car_dealer/screens/auth screens/auth2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/screens/landing_page.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       // ),
       initialRoute: '/',
       routes: {
-        '/':(context) =>LandingPage(),
+        '/':(context) =>AdminAnalysis(),
         '/auth':(context) => HomePage(),
         // '/':(context) =>NewHomeScreen(),
         // '/login': (context) => LoginPage(),

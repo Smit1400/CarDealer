@@ -47,6 +47,7 @@ class _MySideBarState extends State<MySideBar> {
             title: Text('Do you want to exit this application?'),
             content: Text('See you again...'),
             actions: <Widget>[
+              // ignore: deprecated_member_use
               FlatButton(
                 onPressed: () {
                   print("you choose no");
@@ -54,6 +55,7 @@ class _MySideBarState extends State<MySideBar> {
                 },
                 child: Text('No'),
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 onPressed: () {
                   signOut();

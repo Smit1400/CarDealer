@@ -166,6 +166,7 @@ class _ShowPageState extends State<ShowPage> {
                             child: GestureDetector(
                           onTap: () async {
                             _firebaseMethods.addCarToWishlist(widget.productId);
+                            // ignore: deprecated_member_use
                             Scaffold.of(context).showSnackBar(_snackBar);
                           },
                           child: Container(

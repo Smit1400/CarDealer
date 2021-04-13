@@ -8,15 +8,15 @@ import 'package:car_dealer/Screens/sell_car_page.dart';
 
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/my_sell_cars.dart';
+import 'package:car_dealer/screens/add_admin.dart';
+
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/widgets/appbar.dart';
-import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:car_dealer/widgets/loading_page.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
 
@@ -28,7 +28,6 @@ class NewHomeScreen extends StatefulWidget {
 }
 
 class _NewHomeScreenState extends State<NewHomeScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseServices _firebaseServices = FirebaseServices();
   Map<String, dynamic> user;
   bool loading;
@@ -202,6 +201,28 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                           size: 35, color: Colors.white),
                                       title: Text(
                                         "Car approval",
+                                        style: GoogleFonts.oswald(
+                                          textStyle: TextStyle(
+                                              color: Constants.secColor,
+                                              fontSize: 22),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                                  user['admin'] == true
+                                  ? ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AdminRegisterPage(),
+                                          ),
+                                        );
+                                      },
+                                      leading: Icon(Icons.add_box,
+                                          size: 35, color: Colors.white),
+                                      title: Text(
+                                        "Add new admin",
                                         style: GoogleFonts.oswald(
                                           textStyle: TextStyle(
                                               color: Constants.secColor,

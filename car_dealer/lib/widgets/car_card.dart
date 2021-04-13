@@ -160,6 +160,7 @@ class CarCard extends StatelessWidget {
             onTap: () async {
               _firebaseMethods.addCarToWishlist(car.carId);
               // _addToList();
+              // ignore: deprecated_member_use
               Scaffold.of(context).showSnackBar(_snackBar);
             },
             child: Padding(

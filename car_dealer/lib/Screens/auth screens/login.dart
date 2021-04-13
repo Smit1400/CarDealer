@@ -1,6 +1,8 @@
-import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:car_dealer/widgets/alert.dart';
+import 'package:car_dealer/services/database.dart';
+import 'package:car_dealer/services/phone_auth.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,9 +12,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   static const mainColor = Color(0xFFAFEADC);
   static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
 
-  final TextEditingController _controller = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
         context: context,
@@ -31,59 +32,15 @@ class _LoginState extends State<Login> {
         });
   }
 
-  // Create a new user account
-  Future<String> _loginAccount() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _loginEmail, password: _loginPassword);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      }
-      return e.message;
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  void _submitForm() async {
-    setState(() {
-      _loginFormLoading = true;
-    });
-
-    String _loginFeedback = await _loginAccount();
-
-    if (_loginFeedback != null) {
-      _alertDialogBuilder(_loginFeedback);
-
-      setState(() {
-        print("hi");
-        _loginFormLoading = false;
-      });
+  bool phoneError = false;
+  bool clickedOnSignIn = false;
+  bool validation() {
+    if (_phoneController.text.length < 10 || _phoneController.text == null) {
+      phoneError = true;
+      return false;
     } else {
-      Navigator.pushReplacementNamed(context, '/');
+      return true;
     }
-  }
-
-  bool _loginFormLoading = false;
-  String _loginEmail = "";
-  String _loginPassword = "";
-
-  FocusNode _passwordFocusNode;
-
-  @override
-  void initState() {
-    _passwordFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _passwordFocusNode.dispose();
-    super.dispose();
   }
 
   @override
@@ -125,48 +82,13 @@ class _LoginState extends State<Login> {
           height: 16,
         ),
         TextField(
-          onChanged: (value) {
-            _loginEmail = value;
-          },
-          onSubmitted: (value) {
-            _passwordFocusNode.requestFocus();
-          },
+          maxLength: 10,
           textInputAction: TextInputAction.next,
-          // controller: _controller,
+          controller: _phoneController,
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            hintText: 'Email / Username',
-            hintStyle: TextStyle(
-              fontSize: 16,
-              color: secColor,
-              fontWeight: FontWeight.bold,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
-            ),
-            filled: true,
-            fillColor: Colors.black12,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        TextField(
-          obscureText: true,
-          onChanged: (value) {
-            _loginPassword = value;
-          },
-          focusNode: _passwordFocusNode,
-          //isPasswordField: true,
-          onSubmitted: (value) {
-            _submitForm();
-          },
-          decoration: InputDecoration(
-            hintText: 'Password',
+            hintText: 'Phone Number',
+            errorText: phoneError ? "Enter a valid phone number" : null,
             hintStyle: TextStyle(
               fontSize: 16,
               color: secColor,
@@ -215,9 +137,27 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          onTap: () {
-            _submitForm();
-            //HomePage();
+          onTap: () async {
+            if (!validation()) {
+              setState(() {});
+            } else {
+              // first check in cloud firestore whether user is registered
+              bool userExist =
+                  await Database().userExists("+91" + _phoneController.text);
+              if (userExist == true) {
+                // if user exists then we perform OTP verification
+                setState(() {
+                  clickedOnSignIn = true;
+                });
+                await PhoneAuth().phoneNumberVerificationLogin(
+                    "+91" + _phoneController.text, context);
+              } else {
+                _alertDialogBuilder(
+                    "Error! You are not a registered user! You can register on the Sign Up page");
+                // AlertMessage().showAlertDialog(context,
+                //     "Error! You are not a registered user! You can register on the Sign Up page");
+              }
+            }
           },
         ),
         SizedBox(

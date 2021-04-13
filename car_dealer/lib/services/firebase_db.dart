@@ -23,6 +23,18 @@ class FirebaseMethods {
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
+  Future<List<CarDetails>> getCars()async{
+    print("[INFO] Getting all the cars from the database.");
+    String path = "Cars/";
+    final reference = FirebaseFirestore.instance.collection(path).where(
+          "isSold",
+          isEqualTo: false,
+        );
+    final snapshots = reference.snapshots();
+    return await snapshots.map((snapshot) =>
+        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList()).first;
+  }
+
   Stream<List<CarDetails>> getAllFilteredCars(
       {int minPrice,
       int maxPrice,
@@ -63,9 +75,9 @@ class FirebaseMethods {
 
     query1 = query1.orderBy("price");
     // print(query1.toString());
-    Query query2 = col
-        .where("year", isGreaterThanOrEqualTo: minYear)
-        .where("year", isLessThanOrEqualTo: maxYear);
+    // Query query2 = col
+    //     .where("year", isGreaterThanOrEqualTo: minYear)
+    //     .where("year", isLessThanOrEqualTo: maxYear);
 
     // if(minPrice!=null){
     //    query = query.where('price', isGreaterThanOrEqualTo: 10000);

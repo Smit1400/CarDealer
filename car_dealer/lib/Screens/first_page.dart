@@ -1,18 +1,17 @@
-import 'package:car_dealer/main.dart';
+
 import 'package:flutter/material.dart';
-import 'package:car_dealer/widgets/background2.dart';
-import 'package:car_dealer/screens/auth2.dart';
+
 
 import 'package:carousel_slider/carousel_slider.dart';
 // const Color mainColor=Color(0xFF5a5aff);
  
-class AuthScreen extends StatefulWidget {
+class FirstScreen extends StatefulWidget {
   @override
 
-  _AuthScreenState createState() => _AuthScreenState();
+  _FirstScreenState createState() => _FirstScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _FirstScreenState extends State<FirstScreen> {
 
   int _currentIndex=0;
 

@@ -154,6 +154,7 @@ class WishlsitCard extends StatelessWidget {
                       .deleteCarFromWishlist(
                           car.carId);
                   Scaffold.of(context)
+                      // ignore: deprecated_member_use
                       .showSnackBar(
                           _snackBar);
                 },

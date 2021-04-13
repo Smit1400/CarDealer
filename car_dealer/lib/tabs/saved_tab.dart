@@ -207,6 +207,7 @@ class _SavedTabState extends State<SavedTab> {
                                     .deleteCarFromWishlist(
                                         "${_productMap['carId']}");
                                 Scaffold.of(context)
+                                    // ignore: deprecated_member_use
                                     .showSnackBar(_snackBar);
                               },
                               child: Container(

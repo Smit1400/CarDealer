@@ -1,9 +1,10 @@
-import 'package:car_dealer/widgets/dialog_box.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:car_dealer/services/database.dart';
+import 'package:car_dealer/services/phone_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:car_dealer/widgets/alert.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
 
-import 'package:car_dealer/services/firebase_auth.dart';
+// import 'package:car_dealer/services/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -11,13 +12,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  static const mainColor = Color(0xFFAFEADC);
-  static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
-
-  FirebaseServices _firebaseServices = FirebaseServices();
-  var _user;
-
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
         context: context,
@@ -36,86 +30,33 @@ class _SignUpState extends State<SignUp> {
         });
   }
 
-  Future<String> _signUp() async {
-    try {
-      var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _registerEmail, password: _registerPassword);
+  static const mainColor = Color(0xFFAFEADC);
+  static const secColor = Color(0xFF041E42);
 
-      _user = result.user;
-      return null;
-      // assert(_user != null);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      }
-      print("User Added");
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  bool admin = false;
+  bool nameError = false;
+  bool emailError = false;
+  bool phoneError = false;
+  bool clickedOnSignUp = false;
 
-      // return user;
-      return e.message;
-    } catch (e) {
-      return e.toString();
+  bool validation() {
+    bool retVal = true;
+    if (_nameController.text == "" || _nameController.text == null) {
+      nameError = true;
+      retVal = false;
     }
-  }
-
-  Future<String> createUser() async {
-    String str = await _signUp();
-    print(_user.uid);
-
-    // Call the user's CollectionReference to add a new user
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String token = await messaging.getToken();
-    await _firebaseServices.usersRef
-        .doc(_user.uid)
-        .set({
-          'username': _registerName,
-          'email': _registerEmail,
-          'token': token,
-
-          // 42
-        })
-        .then((value) => Navigator.pushReplacementNamed(context, '/admin'))
-        .catchError((error) => print("Failed to add user: $error"));
-    return str;
-  }
-
-  void _submitForm() async {
-    setState(() {
-      _registerFormLoading = true;
-    });
-
-    String _createAccountFeedback = await createUser();
-
-    if (_createAccountFeedback != null) {
-      _alertDialogBuilder(_createAccountFeedback);
-
-      setState(() {
-        _registerFormLoading = false;
-      });
-    } else {
-      Navigator.pop(context);
+    if (_emailController.text == "" || _emailController.text == null) {
+      emailError = true;
+      retVal = false;
     }
-  }
-
-  bool _registerFormLoading = false;
-  String _registerEmail = "";
-  String _registerName = "";
-  String _registerPassword = "";
-  FocusNode _passwordFocusNode, _emailFocusNode;
-
-  @override
-  void initState() {
-    _passwordFocusNode = FocusNode();
-    _emailFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
-    super.dispose();
+    if (_phoneController.text.length < 10 || _phoneController.text == null) {
+      phoneError = true;
+      retVal = false;
+    }
+    return retVal;
   }
 
   @override
@@ -146,19 +87,13 @@ class _SignUpState extends State<SignUp> {
           height: 16,
         ),
         TextField(
-          onChanged: (value) {
-            _registerName = value;
-          },
-          onSubmitted: (value) {
-            _emailFocusNode.requestFocus();
-          },
+          controller: _nameController,
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.white
-                ),
+          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter name',
+            errorText: nameError ? "Please enter first name" : null,
             hintStyle: TextStyle(
               fontSize: 16,
               color: Color(0xFF3F3C31),
@@ -180,23 +115,16 @@ class _SignUpState extends State<SignUp> {
           height: 16,
         ),
         TextField(
-          onChanged: (value) {
-            _registerEmail = value;
-          },
-          focusNode: _emailFocusNode,
-          onSubmitted: (value) {
-            _passwordFocusNode.requestFocus();
-          },
+          controller: _emailController,
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.white
-                ),
+          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter Email ',
+            errorText: emailError ? "Please enter your Email" : null,
             hintStyle: TextStyle(
               fontSize: 16,
-              color:  Color(0xFF3F3C31),
+              color: Color(0xFF3F3C31),
               //decorationColor: Colors.white10,//Font color change
               fontWeight: FontWeight.bold,
             ),
@@ -216,21 +144,13 @@ class _SignUpState extends State<SignUp> {
           height: 16,
         ),
         TextField(
-          obscureText: true,
-          onChanged: (value) {
-            _registerPassword = value;
-          },
-          focusNode: _passwordFocusNode,
-          // isPasswordField: true,
-          onSubmitted: (value) {
-            _submitForm();
-          },
-          keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.white
-                ),
+          maxLength: 10,
+          controller: _phoneController,
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: 'Password',
+            hintText: 'Phone Number',
+            errorText: phoneError ? "Enter a valid phone number" : null,
             hintStyle: TextStyle(
               fontSize: 16,
               color: Color(0xFF3F3C31),
@@ -248,12 +168,12 @@ class _SignUpState extends State<SignUp> {
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           ),
         ),
+        clickedOnSignUp ? Text('wait for verification code..') : Container(),
         SizedBox(
           height: 24,
         ),
         InkWell(
           child: Container(
-            
             height: 40,
             decoration: BoxDecoration(
               color: mainColor,
@@ -280,52 +200,36 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          onTap: () {
-            _submitForm();
+          onTap: () async {
+            // first check in cloud firestore whether user is registered
+            if (!validation()) {
+              setState(() {});
+            } else {
+              bool userExist =
+                  await Database().userExists("+91" + _phoneController.text);
+              if (userExist == false) {
+                // we perform OTP verification only if it is a new user
+                setState(() {
+                  clickedOnSignUp = true;
+                });
+                await PhoneAuth().phoneNumberVerificationRegister(
+                    "+91" + _phoneController.text,
+                    _nameController.text,
+                    _emailController.text,
+                    admin,
+                    context);
+              } else {
+                _alertDialogBuilder( "Error , an user with this phone number already exists!");
+                // AlertMessage().showAlertDialog(context,
+                //     "Error , an user with this phone number already exists!");
+              }
+            }
           },
           //isLoading: _registerFormLoading,
         ),
         SizedBox(
           height: 24,
         ),
-
-        /* Text(
-          "Or Signup with",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFFF3D657),
-            height: 1,
-          ),
-        ),
-
-        SizedBox(
-          height: 16,
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-            Icon(
-              Entypo.facebook_with_circle,
-              size: 32,
-              color: Color(0xFFF3D657),
-            ),
-
-            SizedBox(
-              width: 24,
-            ),
-
-            Icon(
-              Entypo.google__with_circle,
-              size: 32,
-              color: Color(0xFFF3D657),
-            ),
-
-          ],
-        )
-*/
       ],
     );
   }

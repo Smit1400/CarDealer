@@ -1,6 +1,3 @@
-
-// import 'package:car_dealer/screens/price_predict.dart';
-
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,9 +8,6 @@ import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:car_dealer/widgets/loading_page.dart';
 import 'package:car_dealer/widgets/appbar.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -21,7 +15,6 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseServices _firebaseServices = FirebaseServices();
   Map<String, dynamic> user;
   bool loading;

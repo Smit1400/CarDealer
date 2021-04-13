@@ -88,6 +88,7 @@ class _DialogBoxState extends State<DialogBox> {
                                 : MainAxisAlignment.center,
                             children: <Widget>[
                               Expanded(
+                                // ignore: deprecated_member_use
                                 child: FlatButton(
                                   onPressed: widget.button1Func,
                                   child: Text(
@@ -101,6 +102,7 @@ class _DialogBoxState extends State<DialogBox> {
                               ),
                               widget.buttonText2 != null
                                   ? Expanded(
+                                // ignore: deprecated_member_use
                                 child: FlatButton(
                                   onPressed: widget.button2Func,
                                   child: Text(
@@ -131,9 +133,9 @@ class _DialogBoxState extends State<DialogBox> {
                     : Color(secondary),
                 child: Icon(
                   widget.icon,
-                  size: 60.0,
+                  size: 50.0,
                 ),
-                radius: 60,
+                radius: 50,
               ),
             )
                 : Text("")
