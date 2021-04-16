@@ -15,13 +15,25 @@ class FirebaseMethods {
   Stream<List<CarDetails>> getAllCars() {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
-    final reference = FirebaseFirestore.instance.collection(path).where(
+    final reference = firestore.collection(path).where(
           "isSold",
           isEqualTo: false,
         );
     final snapshots = reference.snapshots();
     return snapshots.map((snapshot) =>
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
+  }
+
+  Future<List<CarDetails>> getAllSoldCars() {
+    print("[INFO] Getting all the cars from the database.");
+    String path = "Cars/";
+    final reference = firestore.collection(path).where(
+          "isSold",
+          isEqualTo: true,
+        );
+    final snapshots = reference.snapshots();
+    return snapshots.map((snapshot) =>
+        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList()).first;
   }
 
   Future<List<CarDetails>> getCars() async {
@@ -60,7 +72,7 @@ class FirebaseMethods {
       String fuelType}) {
     print("[INFO] Getting all the filtered cars from the database.");
     String path = "Cars/";
-    CollectionReference col = FirebaseFirestore.instance.collection(path);
+    CollectionReference col = firestore.collection(path);
     //   ownerType = "second";
     // transmissionType="Manual";
     //  fuelType="Diesel";
@@ -150,7 +162,7 @@ class FirebaseMethods {
       print("[INFO] Updating car with id = ${carDetails.carId}");
       String path = "Cars/${carDetails.carId}";
       print("[INFO] Updated car data = ${carDetails.toMap()}");
-      await FirebaseFirestore.instance.doc(path).update(carDetails.toMap());
+      await firestore.doc(path).update(carDetails.toMap());
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while updating ${e.code}");
       throw FirebaseException(
@@ -167,7 +179,7 @@ class FirebaseMethods {
       String path = "Cars/$carId";
       print(path);
       // print("[INFO] Updated car data = ${carDetails.toMap()}");
-      await FirebaseFirestore.instance.doc(path).update({"isSold": true});
+      await firestore.doc(path).update({"isSold": true});
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while updating ${e.code}");
       throw FirebaseException(
@@ -182,7 +194,7 @@ class FirebaseMethods {
     try {
       print("[INFO] Car id = $carId");
       String path = "Cars/$carId/";
-      await FirebaseFirestore.instance.doc(path).delete();
+      await firestore.doc(path).delete();
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while deleting ${e.code}");
       throw FirebaseException(
@@ -199,7 +211,7 @@ class FirebaseMethods {
   getAllCarsWishlist() {
     print("[INFO] Getting all the cars of wishlist from the database.");
     String path = "Users/";
-    final reference = FirebaseFirestore.instance
+    final reference = firestore
         .collection(path)
         .doc(_firebaseServices.getUserId())
         .collection("Wishlist");
@@ -212,7 +224,7 @@ class FirebaseMethods {
   //   Stream<List<CarDetails>> getAllCarsWishlist() {
   //   print("[INFO] Getting all the cars from the database.");
   //   String path = "Users/";
-  //   final reference = FirebaseFirestore.instance.collection(path).doc(_firebaseServices.getUserId()).collection("Wishlist");
+  //   final reference = firestore.collection(path).doc(_firebaseServices.getUserId()).collection("Wishlist");
   //   final snapshots = reference.snapshots();
   //   return snapshots.map((snapshot) =>
   //       snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
@@ -226,7 +238,7 @@ class FirebaseMethods {
       print("[INFO] User id = $userId");
       String path = "Users/$userId/Wishlist/$carId/";
       print("[INFO] Path = $path");
-      await FirebaseFirestore.instance.doc(path).delete();
+      await firestore.doc(path).delete();
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while deleting ${e.code}");
       throw FirebaseException(
@@ -239,7 +251,7 @@ class FirebaseMethods {
     }
   }
 
-  Future<void> addCarToWishlist(String CarId) async {
+  Future<void> addCarToWishlist(String carId) async {
     try {
       print("[INFO] Storing car id to wishlist");
       final DateTime now = DateTime.now();
@@ -248,7 +260,7 @@ class FirebaseMethods {
       await _firebaseServices.usersRef
           .doc(_firebaseServices.getUserId())
           .collection("Wishlist")
-          .doc(CarId)
+          .doc(carId)
           .set({"date": formatted});
       print("[INFO] Stored car id in wishlist");
     } on FirebaseException catch (e) {
@@ -268,7 +280,7 @@ class FirebaseMethods {
     print("[INFO] Getting all the cars from the database for particular user.");
     String path = "Cars/";
     String userId = _firebaseServices.getUserId();
-    final reference = FirebaseFirestore.instance
+    final reference = firestore
         .collection(path)
         .where(
           "userId",
@@ -287,7 +299,7 @@ class FirebaseMethods {
     print("[INFO] Getting all the cars from the database for particular user.");
     String path = "Cars/";
     String userId = _firebaseServices.getUserId();
-    final reference = FirebaseFirestore.instance
+    final reference = firestore
         .collection(path)
         .where(
           "userId",

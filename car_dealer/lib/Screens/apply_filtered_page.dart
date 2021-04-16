@@ -62,10 +62,12 @@ class _ApplyFilterPageState extends State<ApplyFilterPage> {
             List<CarDetails> data = snapshot.data;
             print("order1" + _order.toString());
             if (data.length > 0) {
+              //  List<CarDetails> data2=;
               return Container(
                 child: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
+
                       return (data[index].year>=widget.minYear && data[index].year<=widget.maxYear) 
                           ? CarCard(
                               car: data[index],

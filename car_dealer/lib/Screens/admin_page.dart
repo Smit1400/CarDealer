@@ -40,14 +40,13 @@ class _AdminPageState extends State<AdminPage> {
         child: Stack(
           children: [
             Center(
-              child: Opacity(
-                opacity: 0.3,
-                child: Lottie.asset(
-                  "assets/images/approval-waiting.json",
-                  width: double.infinity,
-                ),
-              )
-          ),
+                child: Opacity(
+              opacity: 0.3,
+              child: Lottie.asset(
+                "assets/images/approval-waiting.json",
+                width: double.infinity,
+              ),
+            )),
             Container(
               padding: EdgeInsets.only(top: 55),
               // width: double.infinity,
@@ -65,8 +64,7 @@ class _AdminPageState extends State<AdminPage> {
                       );
                     }
                     List<CarDetails> data = snapshot.data;
-                    data =
-                        data.where((car) => car.approved == false).toList();
+                    data = data.where((car) => car.approved == false).toList();
                     if (data.length > 0) {
                       return ListView.builder(
                           shrinkWrap: true,
@@ -84,7 +82,18 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                       );
                     }
-                    return LoadingPage(path: "assets/images/old-car-moving-animation.json");
+                       return Scaffold(
+                      body: Center(
+                        child: Lottie.asset(
+                           "assets/images/old-car-moving-animation.json",
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                    // LoadingPage(path: "assets/images/old-car-moving-animation.json");
+                    return Container();
                   },
                 ),
               ),

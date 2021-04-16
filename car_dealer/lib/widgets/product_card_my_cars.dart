@@ -4,7 +4,7 @@ import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/show_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

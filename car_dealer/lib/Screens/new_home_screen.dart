@@ -1,21 +1,16 @@
 import 'dart:math';
 import 'dart:ui';
-
-import 'package:car_dealer/Screens/admin_analysis.dart';
-import 'package:car_dealer/Screens/admin_page.dart';
-import 'package:car_dealer/Screens/price_predict.dart';
-import 'package:car_dealer/Screens/sell_car_page.dart';
+import 'package:car_dealer/screens/price_predict.dart';
+import 'package:car_dealer/screens/sell_car_page.dart';
 
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/my_sell_cars.dart';
-import 'package:car_dealer/screens/add_admin.dart';
 
-import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/widgets/appbar.dart';
-import 'package:car_dealer/widgets/loading_page.dart';
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
@@ -23,13 +18,13 @@ import 'package:car_dealer/widgets/custom_alert_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewHomeScreen extends StatefulWidget {
+  final Map<String, dynamic> user;
+  NewHomeScreen({this.user});
   @override
-  _NewHomeScreenState createState() => _NewHomeScreenState();
+  _NewHomescreenstate createState() => _NewHomescreenstate();
 }
 
-class _NewHomeScreenState extends State<NewHomeScreen> {
-  FirebaseServices _firebaseServices = FirebaseServices();
-  Map<String, dynamic> user;
+class _NewHomescreenstate extends State<NewHomeScreen> {
   bool loading;
   PageController _tabsPageController;
   int index = 0;
@@ -38,28 +33,9 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
   @override
   void initState() {
     // print("User ID:${_firebaseServices.getUserId()}");
-    getUserData();
+
     _tabsPageController = PageController();
     super.initState();
-  }
-
-  Future<void> getUserData() async {
-    setState(() {
-      loading = true;
-    });
-    await _firebaseServices.usersRef
-        .doc(_firebaseServices.getUserId())
-        .get()
-        .then((doc) {
-      print("doc = ${doc.data()}");
-      setState(() {
-        user = doc.data();
-        loading = false;
-      });
-    }).catchError((error) {
-      print("[ERROR] ${error.toString()}");
-      loading = false;
-    });
   }
 
   @override
@@ -72,9 +48,8 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    return loading
-        ? LoadingPage(path: "assets/images/old-car-moving-animation.json")
-        : Scaffold(
+    return 
+        Scaffold(
             body: Stack(
               children: [
                 Container(
@@ -105,7 +80,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                               ),
                               SizedBox(height: 15),
                               Text(
-                                "${user['username']}",
+                                "${widget.user['username']}",
                                 style: GoogleFonts.oswald(
                                   textStyle: TextStyle(
                                     color: Constants.secColor,
@@ -125,14 +100,17 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SellCar(
-                                        email: user['email'],
-                                        username: user['username'],
+                                        email: widget.user['email'],
+                                        username: widget.user['username'],
                                       ),
                                     ),
                                   );
                                 },
-                                leading: Image.asset("assets/images/rupee3.png",
-                                    width: 35, height: 35, color: Colors.white),
+                               leading: Image.asset(
+                                    "assets/images/sell_car2.png",
+                                    width: 35,
+                                    height: 35,
+                                    color: Colors.white),
                                 title: Text(
                                   "Sell Car",
                                   style: GoogleFonts.oswald(
@@ -151,11 +129,9 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                     ),
                                   );
                                 },
-                                leading: Image.asset(
-                                    "assets/images/sell_car2.png",
-                                    width: 35,
-                                    height: 35,
-                                    color: Colors.white),
+                                  leading: Image.asset("assets/images/rupee3.png",
+                                    width: 35, height: 35, color: Colors.white),
+                               
                                 title: Text(
                                   "Predict Price",
                                   style: GoogleFonts.oswald(
@@ -174,11 +150,8 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                     ),
                                   );
                                 },
-                                leading: Image.asset(
-                                    "assets/images/sell_car2.png",
-                                    width: 35,
-                                    height: 35,
-                                    color: Colors.white),
+                                leading: Icon(Icons.list,
+                                    size: 35, color: Colors.white),
                                 title: Text(
                                   "My cars",
                                   style: GoogleFonts.oswald(
@@ -188,74 +161,6 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                   ),
                                 ),
                               ),
-                              user['admin'] == true
-                                  ? ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => AdminPage(),
-                                          ),
-                                        );
-                                      },
-                                      leading: Icon(Icons.check,
-                                          size: 35, color: Colors.white),
-                                      title: Text(
-                                        "Car approval",
-                                        style: GoogleFonts.oswald(
-                                          textStyle: TextStyle(
-                                              color: Constants.secColor,
-                                              fontSize: 22),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                              user['admin'] == true
-                                  ? ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AdminRegisterPage(),
-                                          ),
-                                        );
-                                      },
-                                      leading: Icon(Icons.add_box,
-                                          size: 35, color: Colors.white),
-                                      title: Text(
-                                        "Add new admin",
-                                        style: GoogleFonts.oswald(
-                                          textStyle: TextStyle(
-                                              color: Constants.secColor,
-                                              fontSize: 22),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                              user['admin'] == true
-                                  ? ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AdminAnalysis(),
-                                          ),
-                                        );
-                                      },
-                                      leading: Icon(Icons.graphic_eq_sharp,
-                                          size: 35, color: Colors.white),
-                                      title: Text(
-                                        "Analysis",
-                                        style: GoogleFonts.oswald(
-                                          textStyle: TextStyle(
-                                              color: Constants.secColor,
-                                              fontSize: 22),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
                               ListTile(
                                 onTap: () {
                                   showDialog(

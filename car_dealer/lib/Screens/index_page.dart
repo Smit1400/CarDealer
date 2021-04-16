@@ -7,6 +7,8 @@ import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/widgets/bottom_tabs.dart';
 import 'package:car_dealer/widgets/loading_page.dart';
 import 'package:car_dealer/widgets/appbar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 
 class IndexPage extends StatefulWidget {
@@ -15,36 +17,16 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  FirebaseServices _firebaseServices = FirebaseServices();
-  Map<String, dynamic> user;
-  bool loading;
   PageController _tabsPageController;
-  int _selectedTab = 0;
+  // int _selectedTab = 0;
+    int index = 0;
 
   @override
   void initState() {
     // print("User ID:${_firebaseServices.getUserId()}");
-    getUserData();
+
     _tabsPageController = PageController();
     super.initState();
-  }
-
-  Future<void> getUserData() async {
-    setState(() {
-      loading = true;
-    });
-    await _firebaseServices.usersRef
-        .doc(_firebaseServices.getUserId())
-        .get()
-        .then((doc) {
-      setState(() {
-        user = doc.data();
-        loading = false;
-      });
-    }).catchError((error) {
-      print("[ERROR] ${error.toString()}");
-      loading = false;
-    });
   }
 
   @override
@@ -55,82 +37,92 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? LoadingPage(path: "assets/images/old-car-moving-animation.json")
-        : Scaffold(
-            appBar: MyAppBar(),
-            // AppBar(
-            //     backgroundColor: Colors.white,
-            //     title: Text(
-            //       "Car Dealer App",
-            //       style: TextStyle(color: Colors.black),
-            //     ),
-            //     actions: <Widget>[
-            //       IconButton(
-            //         padding: EdgeInsets.only(right: 20.0),
-            //         icon: Icon(Icons.power_settings_new),
-            //         iconSize: 30,
-            //         color: Colors.red,
-            //         onPressed: () {
-            //           //Confiramtion Dailoag
-            //           _exitApp(context);
-            //         },
-            //       ),
-            //       user['admin'] == true
-            //           ? IconButton(
-            //               padding: EdgeInsets.only(right: 20.0),
-            //               icon: Icon(Icons.car_rental),
-            //               iconSize: 30,
-            //               color: Colors.black,
-            //               onPressed: () {
-            //                 Navigator.push(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                     builder: (context) => AdminPage(),
-            //                   ),
-            //                 );
-            //               },
-            //             )
-            //           : Container(),
-            //     ]),
-
-            resizeToAvoidBottomInset: false,
-            // drawer: MySideBar(),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+       appBar: AppBar(
+    backgroundColor: Color(0xFF041E42),
+    title: Text(
+      "Cars",
+      style: GoogleFonts.oswald(),
+    )
+       ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _tabsPageController,
+              onPageChanged: (num) {
+                setState(() {
+                  index = num;
+                });
+              },
               children: [
-                Expanded(
-                  child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: _tabsPageController,
-                    onPageChanged: (num) {
-                      setState(() {
-                        _selectedTab = num;
-                      });
-                    },
-                    children: [
-                      HomeTab(),
-                      SearchTab(),
-                      SavedTab(),
-                      // SellCar(
-                      //   email: user["email"],
-                      //   username: user["username"],
-                      // ),
-                    ],
-                  ),
-                ),
-                BottomTabs(
-                  selectedTab: _selectedTab,
-                  tabPressed: (num) {
-                    _tabsPageController.animateToPage(num,
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeOutCubic);
-                  },
-                ),
+                HomeTab(),
+                SearchTab(),
+                SavedTab(),
               ],
             ),
-          );
-  }
+          ),
+        ],
+      ),
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: Color(0xFF041E42),
+        style: TabStyle.reactCircle,
+        items: [
+          TabItem(icon: Icons.home_outlined),
+          TabItem(icon: Icons.search_outlined),
+          TabItem(icon: Icons.save_alt_outlined),
+        ],
+        initialActiveIndex: index,
+        onTap: (num) {
+          _tabsPageController.animateToPage(num,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic);
+        },
+      ),
+    );
 
- 
+    //  Scaffold(
+    //    appBar: AppBar(
+    // backgroundColor: Color(0xFF041E42),
+    // title: Text(
+    //   "Cars",
+    //   style: GoogleFonts.oswald(),
+    // )
+    //    ),
+
+    //     resizeToAvoidBottomInset: false,
+    //     // drawer: MySideBar(),
+    //     body: Column(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         Expanded(
+    //           child: PageView(
+    //             physics: NeverScrollableScrollPhysics(),
+    //             controller: _tabsPageController,
+    //             onPageChanged: (num) {
+    //               setState(() {
+    //                 _selectedTab = num;
+    //               });
+    //             },
+    //             children: [
+    //               HomeTab(),
+    //               SearchTab(),
+    //               SavedTab(),
+    //             ],
+    //           ),
+    //         ),
+    //         BottomTabs(
+    //           selectedTab: _selectedTab,
+    //           tabPressed: (num) {
+    //             _tabsPageController.animateToPage(num,
+    //                 duration: Duration(milliseconds: 300),
+    //                 curve: Curves.easeOutCubic);
+    //           },
+    //         ),
+    //       ],
+    //     ),
+    //   );
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:car_dealer/services/database.dart';
 import 'package:car_dealer/services/phone_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:car_dealer/widgets/alert.dart';
+// import 'package:car_dealer/widgets/alert.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 
 // import 'package:car_dealer/services/firebase_auth.dart';
