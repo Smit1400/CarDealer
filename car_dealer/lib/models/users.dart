@@ -1,26 +1,30 @@
 class User {
-  final String uid;
+  final String phonenum;
   final String username;
   final String email;
   final bool admin;
+  final String date;
 
-  User({this.uid, this.username, this.email, this.admin: false});
+  User({this.phonenum, this.username, this.email, this.admin: false, this.date});
 
   factory User.fromMap(Map<dynamic, dynamic> value) {
+    // print("value =  $value");
     return User(
-      uid: value["uid"],
+      phonenum: value["phonenum"],
       username: value['name'],
       email: value["email"],
       admin: value['admin'],
+      date: value['date'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'uid': this.uid,
+      'phonenum': this.phonenum,
       'username': this.username,
       'email': this.email,
       'admin': this.admin,
+      'date': this.date,
     };
   }
 }

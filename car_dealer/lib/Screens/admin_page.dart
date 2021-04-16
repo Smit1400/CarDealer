@@ -84,7 +84,7 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                       );
                     }
-                    return LoadingPage();
+                    return LoadingPage(path: "assets/images/old-car-moving-animation.json");
                   },
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:car_dealer/models/car_details.dart';
+import 'package:car_dealer/models/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -23,16 +24,29 @@ class FirebaseMethods {
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
-  Future<List<CarDetails>> getCars()async{
+  Future<List<CarDetails>> getCars() async {
     print("[INFO] Getting all the cars from the database.");
     String path = "Cars/";
-    final reference = FirebaseFirestore.instance.collection(path).where(
-          "isSold",
-          isEqualTo: false,
-        );
+    final reference = FirebaseFirestore.instance.collection(path);
     final snapshots = reference.snapshots();
-    return await snapshots.map((snapshot) =>
-        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList()).first;
+    return await snapshots
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList())
+        .first;
+  }
+
+  Future<List<User>> getUsers() async {
+    print("[INFO] Getting all the users from the database.");
+    String path = "Users/";
+    final reference = FirebaseFirestore.instance.collection(path);
+    final data = await reference.get();
+    final final_data = data.docs.map((doc) => User.fromMap(doc.data())).toList();
+    return final_data;
+    // final snapshots = reference.snapshots();
+    // return await snapshots
+    //     .map((snapshot) =>
+    //         snapshot.docs.map((doc) => User.fromMap(doc.data())).toList())
+    //     .first;
   }
 
   Stream<List<CarDetails>> getAllFilteredCars(
@@ -49,7 +63,7 @@ class FirebaseMethods {
     CollectionReference col = FirebaseFirestore.instance.collection(path);
     //   ownerType = "second";
     // transmissionType="Manual";
-      //  fuelType="Diesel";
+    //  fuelType="Diesel";
     print("minprice:" + minPrice.toString());
     print("maxprice:" + maxPrice.toString());
 

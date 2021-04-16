@@ -18,8 +18,8 @@ class Database {
   }
 
   Future<void> storeUserDetails(User _user, String username, String phonenum,
-      bool admin, String email) async {
+      bool admin, String email, String date) async {
     return FirebaseFirestore.instance.collection('Users').doc(_user.uid).set(
-        {'username': username, 'phonenum': phonenum, 'admin': admin, 'email': email});
+        {'username': username, 'phonenum': phonenum, 'admin': admin, 'email': email, 'date': date});
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:car_dealer/Screens/admin_analysis.dart';
 import 'package:car_dealer/Screens/admin_page.dart';
 import 'package:car_dealer/Screens/price_predict.dart';
 import 'package:car_dealer/Screens/sell_car_page.dart';
-
 
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/screens/my_sell_cars.dart';
@@ -51,6 +51,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         .doc(_firebaseServices.getUserId())
         .get()
         .then((doc) {
+      print("doc = ${doc.data()}");
       setState(() {
         user = doc.data();
         loading = false;
@@ -72,7 +73,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return loading
-        ? LoadingPage()
+        ? LoadingPage(path: "assets/images/old-car-moving-animation.json")
         : Scaffold(
             body: Stack(
               children: [
@@ -209,13 +210,14 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                       ),
                                     )
                                   : Container(),
-                                  user['admin'] == true
+                              user['admin'] == true
                                   ? ListTile(
                                       onTap: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => AdminRegisterPage(),
+                                            builder: (context) =>
+                                                AdminRegisterPage(),
                                           ),
                                         );
                                       },
@@ -231,10 +233,35 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                       ),
                                     )
                                   : Container(),
+                              user['admin'] == true
+                                  ? ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AdminAnalysis(),
+                                          ),
+                                        );
+                                      },
+                                      leading: Icon(Icons.graphic_eq_sharp,
+                                          size: 35, color: Colors.white),
+                                      title: Text(
+                                        "Analysis",
+                                        style: GoogleFonts.oswald(
+                                          textStyle: TextStyle(
+                                              color: Constants.secColor,
+                                              fontSize: 22),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
                               ListTile(
-                                onTap: (){
-                                showDialog(
-                                         context: context, builder: (context) => CustomAlertDialog());
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          CustomAlertDialog());
                                 },
                                 leading: Icon(Icons.logout,
                                     size: 35, color: Colors.white),

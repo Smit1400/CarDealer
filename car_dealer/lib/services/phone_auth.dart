@@ -8,9 +8,7 @@ import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:path/path.dart';
 
-
 class PhoneAuth {
-
   Future<void> phoneNumberVerificationLogin(
       String phoneNumber, BuildContext context) async {
     final TextEditingController _codeController = TextEditingController();
@@ -21,8 +19,7 @@ class PhoneAuth {
         verificationCompleted: null,
         verificationFailed: (FirebaseAuthException authException) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Verification Falied'))
-              );
+              .showSnackBar(SnackBar(content: Text('Verification Falied')));
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
           showDialog(
@@ -69,8 +66,8 @@ class PhoneAuth {
                         style: GoogleFonts.sourceSansPro(color: Colors.white),
                       ),
                       style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>( Constants.secColor),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Constants.secColor),
                       ),
                     )
                   ],
@@ -80,8 +77,8 @@ class PhoneAuth {
         codeAutoRetrievalTimeout: (String verificationId) {});
   }
 
-  Future<void> phoneNumberVerificationRegister(String phoneNumber, String username,
-      String email, bool admin, BuildContext context) async {
+  Future<void> phoneNumberVerificationRegister(String phoneNumber,
+      String username, String email, bool admin, BuildContext context) async {
     final TextEditingController _codeController = TextEditingController();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     _auth.verifyPhoneNumber(
@@ -103,7 +100,7 @@ class PhoneAuth {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextField(
-                        keyboardType:TextInputType.number,
+                        keyboardType: TextInputType.number,
                         controller: _codeController,
                       ),
                     ],
@@ -118,9 +115,10 @@ class PhoneAuth {
                         UserCredential userCredential =
                             await _auth.signInWithCredential(credential);
                         var user = userCredential.user;
+                        String date = DateTime.now().toIso8601String();
                         await Database()
                             .storeUserDetails(
-                                user, username, phoneNumber, admin, email)
+                                user, username, phoneNumber, admin, email, date)
                             .then((value) {
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/', (route) => true);
@@ -131,8 +129,8 @@ class PhoneAuth {
                         style: GoogleFonts.sourceSansPro(color: Colors.white),
                       ),
                       style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Constants.secColor),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Constants.secColor),
                       ),
                     )
                   ],

@@ -56,7 +56,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? LoadingPage()
+        ? LoadingPage(path: "assets/images/old-car-moving-animation.json")
         : Scaffold(
             appBar: MyAppBar(),
             // AppBar(
