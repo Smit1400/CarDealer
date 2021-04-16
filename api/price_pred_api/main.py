@@ -1,6 +1,6 @@
 ### Imports for FastApi
 
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 
 ### imports for predicting price
@@ -9,7 +9,13 @@ import numpy as np
 import pandas as pd
 import datetime
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+from PIL import Image
+from io import BytesIO
 import torch
+
+import cv2
+import cvlib as cv
+from cvlib.object_detection import draw_bbox
 
 ### Importing model
 
@@ -81,18 +87,37 @@ class UsedCarAttributes(BaseModel):
     seats: int
     year: int
 
+
+
 @app.post("/predict")
 def predict_price(attributes: UsedCarAttributes):
     cat_array = np.array([lbl_encoders["Fuel_Type"].transform(np.array([attributes.fuel_type])), lbl_encoders["Transmission"].transform(np.array([attributes.transmission])), lbl_encoders["Owner_Type"].transform(np.array([attributes.owner_type]))])
-    print(cat_array)
     cat_array = torch.tensor(cat_array.reshape(1, 3), dtype=torch.int64)
     cont_array = np.array([[attributes.year, attributes.km_driven, attributes.mileage, attributes.engine, attributes.power, attributes.seats]])
-    print(cont_array)
     cont_array = norm.transform(cont_array)[0]
-    print(cont_array)
     cont_array = torch.tensor(cont_array.reshape(1,6), dtype = torch.float)
     predicted_value = price_predict_model(cat_array,cont_array).item()
     return {
         "task": "Successfully Predicted",
         "predicted_value": int(predicted_value * 100000)
     }
+
+@app.post('/car/validate')
+def car_validate(file: bytes = File(...)):
+    success = False
+    count=-1
+    try:
+        pil_image = Image.open(BytesIO(file))
+        open_cv_image = np.array(pil_image)
+        im = open_cv_image[:, :, ::-1].copy()
+        bbox, label, conf = cv.detect_common_objects(im)
+        success = True
+        count = label.count('car')
+    except:
+        success = False
+        count = -1
+    finally:
+        return {
+            'successful': success,
+            'count': count
+        }
