@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io';
 import 'package:car_dealer/components/constants.dart';
@@ -13,6 +15,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
@@ -22,14 +26,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:car_dealer/widgets/custom_button.dart';
 
-
 class ImageUpload extends StatefulWidget {
   @override
   _ImageUploadState createState() => _ImageUploadState();
 }
 
 class _ImageUploadState extends State<ImageUpload> {
- String imageUrl;
+  String imageUrl;
 
   uploadImage() async {
     final _firebaseStorage = FirebaseStorage.instance;
@@ -121,7 +124,6 @@ class SellCar extends StatefulWidget {
 
 class _SellCarState extends State<SellCar> {
   String name, mileage, imageUrl;
-
 
   bool _loading = false;
 
@@ -216,21 +218,67 @@ class _SellCarState extends State<SellCar> {
     }
   }
 
-
+  errorDialogBox(description, context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            title: "ERROR",
+            buttonText1: 'OK',
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icons.clear,
+            description: '$description',
+            iconColor: Colors.red,
+          );
+        });
+  }
 
   Future<List<dynamic>> _getDownLoadUrl(BuildContext context) async {
     try {
       List urls = [];
+      final Uri _uri = Uri.parse('http://localhost:8000/car/validate');
       for (int i = 0; i < files.length; i++) {
-        final Reference firebaseStorageRef = FirebaseStorage.instance
-            .ref()
-            .child('car_images/${basename(files[i].path)}');
-        final TaskSnapshot task = await firebaseStorageRef.putFile(files[i]);
-        print("[INFO] Successfully stored image in firebase storage.");
-        String url = await task.ref.getDownloadURL();
-        setState(() {
-          urls.add(url);
-        });
+        try {
+          http.MultipartRequest request =
+              new http.MultipartRequest("POST", _uri);
+
+          http.MultipartFile multipartFile =
+              await http.MultipartFile.fromPath('file', files[i].path);
+
+          request.files.add(multipartFile);
+
+          http.StreamedResponse response = await request.send();
+          if (response.statusCode == 200) {
+            var data = await response.stream.bytesToString();
+            // print(data);
+            var finalData = jsonDecode(data);
+            print(finalData);
+            if (finalData['successful'] == true) {
+              if (finalData['count'] <= 0) {
+                return [];
+              } else {
+                final Reference firebaseStorageRef = FirebaseStorage.instance
+                    .ref()
+                    .child('car_images/${basename(files[i].path)}');
+                final TaskSnapshot task =
+                    await firebaseStorageRef.putFile(files[i]);
+                print("[INFO] Successfully stored image in firebase storage.");
+                String url = await task.ref.getDownloadURL();
+                setState(() {
+                  urls.add(url);
+                });
+              }
+            } else {
+              await errorDialogBox("API ERROR OCCURED", context);
+            }
+          } else {
+            print(response.statusCode);
+          }
+        } catch (e) {
+          print("[API ERROR] ${e.toString()}");
+        }
       }
       return urls;
     } catch (e) {
@@ -253,34 +301,44 @@ class _SellCarState extends State<SellCar> {
       });
       if (files != null && files.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
-        String carId = "cars_${DateTime.now().toIso8601String()}";
-        CarDetails carDetails = CarDetails(
-            transmissionType: _selectedtransmission,
-            brand: _selectedbrand,
-            carId: carId,
-            userId: _firebaseServices.getUserId(),
-            ownerName: widget.username,
-            mileage: _mileage.toDouble(),
-            kilometer_driven: _km.toDouble(),
-            engine: _engine.toDouble(),
-            owner_type: _selectedowner,
-            power: _power.toDouble(),
-            price: _price.toDouble(),
-            seats: _seats,
-            year: _year,
-            fuel_type: _selectedfuel,
-            title: _title.toLowerCase(),
-            description: _description,
-            mobileNumber: 9999999999,
-            imageUrls: imageUrls);
-        _firebaseMethods.addCarDetailsToDb(carDetails);
-        print("[INFO] Successfully Registered");
-        Toast.show("Car Registered. Wait for approval", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.TOP,
-            textColor: Constants.secColor,
-            backgroundColor: Constants.mainColor);
-        Navigator.pop(context);
+        if (imageUrls.length > 0) {
+          String carId = "cars_${DateTime.now().toIso8601String()}";
+          CarDetails carDetails = CarDetails(
+              transmissionType: _selectedtransmission,
+              brand: _selectedbrand,
+              carId: carId,
+              userId: _firebaseServices.getUserId(),
+              ownerName: widget.username,
+              mileage: _mileage.toDouble(),
+              kilometer_driven: _km.toDouble(),
+              engine: _engine.toDouble(),
+              owner_type: _selectedowner,
+              power: _power.toDouble(),
+              price: _price.toDouble(),
+              seats: _seats,
+              year: _year,
+              fuel_type: _selectedfuel,
+              title: _title.toLowerCase(),
+              description: _description,
+              mobileNumber: 9999999999,
+              imageUrls: imageUrls);
+          _firebaseMethods.addCarDetailsToDb(carDetails);
+          print("[INFO] Successfully Registered");
+          Toast.show("Car Registered. Wait for approval", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.TOP,
+              textColor: Constants.secColor,
+              backgroundColor: Constants.mainColor);
+          Navigator.pop(context);
+        } else {
+          _scaffoldKey.currentState
+              // ignore: deprecated_member_use
+              .showSnackBar(
+                  SnackBar(content: Text("Image should contain car.")));
+          setState(() {
+            files = [];
+          });
+        }
       } else {
         _scaffoldKey.currentState
             // ignore: deprecated_member_use
@@ -288,36 +346,10 @@ class _SellCarState extends State<SellCar> {
       }
     } on FirebaseException catch (e) {
       print("[FIREBASE ERROR] ${e.message}");
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return DialogBox(
-              title: "ERROR",
-              buttonText1: 'OK',
-              button1Func: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icons.clear,
-              description: '${e.message}',
-              iconColor: Colors.red,
-            );
-          });
+      await errorDialogBox(e.message, context);
     } catch (e) {
       print("[ERROR N] ${e.toString()}");
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return DialogBox(
-              title: "ERROR",
-              buttonText1: 'OK',
-              button1Func: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icons.clear,
-              description: '${e.toString()}',
-              iconColor: Colors.red,
-            );
-          });
+      await errorDialogBox(e.toString(), context);
     } finally {
       setState(() {
         _loading = false;
@@ -674,16 +706,15 @@ class _SellCarState extends State<SellCar> {
         child: Text(
           "Upload Image",
           style: GoogleFonts.oswald(
-            textStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
+            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),
         onPressed: () {
           loadAssets();
         },
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),),
+          borderRadius: BorderRadius.circular(18.0),
+        ),
         elevation: 5.0,
         color: Constants.mainColor,
         textColor: Constants.secColor,

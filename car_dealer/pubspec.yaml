@@ -39,6 +39,7 @@ dependencies:
   firebase_messaging: ^9.1.1
   fl_chart: ^0.35.0
   charts_flutter: ^0.10.0
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:
