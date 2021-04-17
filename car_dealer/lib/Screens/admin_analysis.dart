@@ -5,15 +5,15 @@ import 'package:car_dealer/models/users.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/per_month_chart.dart';
 import 'package:car_dealer/models/cars_per_brand.dart';
+import 'package:car_dealer/models/users_per_month.dart';
 
 import 'package:car_dealer/widgets/admin_no_card.dart';
 import 'package:car_dealer/widgets/brands_chart.dart';
 import 'package:car_dealer/widgets/appbar.dart';
 
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:lottie/lottie.dart';
@@ -52,7 +52,6 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
     super.initState();
     getData();
     getBrandData();
-
   }
 
   void getData() async {
@@ -66,8 +65,6 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       Map<String, int> data1 = {};
       Map<String, int> data2 = {};
       List<CarDetails> carsSold = await _methods.getAllSoldCars();
-
-
 
       setState(() {
         print("Not sold cars length--------------");
@@ -131,6 +128,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       });
     }
   }
+
   void getBrandData() async {
     setState(() {
       _loading = true;
@@ -177,10 +175,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: MyAppBar(),
- 
-     
-      
+      appBar: MyAppBar(),
       body: _loading
           ? Container(
               color: Colors.black.withOpacity(0.5),
@@ -196,7 +191,8 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                     Row(
+                 
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       adminNoCard(
@@ -218,19 +214,212 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                     id: "Cars",
                     title: "Cars Registered Per Month",
                   ),
-                  SizedBox(height: 15),
+                  UserAnalysis(),
+                  // SizedBox(height: 10),
                   PerMonthChart(
                     data: graphData2,
                     id: "Users",
                     title: "Users Registered Per Month",
                   ),
-                  SizedBox(height: 15),
-                    CarsPerBrandChart(
+                  // SizedBox(height: 10),
+                   
+                  //  SizedBox(height: 10),
+                  CarsPerBrandChart(
                     data: graphData3,
-                 )
+                  )
                 ],
               ),
             ),
+    );
+  }
+}
+
+class Person {
+  String name;
+  int age;
+  num height;
+  Person({this.name, this.age, this.height});
+}
+
+class UserAnalysis extends StatefulWidget {
+  @override
+  _UserAnalysisState createState() => _UserAnalysisState();
+}
+
+class _UserAnalysisState extends State<UserAnalysis> {
+  FirebaseMethods _methods = FirebaseMethods();
+
+  List<CarsPerUser> UserCarsData = [];
+
+  bool _loading = true;
+
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    setState(() {
+      _loading = true;
+    });
+    try {
+      List<CarDetails> cars = await _methods.getCars();
+      Map<String, dynamic> data = {};
+      Map<String, dynamic> data2 = {};
+
+      List<int> mbno = [];
+      for (CarDetails car in cars) {
+        String ownerName = car.ownerName;
+        // String mbNo = car.mobileNumber;
+        // String month = DateTime.parse(car.carId.substring(5)).month.toString();
+        if (data.containsKey(ownerName)) {
+          setState(() {
+            data[ownerName] = data[ownerName] + 1;
+          });
+        } else {
+          setState(() {
+            data[ownerName] = 1;
+            mbno.add(car.mobileNumber);
+          });
+        }
+      }
+      print(data);
+      int k = 0;
+      data.forEach((ownerName, cars) {
+        print(cars);
+
+        setState(() {
+          UserCarsData.add(CarsPerUser(
+              ownerName: ownerName, cars: cars, mobileNumber: mbno[k]));
+        });
+        k += 1;
+        
+      });
+      print("User Data------------------->");
+        print(UserCarsData);
+    } on FirebaseException catch (e) {
+      print(e.message);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  bool _sortNameAsc = true;
+  bool _sortAgeAsc = true;
+  bool _sortHeightAsc = true;
+  bool _sortAscending = true;
+  bool _sortAsc = true;
+  int _sortColumnIndex;
+  List<Person> _persons;
+  // List<CarsPerBrand> _UserCarsData;
+
+  @override
+  Widget build(BuildContext context) {
+    var myColumns = [
+      DataColumn(
+        label: Text(
+          'Owner name',
+        ),
+        onSort: (columnIndex, sortAscending) {
+          setState(() {
+            if (columnIndex == _sortColumnIndex) {
+              _sortAsc = _sortNameAsc = sortAscending;
+            } else {
+              _sortColumnIndex = columnIndex;
+              _sortAsc = _sortNameAsc;
+            }
+            UserCarsData.sort((a, b) => a.ownerName.compareTo(b.ownerName));
+            if (!_sortAscending) {
+              UserCarsData = UserCarsData.reversed.toList();
+            }
+          });
+        },
+      ),
+      DataColumn(
+        label: Text(
+          'No. of cars',
+        ),
+        onSort: (columnIndex, sortAscending) {
+          setState(() {
+            if (columnIndex == _sortColumnIndex) {
+              _sortAsc = _sortHeightAsc = sortAscending;
+            } else {
+              _sortColumnIndex = columnIndex;
+              _sortAsc = _sortHeightAsc;
+            }
+            UserCarsData.sort((a, b) => a.cars.compareTo(b.cars));
+            if (!_sortAscending) {
+              UserCarsData = UserCarsData.reversed.toList();
+            }
+          });
+        },
+      ),
+      DataColumn(
+        label: Text(
+          'Mobile Number',
+        ),
+        onSort: (columnIndex, sortAscending) {
+          setState(() {
+            if (columnIndex == _sortColumnIndex) {
+              _sortAsc = _sortAgeAsc = sortAscending;
+            } else {
+              _sortColumnIndex = columnIndex;
+              _sortAsc = _sortAgeAsc;
+            }
+            UserCarsData.sort(
+                (a, b) => a.mobileNumber.compareTo(b.mobileNumber));
+            if (!_sortAscending) {
+              UserCarsData = UserCarsData.reversed.toList();
+            }
+          });
+        },
+      ),
+    ];
+
+    var myRows = UserCarsData.map((person) {
+      return DataRow(cells: [
+        DataCell(Text(
+          person.ownerName,
+        )),
+        DataCell(Text('${person.cars}')),
+        DataCell(Text('${person.mobileNumber}')),
+      ]);
+    });
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 18),
+     
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: FittedBox(
+          child: DataTable(
+            showBottomBorder: true,
+            headingRowColor:
+                MaterialStateProperty.resolveWith((states) =>  Color(0xff2c4260),),
+            headingTextStyle: GoogleFonts.oswald(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            columnSpacing: 25,
+            dataRowColor: MaterialStateProperty.resolveWith(
+                (states) => Constants.mainColor),
+            dataTextStyle: TextStyle(
+                fontSize: 16,
+                color: Constants.secColor,
+                fontWeight: FontWeight.w400),
+            columns: myColumns,
+            rows: myRows.toList(),
+            sortColumnIndex: _sortColumnIndex,
+            sortAscending: _sortAsc,
+          ),
+        ),
+      ),
     );
   }
 }

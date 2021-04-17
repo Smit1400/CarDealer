@@ -13,7 +13,6 @@ import 'package:car_dealer/screens/add_admin.dart';
 import 'package:car_dealer/screens/index_page.dart';
 
 
-import 'package:car_dealer/services/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
@@ -28,7 +27,7 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _NewHomescreenstate extends State<AdminHomeScreen> {
-  FirebaseServices _firebaseServices = FirebaseServices();
+
 
   PageController _tabsPageController;
   int index = 0;
@@ -105,7 +104,7 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             );
                           },
                           leading:
-                              Icon(Icons.list,size: 35, color: Colors.white),
+                              Icon(Icons.home,size: 35, color: Colors.white),
                           title: Text(
                             "Cars",
                             style: GoogleFonts.oswald(
@@ -176,25 +175,25 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             ),
                           ),
                         ),
-                         ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AdminAnalysis(),
-                              ),
-                            );
-                          },
-                          leading:
-                              Icon(Icons.analytics_outlined,size: 35, color: Colors.white),
-                          title: Text(
-                            "Admin Analysis",
-                            style: GoogleFonts.oswald(
-                              textStyle: TextStyle(
-                                  color: Constants.secColor, fontSize: 22),
-                            ),
-                          ),
-                        ),
+                        //  ListTile(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => AdminAnalysis(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   leading:
+                        //       Icon(Icons.analytics_outlined,size: 35, color: Colors.white),
+                        //   title: Text(
+                        //     "Admin Analysis",
+                        //     style: GoogleFonts.oswald(
+                        //       textStyle: TextStyle(
+                        //           color: Constants.secColor, fontSize: 22),
+                        //     ),
+                        //   ),
+                        // ),
                         ListTile(
                           onTap: () {
                             Navigator.push(
@@ -214,25 +213,25 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             ),
                           ),
                         ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AdminRegisterPage(),
-                              ),
-                            );
-                          },
-                          leading: Icon(Icons.add_box,
-                              size: 35, color: Colors.white),
-                          title: Text(
-                            "Add new admin",
-                            style: GoogleFonts.oswald(
-                              textStyle: TextStyle(
-                                  color: Constants.secColor, fontSize: 22),
-                            ),
-                          ),
-                        ),
+                        // ListTile(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => AdminRegisterPage(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   leading: Icon(Icons.add_box,
+                        //       size: 35, color: Colors.white),
+                        //   title: Text(
+                        //     "Add new admin",
+                        //     style: GoogleFonts.oswald(
+                        //       textStyle: TextStyle(
+                        //           color: Constants.secColor, fontSize: 22),
+                        //     ),
+                        //   ),
+                        // ),
                         ListTile(
                           onTap: () {
                             showDialog(
