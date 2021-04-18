@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
-import 'package:flutter_otp/flutter_otp.dart';
+// import 'package:flutter_otp/flutter_otp.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
+import 'package:car_dealer/widgets/dialog_box.dart';
 import 'package:sms/sms.dart';
 import 'package:car_dealer/components/constants.dart';
 
@@ -26,19 +27,15 @@ class _SignUpState extends State<SignUp> {
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Container(
-              child: Text(error),
-            ),
-            actions: [
-              FlatButton(
-                child: Text("Close Dialog"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
+          return DialogBox(
+            title: "Error",
+            buttonText1: "Close Dialog",
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            description: error,
+            iconColor: Colors.red,
+            icon: Icons.clear,
           );
         });
   }
@@ -53,44 +50,43 @@ class _SignUpState extends State<SignUp> {
       // assert(_user != null);
       // assert(await _user.getIdToken() != null);
       print("User Added");
-      return _user.uid;
+      return null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
         return 'The account already exists for that email.';
       }
-      print("User Added");
-
-      // return user;
       return e.message;
     } catch (e) {
       return e.toString();
     }
-    
   }
 
   Future<String> createUser() async {
-    String str = await _signUp();
-    print("User uid" + str);
-    print(_user.uid);
+    try {
+      String str = await _signUp();
+      // print("User uid" + str);
+      // print(_user.uid);
 
-    // Call the user's CollectionReference to add a new user
-    await _firebaseServices.usersRef
-        .doc(_user.uid)
-        .set({
-          'username': _registerName,
-          'email': _registerEmail,
-          'password': _registerPassword,
-          'phonenum': _phonenum,
-          'admin': false,
-          'date': DateTime.now(),
+      // Call the user's CollectionReference to add a new user
+      await _firebaseServices.usersRef
+          .doc(_user.uid)
+          .set({
+            'username': _registerName,
+            'email': _registerEmail,
+            'phonenum': "+91" + _phonenum,
+            'admin': false,
+            'date': DateTime.now().toString(),
 
-          // 42
-        })
-        .then((value) => Navigator.pushReplacementNamed(context, '/admin'))
-        .catchError((error) => print("Failed to add user: $error"));
-    return str;
+            // 42
+          })
+          .then((value) => Navigator.pushReplacementNamed(context, '/'))
+          .catchError((error) => ("Failed to add user: $error"));
+      return str;
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   void _submitForm() async {
@@ -117,11 +113,47 @@ class _SignUpState extends State<SignUp> {
   String _registerPassword = "";
   String _phonenum = "";
   FocusNode _passwordFocusNode, _emailFocusNode, _phonenumFocusNode;
+  bool admin = false;
+  bool nameError = false;
+  bool emailError = false;
+  bool phoneError = false;
+  bool passwordError = false;
+  String emailValid=r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+  bool clickedOnSignUp = false;
+
+  bool validation() {
+    bool retVal = true;
+    if (_registerName == "") {
+      nameError = true;
+      retVal = false;
+    } else
+      nameError = false;
+    if (_registerEmail == "" || !RegExp(emailValid).hasMatch(_registerEmail)) {
+      emailError = true;
+      retVal = false;
+    } else
+      emailError = false;
+
+    if (_registerPassword == "") {
+      passwordError = true;
+      retVal = false;
+    } else
+      passwordError = false;
+
+    if (_phonenum.length < 10) {
+      phoneError = true;
+      retVal = false;
+    } else
+      phoneError = false;
+
+    return retVal;
+  }
 
   @override
   void initState() {
     _passwordFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
+    _phonenumFocusNode = FocusNode();
     super.initState();
   }
 
@@ -129,6 +161,7 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _phonenumFocusNode.dispose();
     super.dispose();
   }
 
@@ -172,6 +205,7 @@ class _SignUpState extends State<SignUp> {
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter name',
+            errorText: nameError ? "Please enter your name" : null,
             hintStyle: TextStyle(
               fontSize: 16,
               color: Color(0xFF3F3C31),
@@ -205,6 +239,7 @@ class _SignUpState extends State<SignUp> {
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter Email ',
+            errorText: emailError ? "Please enter valid email" : null,
             hintStyle: TextStyle(
               fontSize: 16,
               color: Color(0xFF3F3C31),
@@ -232,13 +267,15 @@ class _SignUpState extends State<SignUp> {
             _registerPassword = value;
           },
           focusNode: _passwordFocusNode,
-          // isPasswordField: true,
           onSubmitted: (value) {
-            _submitForm();
+            _phonenumFocusNode.requestFocus();
           },
+          // isPasswordField: true,
+
           keyboardType: TextInputType.text,
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
+            errorText: passwordError ? "Please enter your password" : null,
             hintText: 'Password',
             hintStyle: TextStyle(
               fontSize: 16,
@@ -266,13 +303,11 @@ class _SignUpState extends State<SignUp> {
             _phonenum = value;
           },
           focusNode: _phonenumFocusNode,
-          onSubmitted: (value) {
-            _passwordFocusNode.requestFocus();
-          },
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
+            errorText: phoneError ? "Please enter your phonenumber" : null,
             hintText: 'Enter Phone Number ',
             hintStyle: TextStyle(
               fontSize: 16,
@@ -323,45 +358,51 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           onTap: () {
-            sendOtp(_phonenum);
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Enter Code"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          controller: _codeController,
-                        ),
+            if (!validation()) {
+              setState(() {});
+            } else {
+              sendOtp(_phonenum);
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Enter Code"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          TextField(
+                            keyboardType: TextInputType.number,
+                            controller: _codeController,
+                          ),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () async {
+                            if (resultChecker(_codeController.text) == true) {
+                              _submitForm();
+                              // Navigator.pushNamedAndRemoveUntil(
+                              //     context, '/', (route) => true);
+                            } else {
+                              // Navigator.of(context).pop();
+                              _alertDialogBuilder("OTP entered is wrong!!");
+                            }
+                          },
+                          child: Text(
+                            "Confirm",
+                            style:
+                                GoogleFonts.sourceSansPro(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Constants.secColor),
+                          ),
+                        )
                       ],
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () async {
-                          if (resultChecker(_codeController.text) == true) {
-                            _submitForm();
-                            // Navigator.pushNamedAndRemoveUntil(
-                            //     context, '/', (route) => true);
-                          }
-                        },
-                        child: Text(
-                          "Confirm",
-                          style: GoogleFonts.sourceSansPro(color: Colors.white),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Constants.secColor),
-                        ),
-                      )
-                    ],
-                  );
-                });
-
-            //_submitForm();
+                    );
+                  });
+            }
           },
         ),
         SizedBox(
@@ -384,7 +425,7 @@ class _SignUpState extends State<SignUp> {
       String countryCode = '+91']) {
     generateOtp(min, max);
     SmsSender sender = new SmsSender();
-    String address = (countryCode ?? '+1') + phoneNumber;
+    String address = (countryCode ?? '+91') + phoneNumber;
     sender.sendSms(new SmsMessage(
         address,
         (messageText ?? 'Your OTP for Car Buddy authentication is ') +
