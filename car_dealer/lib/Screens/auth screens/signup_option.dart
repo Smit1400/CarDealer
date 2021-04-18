@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+ 
 class SignUpOption extends StatelessWidget {
   static const mainColor=Color(0xFFAFEADC);
   static const secColor=Color(0xFF041E42);
@@ -10,7 +10,7 @@ class SignUpOption extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-
+ 
         Text(
           "OR",
           textAlign: TextAlign.center,
@@ -21,11 +21,11 @@ class SignUpOption extends StatelessWidget {
             color: mainColor,
           ),
         ),
-
+ 
         SizedBox(
           height: 24,
         ),
-
+ 
         Container(
           height: 40,
           decoration: BoxDecoration(
@@ -53,8 +53,9 @@ class SignUpOption extends StatelessWidget {
             ),
           ),
         ),
-
+ 
       ],
     );
   }
 }
+

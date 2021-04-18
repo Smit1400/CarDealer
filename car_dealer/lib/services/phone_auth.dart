@@ -78,7 +78,7 @@ class PhoneAuth {
   }
 
   Future<void> phoneNumberVerificationRegister(String phoneNumber,
-      String username, String email, bool admin, BuildContext context) async {
+      String username, String email,String password, bool admin, BuildContext context) async {
     final TextEditingController _codeController = TextEditingController();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     _auth.verifyPhoneNumber(
@@ -118,7 +118,7 @@ class PhoneAuth {
                         String date = DateTime.now().toIso8601String();
                         await Database()
                             .storeUserDetails(
-                                user, username, phoneNumber, admin, email, date)
+                                user, username, phoneNumber, admin, email,password, date)
                             .then((value) {
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/', (route) => true);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+ 
 class LoginOption extends StatelessWidget {
   static const mainColor=Color(0xFFAFEADC);
   static const secColor=Color(0xFF041E42);
@@ -10,18 +10,18 @@ class LoginOption extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-
+ 
         Text(
           "Existing user?",
           style: TextStyle(
             fontSize: 16,
           ),
         ),
-
+ 
         SizedBox(
           height: 16,
         ),
-
+ 
         Container(
           height: 40,
           decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class LoginOption extends StatelessWidget {
             ),
           ),
         ),
-
+ 
       ],
     );
   }

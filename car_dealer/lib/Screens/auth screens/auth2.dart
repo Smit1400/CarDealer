@@ -4,14 +4,14 @@ import 'package:car_dealer/screens/auth screens/login.dart';
 import 'package:car_dealer/screens/auth screens/login_option.dart';
 import 'package:car_dealer/screens/auth screens/signup.dart';
 import 'package:car_dealer/screens/auth screens/signup_option.dart';
-
+ 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
-
+ 
 class _HomePageState extends State<HomePage> {
-
+ 
   bool login = true;
   static const mainColor=Color(0xFFAFEADC);
 static const secColor=Color(0xFF041E42);
@@ -20,13 +20,12 @@ static const backgroundColor=Color(0xFFAFEADC);
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: secColor,//Color(0xFF1C1C1C),
-      body: 
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
+ 
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -45,7 +44,7 @@ static const backgroundColor=Color(0xFFAFEADC);
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          child: login
+                          child: login 
                           ? Login()
                           : LoginOption(),
                         ),
@@ -55,7 +54,7 @@ static const backgroundColor=Color(0xFFAFEADC);
                 ),
               ),
             ),
-
+ 
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -89,31 +88,31 @@ static const backgroundColor=Color(0xFFAFEADC);
     );
   }
 }
-
+ 
 class CurvePainter extends CustomPainter {
 static const mainColor=Color(0xFFAFEADC);
 static const secColor=Color(0xFF041E42);
 static const backgroundColor=Color(0xFFAFEADC);
   bool outterCurve;
-
+ 
   CurvePainter(this.outterCurve);
-
+ 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
     paint.color = mainColor;
     paint.style = PaintingStyle.fill;
-
+ 
     Path path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
     path.quadraticBezierTo(size.width * 0.5, outterCurve ? size.height + 110 : size.height - 110, size.width, size.height);
     path.lineTo(size.width, 0);
     path.close();
-
+ 
     canvas.drawPath(path, paint);
   }
-
+ 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
