@@ -7,18 +7,23 @@ import 'package:google_fonts/google_fonts.dart';
 class CarsPerBrandChart extends StatelessWidget {
   final List<CarsPerBrand> data;
   CarsPerBrandChart({@required this.data});
-
+ 
   @override
   Widget build(BuildContext context) {
+     int count = 0;
+    data.forEach((brand) {
+      count += brand.cars;
+    });
+    print(count);
     List<charts.Series<CarsPerBrand, String>> series = [
       charts.Series(
         id: "Cars",
         data: data,
         domainFn: (CarsPerBrand car, _) => car.brand,
-        
+
         // colorFn: (CarsPerBrand car, _) => car.color,
         measureFn: (CarsPerBrand car, _) => car.cars,
-        labelAccessorFn: (CarsPerBrand car, _) => '${car.brand}-${car.cars} ',
+        labelAccessorFn: (CarsPerBrand car, _) => '${car.brand}-${car.cars}\n  ${(car.cars*100~/count)}%',
       ),
     ];
     return Container(
@@ -40,47 +45,45 @@ class CarsPerBrandChart extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: charts.PieChart( 
+                child: charts.PieChart(
                   series,
                   // vertical: false,
                   animate: true,
                   animationDuration: Duration(
                     seconds: 1,
                   ),
-                   defaultRenderer: new charts.ArcRendererConfig(
-                          arcRendererDecorators: [
-                            new charts.ArcLabelDecorator(
-                              //labelPadding:-25,
-                                labelPosition: charts.ArcLabelPosition.inside),
-                          ],
-                      
-                        ),
-                  
-          //         domainAxis: new charts.OrdinalAxisSpec(
-          // renderSpec: new charts.SmallTickRendererSpec(
+                  defaultRenderer: new charts.ArcRendererConfig(
+                    arcRendererDecorators: [
+                      new charts.ArcLabelDecorator(
+                          //labelPadding:-25,
+                          labelPosition: charts.ArcLabelPosition.inside),
+                    ],
+                  ),
 
-          //     // Tick and Label styling here.
-          //     labelStyle: new charts.TextStyleSpec(
-          //         fontSize: 15, // size in Pts.
-          //         color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
+                  //         domainAxis: new charts.OrdinalAxisSpec(
+                  // renderSpec: new charts.SmallTickRendererSpec(
 
-          //     // Change the line colors to match text color.
-          //     lineStyle: new charts.LineStyleSpec(
-          //         color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
+                  //     // Tick and Label styling here.
+                  //     labelStyle: new charts.TextStyleSpec(
+                  //         fontSize: 15, // size in Pts.
+                  //         color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
 
-      /// Assign a custom style for the measure axis.
-      // primaryMeasureAxis: new charts.NumericAxisSpec(
-      //     renderSpec: new charts.GridlineRendererSpec(
+                  //     // Change the line colors to match text color.
+                  //     lineStyle: new charts.LineStyleSpec(
+                  //         color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
 
-      //         // Tick and Label styling here.
-      //         labelStyle: new charts.TextStyleSpec(
-      //             fontSize: 15, // size in Pts.
-      //             color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
+                  /// Assign a custom style for the measure axis.
+                  // primaryMeasureAxis: new charts.NumericAxisSpec(
+                  //     renderSpec: new charts.GridlineRendererSpec(
 
-      //         // Change the line colors to match text color.
-      //         lineStyle: new charts.LineStyleSpec(
-      //             color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
-                  
+                  //         // Tick and Label styling here.
+                  //         labelStyle: new charts.TextStyleSpec(
+                  //             fontSize: 15, // size in Pts.
+                  //             color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
+
+                  //         // Change the line colors to match text color.
+                  //         lineStyle: new charts.LineStyleSpec(
+                  //             color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
                 ),
               ),
             ],

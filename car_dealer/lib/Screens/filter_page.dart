@@ -31,6 +31,12 @@ class _FiltersState extends State<Filters> {
   DateTime minYear = DateTime(2001, 01, 01);
   DateTime maxYear = DateTime(2022, 01, 01);
   SfRangeValues _valuesYear =SfRangeValues(DateTime(2001, 01, 01), DateTime(2022, 01, 01));
+
+  double minMileage = 10.0;
+  double maxMileage = 50.0;
+  double _selectedMinMileage = 10.0;
+  double _selectedMaxMileage = 50.0;
+  SfRangeValues _valuesMileage = SfRangeValues(10.0, 50.0);
   String _selectedTransmissionType = '';
   String _selectedFuelType = '';
   String _selectedOwnerNo = '';
@@ -194,8 +200,8 @@ class _FiltersState extends State<Filters> {
                                 color: Constants.secColor),
                           )),
                       SfRangeSlider(
-                        activeColor: active,
-                        inactiveColor: inactive,
+                        activeColor: Colors.lightBlueAccent,
+                        inactiveColor: Colors.lightBlueAccent[100],
                         min: minPrice,
                         max: maxPrice,
                         values: _valuesPrice,
@@ -261,6 +267,49 @@ class _FiltersState extends State<Filters> {
                             },
                           ),
                         ])),
+                         SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(color: Colors.blue[100], blurRadius: 2)
+                  ], borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Mileage(in kmpl)",
+                          style: GoogleFonts.oswald(
+                            textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Constants.secColor),
+                          )),
+                      SfRangeSlider(
+                        activeColor: active,
+                        inactiveColor: Colors.blueAccent[100],
+                        min: minMileage,
+                        max: maxMileage,
+                        values: _valuesMileage,
+                        // interval: ,
+                        showTicks: true,
+                        showLabels: true,
+                        enableTooltip: true,
+
+                        // numberFormat: NumberFormat("kmpl","end"),
+                        onChanged: (SfRangeValues values) {
+                          setState(() {
+                            _valuesMileage = values;
+
+                            _selectedMinMileage = values.start;
+                            _selectedMaxMileage = values.end;
+                            print(_selectedMinMileage.toString() +
+                                " - " +
+                                _selectedMaxMileage.toString());
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 30),
                 Container(
                   padding: EdgeInsets.all(10),
@@ -354,6 +403,8 @@ class _FiltersState extends State<Filters> {
                             builder: (context) => ApplyFilterPage(
                                   minPrice: _selectedMinPrice,
                                   maxPrice: _selectedMaxPrice,
+                                  minMileage: _selectedMinMileage,
+                                  maxMileage: _selectedMaxMileage,
                                   minYear: _selectedMinYear,
                                   maxYear: _selectedMaxYear,
                                   brands: _selectedBrands,

@@ -4,19 +4,29 @@ import 'package:car_dealer/widgets/car_card.dart';
 import 'package:flutter/material.dart';
 import 'package:car_dealer/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class ApplyFilterPage extends StatefulWidget {
   final int maxPrice, minPrice, minYear, maxYear;
   final List brands;
+  final double maxMileage, minMileage;
   final String transmissionType, fuelType, ownerNo;
   ApplyFilterPage(
-      {this.minPrice, this.maxPrice, this.brands, this.minYear, this.maxYear,this.transmissionType, this.fuelType,this.ownerNo});
+      {this.minPrice,
+      this.maxPrice,
+      this.brands,
+      this.minYear,
+      this.maxYear,
+      this.minMileage,
+      this.maxMileage,
+      this.transmissionType,
+      this.fuelType,
+      this.ownerNo});
   @override
   _ApplyFilterPageState createState() => _ApplyFilterPageState();
 }
-
 class _ApplyFilterPageState extends State<ApplyFilterPage> {
-  var _order = true;
+
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
 
   @override
@@ -36,55 +46,53 @@ class _ApplyFilterPageState extends State<ApplyFilterPage> {
         child: StreamBuilder<List<CarDetails>>(
           initialData: [],
           stream: _firebaseMethods.getAllFilteredCars(
-              minPrice: widget.minPrice,
-              maxPrice: widget.maxPrice,
-              minYear: widget.minYear,
-              maxYear: widget.maxYear,
-              brands: widget.brands,
-              ownerType: widget.ownerNo,
-              transmissionType: widget.transmissionType,
-              fuelType:widget.fuelType,),
-              builder: (context, snapshot) {
+            minPrice: widget.minPrice,
+            maxPrice: widget.maxPrice,
+          
+           
+            brands: widget.brands,
+            ownerType: widget.ownerNo,
+            transmissionType: widget.transmissionType,
+            fuelType: widget.fuelType,
+          ),
+          builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Scaffold(
-                body: Center(
-                  child: Text(
-                    "Error: ${snapshot.error}",
+              return  Center(
+                child: Text(
+                "Error: ${snapshot.error}",
                     style: GoogleFonts.oswald(
-                        textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    )),
-                  ),
-                ),
-              );
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                ))));
             }
             List<CarDetails> data = snapshot.data;
-            print("order1" + _order.toString());
-            if (data.length > 0) {
-              //  List<CarDetails> data2=;
+            List<CarDetails> filterData = [];
+            for (int i = 0; i < data.length; i++) {
+              if (data[i].year >= widget.minYear &&
+                  data[i].year <= widget.maxYear && data[i].mileage <= widget.maxMileage &&data[i].mileage >= widget.minMileage){
+                filterData.add(data[i]);
+              }
+            }
+            if (filterData.length > 0) {
               return Container(
                 child: ListView.builder(
-                    itemCount: data.length,
+                    itemCount: filterData.length,
                     itemBuilder: (context, index) {
-
-                      return (data[index].year>=widget.minYear && data[index].year<=widget.maxYear) 
-                          ? CarCard(
-                              car: data[index],
-                            )
-                          : Container();
+                      return CarCard(
+                        car: filterData[index],
+                      );
                     }),
               );
             } else {
               return Center(
-                child: Text(
-                  "No Cars",
-                  style: GoogleFonts.oswald(
-                      textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  )),
-                ),
+                  child: Lottie.asset(
+                  "assets/images/empty-category.json",
+                 
+                  width: double.infinity,
+                  // height: 250,
+                  fit: BoxFit.cover,
+              ),
               );
             }
           },

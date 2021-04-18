@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loading_animations/loading_animations.dart';
+// import 'package:loading_animations/loading_animations.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingPage extends StatelessWidget {
