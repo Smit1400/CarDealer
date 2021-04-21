@@ -12,7 +12,7 @@ import 'package:car_dealer/screens/my_sell_cars.dart';
 import 'package:car_dealer/screens/add_admin.dart';
 import 'package:car_dealer/screens/index_page.dart';
 
-
+import 'package:car_dealer/screens/faq.dart';
 
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
@@ -27,8 +27,6 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _NewHomescreenstate extends State<AdminHomeScreen> {
-
-
   PageController _tabsPageController;
   int index = 0;
   double value = 0;
@@ -94,7 +92,7 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                   Expanded(
                     child: ListView(
                       children: [
-                         ListTile(
+                        ListTile(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -104,7 +102,7 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             );
                           },
                           leading:
-                              Icon(Icons.home,size: 35, color: Colors.white),
+                              Icon(Icons.home, size: 35, color: Colors.white),
                           title: Text(
                             "Cars",
                             style: GoogleFonts.oswald(
@@ -125,9 +123,8 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                               ),
                             );
                           },
-                           leading: Image.asset("assets/images/sell_car2.png",
+                          leading: Image.asset("assets/images/sell_car2.png",
                               width: 35, height: 35, color: Colors.white),
-                         
                           title: Text(
                             "Sell Car",
                             style: GoogleFonts.oswald(
@@ -137,7 +134,7 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                           ),
                         ),
                         ListTile(
-                           leading: Image.asset("assets/images/rupee3.png",
+                          leading: Image.asset("assets/images/rupee3.png",
                               width: 35, height: 35, color: Colors.white),
                           onTap: () {
                             Navigator.push(
@@ -147,7 +144,6 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                               ),
                             );
                           },
-                         
                           title: Text(
                             "Predict Price",
                             style: GoogleFonts.oswald(
@@ -166,7 +162,7 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             );
                           },
                           leading:
-                              Icon(Icons.list,size: 35, color: Colors.white),
+                              Icon(Icons.list, size: 35, color: Colors.white),
                           title: Text(
                             "My cars",
                             style: GoogleFonts.oswald(
@@ -213,25 +209,25 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                             ),
                           ),
                         ),
-                        // ListTile(
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => AdminRegisterPage(),
-                        //       ),
-                        //     );
-                        //   },
-                        //   leading: Icon(Icons.add_box,
-                        //       size: 35, color: Colors.white),
-                        //   title: Text(
-                        //     "Add new admin",
-                        //     style: GoogleFonts.oswald(
-                        //       textStyle: TextStyle(
-                        //           color: Constants.secColor, fontSize: 22),
-                        //     ),
-                        //   ),
-                        // ),
+                        ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => faq(),
+                              ),
+                            );
+                          },
+                          leading: Icon(Icons.question_answer_rounded,
+                              size: 35, color: Colors.white),
+                          title: Text(
+                            "Frequently asked Questions",
+                            style: GoogleFonts.oswald(
+                              textStyle: TextStyle(
+                                  color: Constants.secColor, fontSize: 22),
+                            ),
+                          ),
+                        ),
                         ListTile(
                           onTap: () {
                             showDialog(
@@ -269,52 +265,52 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                     ..setEntry(0, 3, 200 * val)
                     ..rotateY((pi / 5) * val),
                   child: ClipRRect(
-                    borderRadius: value == 1
-                        ? BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20))
-                        : BorderRadius.zero,
-                    child: AdminAnalysis()
-                    // Scaffold(
-                    //   appBar: MyAppBar(),
-                    //   body: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Expanded(
-                    //         child: PageView(
-                    //           physics: NeverScrollableScrollPhysics(),
-                    //           controller: _tabsPageController,
-                    //           onPageChanged: (num) {
-                    //             setState(() {
-                    //               index = num;
-                    //             });
-                    //           },
-                    //           children: [
-                    //             HomeTab(),
-                    //             SearchTab(),
-                    //             SavedTab(),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    //   bottomNavigationBar: ConvexAppBar(
-                    //     backgroundColor: Color(0xFF041E42),
-                    //     style: TabStyle.reactCircle,
-                    //     items: [
-                    //       TabItem(icon: Icons.home_outlined),
-                    //       TabItem(icon: Icons.search_outlined),
-                    //       TabItem(icon: Icons.save_alt_outlined),
-                    //     ],
-                    //     initialActiveIndex: index,
-                    //     onTap: (num) {
-                    //       _tabsPageController.animateToPage(num,
-                    //           duration: Duration(milliseconds: 300),
-                    //           curve: Curves.easeOutCubic);
-                    //     },
-                    //   ),
-                    // ),
-                  ),
+                      borderRadius: value == 1
+                          ? BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20))
+                          : BorderRadius.zero,
+                      child: AdminAnalysis()
+                      // Scaffold(
+                      //   appBar: MyAppBar(),
+                      //   body: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Expanded(
+                      //         child: PageView(
+                      //           physics: NeverScrollableScrollPhysics(),
+                      //           controller: _tabsPageController,
+                      //           onPageChanged: (num) {
+                      //             setState(() {
+                      //               index = num;
+                      //             });
+                      //           },
+                      //           children: [
+                      //             HomeTab(),
+                      //             SearchTab(),
+                      //             SavedTab(),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   bottomNavigationBar: ConvexAppBar(
+                      //     backgroundColor: Color(0xFF041E42),
+                      //     style: TabStyle.reactCircle,
+                      //     items: [
+                      //       TabItem(icon: Icons.home_outlined),
+                      //       TabItem(icon: Icons.search_outlined),
+                      //       TabItem(icon: Icons.save_alt_outlined),
+                      //     ],
+                      //     initialActiveIndex: index,
+                      //     onTap: (num) {
+                      //       _tabsPageController.animateToPage(num,
+                      //           duration: Duration(milliseconds: 300),
+                      //           curve: Curves.easeOutCubic);
+                      //     },
+                      //   ),
+                      // ),
+                      ),
                 );
               }),
           GestureDetector(

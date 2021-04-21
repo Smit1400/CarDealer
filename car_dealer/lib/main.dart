@@ -1,5 +1,5 @@
-import 'package:car_dealer/Screens/landing_page.dart';
-import 'package:car_dealer/Screens/wishlist_page.dart';
+import 'package:car_dealer/screens/landing_page.dart';
+import 'package:car_dealer/screens/wishlist_page.dart';
 import 'package:car_dealer/screens/auth screens/auth2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:car_dealer/tabs/home_tab.dart';
 import 'package:car_dealer/tabs/saved_tab.dart';
 import 'package:car_dealer/tabs/search_tab.dart';
 import 'package:car_dealer/screens/price_predict.dart';
-
+import 'package:car_dealer/screens/faq.dart';
 import 'Screens/index_page.dart';
 
 
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/hometab':(context)=>HomeTab(),
         '/savedtab':(context)=>SavedTab(),
         '/searchtab':(context)=>SearchTab(),
+        '/faq':(context)=>faq(),
       },
       // home: LandingPage(),
     );
