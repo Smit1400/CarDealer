@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 
+//import 'package:flutter_launch/flutter_launch.dart';
 const Color mainColor = Color(0xFF436eee);
 
 class CarCard extends StatelessWidget {
@@ -23,16 +25,17 @@ class CarCard extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     int pr = (car.price).round();
+    String p = '+91' + (car.mobileNumber).toString();
     return Stack(
       children: [
-
         Card(
           elevation: 10.0,
           // color: Colors.green.withOpacity(0.1),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                  Radius.circular(25),),
-              // side: BorderSide(width: 1, color: Colors.green),
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
+            // side: BorderSide(width: 1, color: Colors.green),
           ),
           margin: EdgeInsets.all(10),
           child: Container(
@@ -49,8 +52,7 @@ class CarCard extends StatelessWidget {
                       height: height * 0.2 * 0.7,
                       width: width * 0.5,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         child: Image.network(
@@ -122,29 +124,27 @@ class CarCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      width: width * 0.4,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Constants.mainColor,
-                        // gradient: LinearGradient(
-                        //   begin: FractionalOffset.topLeft,
-                        //   end: FractionalOffset.bottomRight,
-                        //   colors: [
-                        //     Colors.green,
-                        //     Colors.greenAccent,
-                        //   ],
-                        //   stops: [0.0, 1.0],
-                        //   tileMode: TileMode.repeated,
-                        // ),
-                      ),
-                      child: Center(
-                        child: Text("Chat",
-                            style: GoogleFonts.oswald(
-                              textStyle:
-                                  TextStyle(color: Constants.secColor, fontSize: 18),
-                            )),
+
+                    // var p = "+91" + (car.mobileNumber);
+                    //      int pr = (car.price).round();
+                    InkWell(
+                      onTap: () {
+                        FlutterOpenWhatsapp.sendSingleMessage(p, "Hello");
+                      },
+                      child: Container(
+                        width: width * 0.4,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Constants.mainColor,
+                        ),
+                        child: Center(
+                          child: Text("Chat",
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    color: Constants.secColor, fontSize: 18),
+                              )),
+                        ),
                       ),
                     ),
                   ],

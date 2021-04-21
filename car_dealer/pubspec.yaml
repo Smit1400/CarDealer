@@ -41,6 +41,8 @@ dependencies:
   charts_flutter: ^0.10.0
   dio: ^4.0.0
   flutter_otp: ^0.3.2
+  #flutter_launch: ^0.2.0
+  flutter_open_whatsapp: ^0.1.2
 
 dev_dependencies:
   flutter_test:
