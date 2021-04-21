@@ -126,6 +126,7 @@ class _SellCarState extends State<SellCar> {
   String name, mileage, imageUrl;
 
   bool _loading = false;
+  bool _isValidating = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -154,6 +155,9 @@ class _SellCarState extends State<SellCar> {
   List<Asset> images = List<Asset>();
   // ignore: deprecated_member_use
   List<File> files = List<File>();
+  List<File> front = List<File>();
+  List<File> back = List<File>();
+  List<File> side = List<File>();
 
   String _selectedbrand,
       _selectedfuel,
@@ -176,7 +180,45 @@ class _SellCarState extends State<SellCar> {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
-  Future<void> loadAssets() async {
+  imageValidation(List<File> files, BuildContext context) async {
+    final Uri _uri = Uri.parse('http://localhost:8000/car/validate');
+    for (int i = 0; i < files.length; i++) {
+      try {
+        http.MultipartRequest request = new http.MultipartRequest("POST", _uri);
+
+        http.MultipartFile multipartFile =
+            await http.MultipartFile.fromPath('file', files[i].path);
+
+        request.files.add(multipartFile);
+
+        http.StreamedResponse response = await request.send();
+        if (response.statusCode == 200) {
+          var data = await response.stream.bytesToString();
+          var finalData = jsonDecode(data);
+          print(finalData);
+          if (finalData['successful'] == true) {
+            if (finalData['count'] <= 0) {
+              return false;
+            }
+          } else {
+            await errorDialogBox("API ERROR OCCURED", context);
+          }
+        } else {
+          print(response.statusCode);
+        }
+      } catch (e) {
+        print("[API ERROR] ${e.toString()}");
+        await errorDialogBox(e.toString(), context);
+      }
+    }
+    return true;
+  }
+
+  Future<void> loadAssets(
+      {isFront: false,
+      isBack: false,
+      isSide: false,
+      BuildContext context}) async {
     // ignore: deprecated_member_use
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
@@ -211,9 +253,64 @@ class _SellCarState extends State<SellCar> {
         byteData.buffer
             .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
       );
+      if (isBack) {
+        setState(() {
+          back.add(file);
+        });
+      } else if (isFront) {
+        setState(() {
+          front.add(file);
+        });
+      } else {
+        setState(() {
+          side.add(file);
+        });
+      }
+    }
 
+    try {
       setState(() {
-        files.add(file);
+        _isValidating = true;
+      });
+      if (isBack) {
+        bool check = await imageValidation(back, context);
+        if (check == false) {
+          _scaffoldKey.currentState
+              // ignore: deprecated_member_use
+              .showSnackBar(
+                  SnackBar(content: Text("Back view should contain a car.")));
+          setState(() {
+            back = List<File>();
+          });
+        }
+      } else if (isFront) {
+        bool check = await imageValidation(front, context);
+        if (check == false) {
+          _scaffoldKey.currentState
+              // ignore: deprecated_member_use
+              .showSnackBar(
+                  SnackBar(content: Text("Front view should contain a car.")));
+          setState(() {
+            front = List<File>();
+          });
+        }
+      } else {
+        bool check = await imageValidation(side, context);
+        if (check == false) {
+          _scaffoldKey.currentState
+              // ignore: deprecated_member_use
+              .showSnackBar(
+                  SnackBar(content: Text("Side view should contain a car.")));
+          setState(() {
+            side = List<File>();
+          });
+        }
+      }
+    } catch (e) {
+      print("[SOME ERROR] ${e.toString()}");
+    } finally {
+      setState(() {
+        _isValidating = false;
       });
     }
   }
@@ -238,50 +335,26 @@ class _SellCarState extends State<SellCar> {
   Future<List<dynamic>> _getDownLoadUrl(BuildContext context) async {
     try {
       List urls = [];
-      final Uri _uri = Uri.parse('http://localhost:8000/car/validate');
+      files.addAll(front);
+      files.addAll(back);
+      files.addAll(side);
+      print("Files length = ${files.length}");
+
       for (int i = 0; i < files.length; i++) {
-        try {
-          http.MultipartRequest request =
-              new http.MultipartRequest("POST", _uri);
-
-          http.MultipartFile multipartFile =
-              await http.MultipartFile.fromPath('file', files[i].path);
-
-          request.files.add(multipartFile);
-
-          http.StreamedResponse response = await request.send();
-          if (response.statusCode == 200) {
-            var data = await response.stream.bytesToString();
-            // print(data);
-            var finalData = jsonDecode(data);
-            print(finalData);
-            if (finalData['successful'] == true) {
-              if (finalData['count'] <= 0) {
-                return [];
-              } else {
-                final Reference firebaseStorageRef = FirebaseStorage.instance
-                    .ref()
-                    .child('car_images/${basename(files[i].path)}');
-                final TaskSnapshot task =
-                    await firebaseStorageRef.putFile(files[i]);
-                print("[INFO] Successfully stored image in firebase storage.");
-                String url = await task.ref.getDownloadURL();
-                setState(() {
-                  urls.add(url);
-                });
-              }
-            } else {
-              await errorDialogBox("API ERROR OCCURED", context);
-            }
-          } else {
-            print(response.statusCode);
-          }
-        } catch (e) {
-          print("[API ERROR] ${e.toString()}");
-        }
+        final Reference firebaseStorageRef = FirebaseStorage.instance
+            .ref()
+            .child('car_images/${basename(files[i].path)}');
+        final TaskSnapshot task = await firebaseStorageRef.putFile(files[i]);
+        print("[INFO] Successfully stored image in firebase storage.");
+        String url = await task.ref.getDownloadURL();
+        setState(() {
+          urls.add(url);
+        });
       }
       return urls;
     } catch (e) {
+      print("Shitty Error");
+      print(e.toString());
       throw e.toString();
     }
   }
@@ -299,46 +372,41 @@ class _SellCarState extends State<SellCar> {
       setState(() {
         _loading = true;
       });
-      if (files != null && files.length > 0) {
+      if (front != null &&
+          front.length > 0 &&
+          back != null &&
+          back.length > 0 &&
+          side != null &&
+          side.length > 0) {
         List imageUrls = await _getDownLoadUrl(context);
-        if (imageUrls.length > 0) {
-          String carId = "cars_${DateTime.now().toIso8601String()}";
-          CarDetails carDetails = CarDetails(
-              transmissionType: _selectedtransmission,
-              brand: _selectedbrand,
-              carId: carId,
-              userId: _firebaseServices.getUserId(),
-              ownerName: widget.username,
-              mileage: _mileage.toDouble(),
-              kilometer_driven: _km.toDouble(),
-              engine: _engine.toDouble(),
-              owner_type: _selectedowner,
-              power: _power.toDouble(),
-              price: _price.toDouble(),
-              seats: _seats,
-              year: _year,
-              fuel_type: _selectedfuel,
-              title: _title.toLowerCase(),
-              description: _description,
-              mobileNumber: 9999999999,
-              imageUrls: imageUrls);
-          _firebaseMethods.addCarDetailsToDb(carDetails);
-          print("[INFO] Successfully Registered");
-          Toast.show("Car Registered. Wait for approval", context,
-              duration: Toast.LENGTH_LONG,
-              gravity: Toast.TOP,
-              textColor: Constants.secColor,
-              backgroundColor: Constants.mainColor);
-          Navigator.pop(context);
-        } else {
-          _scaffoldKey.currentState
-              // ignore: deprecated_member_use
-              .showSnackBar(
-                  SnackBar(content: Text("Image should contain car.")));
-          setState(() {
-            files = [];
-          });
-        }
+        String carId = "cars_${DateTime.now().toIso8601String()}";
+        CarDetails carDetails = CarDetails(
+            transmissionType: _selectedtransmission,
+            brand: _selectedbrand,
+            carId: carId,
+            userId: _firebaseServices.getUserId(),
+            ownerName: widget.username,
+            mileage: _mileage.toDouble(),
+            kilometer_driven: _km.toDouble(),
+            engine: _engine.toDouble(),
+            owner_type: _selectedowner,
+            power: _power.toDouble(),
+            price: _price.toDouble(),
+            seats: _seats,
+            year: _year,
+            fuel_type: _selectedfuel,
+            title: _title.toLowerCase(),
+            description: _description,
+            mobileNumber: 9999999999,
+            imageUrls: imageUrls);
+        _firebaseMethods.addCarDetailsToDb(carDetails);
+        print("[INFO] Successfully Registered");
+        Toast.show("Car Registered. Wait for approval", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.TOP,
+            textColor: Constants.mainColor,
+            backgroundColor: Constants.secColor);
+        Navigator.pop(context);
       } else {
         _scaffoldKey.currentState
             // ignore: deprecated_member_use
@@ -638,7 +706,9 @@ class _SellCarState extends State<SellCar> {
                               },
                               labelText: "Price",
                             ),
-                            imageUploadWidget(),
+                            image1UploadWidget(context),
+                            image2UploadWidget(context),
+                            image3UploadWidget(context),
                             SubmitBtn(
                               text: "Register Car",
                               onPressed: () => _submit(context),
@@ -671,14 +741,34 @@ class _SellCarState extends State<SellCar> {
                     ),
                   )
                 : Container(),
+            _isValidating == true
+                ? Container(
+                    color: Colors.black.withOpacity(0.6),
+                    child: Center(
+                      child: Text(
+                        "Validating Images ....",
+                        style: GoogleFonts.oswald(
+                          textStyle: TextStyle(
+                            color: Constants.mainColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         )));
   }
 
-  Widget imageUploadWidget() {
+  Widget image1UploadWidget(BuildContext context) {
     return Column(children: [
-      Container(
-          margin: EdgeInsets.all(15),
+      InkWell(
+        onTap: () {
+          loadAssets(isFront: true, context: context);
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 15, right: 15, left: 15),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -695,32 +785,136 @@ class _SellCarState extends State<SellCar> {
               ),
             ],
           ),
-          child: (files.length > 0 && files != null)
-              ? Image.file(files[0])
-              : Image.network('https://i.imgur.com/sUFH1Aq.png')),
-      SizedBox(
-        height: 20.0,
+          child: (front.length > 0 && front != null)
+              ? Image.file(front[0])
+              : Text(
+                  "Tap to upload image",
+                  style: GoogleFonts.oswald(
+                    textStyle: TextStyle(
+                      color: Constants.secColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+        ),
       ),
-      // ignore: deprecated_member_use
-      RaisedButton(
-        child: Text(
-          "Upload Image",
-          style: GoogleFonts.oswald(
-            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      SizedBox(
+        height: 2.0,
+      ),
+      Text(
+        "Images with front view of the car",
+        style: GoogleFonts.oswald(
+          textStyle: TextStyle(
+            color: Constants.secColor,
+            fontSize: 15,
           ),
         ),
-        onPressed: () {
-          loadAssets();
+      ),
+    ]);
+  }
+
+  Widget image2UploadWidget(BuildContext context) {
+    return Column(children: [
+      InkWell(
+        onTap: () {
+          loadAssets(isBack: true, context: context);
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
+        child: Container(
+          margin: EdgeInsets.only(top: 15, right: 15, left: 15),
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            border: Border.all(color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(2, 2),
+                spreadRadius: 2,
+                blurRadius: 1,
+              ),
+            ],
+          ),
+          child: (back.length > 0 && back != null)
+              ? Image.file(back[0])
+              : Text(
+                  "Tap to upload image",
+                  style: GoogleFonts.oswald(
+                    textStyle: TextStyle(
+                      color: Constants.secColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
         ),
-        elevation: 5.0,
-        color: Constants.mainColor,
-        textColor: Constants.secColor,
-        padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-        splashColor: Colors.grey,
+      ),
+      SizedBox(
+        height: 2.0,
+      ),
+      Text(
+        "Images with back view of the car",
+        style: GoogleFonts.oswald(
+          textStyle: TextStyle(
+            color: Constants.secColor,
+            fontSize: 15,
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  Widget image3UploadWidget(BuildContext context) {
+    return Column(children: [
+      InkWell(
+        onTap: () {
+          loadAssets(isSide: true, context: context);
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 15, right: 15, left: 15),
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            border: Border.all(color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(2, 2),
+                spreadRadius: 2,
+                blurRadius: 1,
+              ),
+            ],
+          ),
+          child: (side.length > 0 && side != null)
+              ? Image.file(side[0])
+              : Text(
+                  "Tap to upload image",
+                  style: GoogleFonts.oswald(
+                    textStyle: TextStyle(
+                      color: Constants.secColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+        ),
+      ),
+      SizedBox(
+        height: 2.0,
+      ),
+      Text(
+        "Images with side view of the car",
+        style: GoogleFonts.oswald(
+          textStyle: TextStyle(
+            color: Constants.secColor,
+            fontSize: 15,
+          ),
+        ),
       ),
     ]);
   }
 }
+// Image.network('https://i.imgur.com/sUFH1Aq.png')
