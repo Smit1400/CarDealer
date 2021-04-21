@@ -64,32 +64,43 @@ class CarCard extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("${car.brand}",
-                              style: GoogleFonts.oswald(
-                                textStyle: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
-                              )),
-                          Text(capsTitle,
-                              style: GoogleFonts.oswald(
-                                textStyle: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w500),
-                              )),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('Rs.$pr',
-                              style: GoogleFonts.oswald(
-                                textStyle: TextStyle(
-                                    color: Constants.secColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600),
-                              )),
-                        ],
+                    Expanded(
+                                          child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("${car.brand}",
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                                style: GoogleFonts.oswald(
+                                  textStyle: TextStyle(
+                                      fontSize: 22, fontWeight: FontWeight.bold),
+                                )),
+                            Text(capsTitle,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                                style: GoogleFonts.oswald(
+                                  textStyle: TextStyle(
+                                      fontSize: 15, fontWeight: FontWeight.w500),
+                                )),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text('Rs.$pr',
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                                style: GoogleFonts.oswald(
+                                  textStyle: TextStyle(
+                                      color: Constants.secColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ],
+                        ),
                       ),
                     )
                   ],
