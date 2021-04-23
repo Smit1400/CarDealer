@@ -86,6 +86,13 @@ flutter pub get
 ```html
     flutter run
 ```
+#### Steps to run the api
+
+1. ``` cd api ```
+2. ``` pip install requirement.txt ```
+3. ``` cd price_pred_api ```
+4. Run the command ``` ucivorn --reload main:app ``` to start the api
+
 
 ---
 ###             Tech stack
