@@ -55,18 +55,18 @@ Document link
 ## Demo ##
 Sign Up/Sign In
 
-![Demo Sign In](images/login.gif)
+<!-- ![Demo Sign In](images/login.gif)
 
 User side
-![Demo User side-CarBuddy](images/user.gif)
+![Demo User side-CarBuddy](images/user.gif) -->
 
 Selling Car Form Demo
 <img src="demo_files/sell_car.gif" width="800" height="500"/>
 
 
-Admin side
+<!-- Admin side
 
-![Demo Admin side-CarBuddy](images/admin.gif)
+![Demo Admin side-CarBuddy](images/admin.gif) -->
 ------------------------------------------
 
 ## How To Use
