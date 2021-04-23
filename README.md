@@ -61,7 +61,8 @@ User side
 ![Demo User side-CarBuddy](images/user.gif)
 
 Selling Car Form Demo
-![](demo_files/sell_car.gif)
+<img src="demo_files/sell_car.gif" width="700" height="600"/>
+
 
 Admin side
 
