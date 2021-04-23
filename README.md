@@ -53,14 +53,15 @@ Document link
 
 ------------------------------------------
 ## Demo ##
-Sign Up/Sign In
+<!-- Sign Up/Sign In -->
 
 <!-- ![Demo Sign In](images/login.gif)
 
 User side
 ![Demo User side-CarBuddy](images/user.gif) -->
 
-Selling Car Form Demo
+**<font size=24>Selling Car Form Demo</font>**
+<br>
 <img src="demo_files/sell_car.gif" width="800" height="500"/>
 
 
