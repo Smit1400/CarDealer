@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "14532864359",
+    "project_id": "car-dealer-project-ac2ef",
+    "storage_bucket": "car-dealer-project-ac2ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14532864359:android:976f629cc1f28a0f0527c2",
+        "android_client_info": {
+          "package_name": "com.example.car_dealer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14532864359-75q57mato03d3nuduau7cf79ve6dt2a2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.car_dealer",
+            "certificate_hash": "4e88d4047856c092dbafc5144c195083d6cd791a"
+          }
+        },
+        {
+          "client_id": "14532864359-8co3rdvms5d7ggucdm396184ia27jt4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.car_dealer",
+            "certificate_hash": "f2c346b9fdc01182975357810201130ba05c3a34"
+          }
+        },
+        {
+          "client_id": "14532864359-jneqrfdnkpbp6d2s6clf3n357gfobes8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.car_dealer",
+            "certificate_hash": "a3dc34cff6b9801d3d4b6e3fb6fa3abb6a39f656"
+          }
+        },
+        {
+          "client_id": "14532864359-h98gh2iuhh2o3t7t7jmiv3m1c131ov9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2eZn-8CFLI6w1iSWSR7D00nnmI0lDg_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14532864359-h98gh2iuhh2o3t7t7jmiv3m1c131ov9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

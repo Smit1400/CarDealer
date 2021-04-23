@@ -60,6 +60,9 @@ Sign Up/Sign In
 User side
 ![Demo User side-CarBuddy](images/user.gif)
 
+Selling Car Form Demo
+![](demo_files/sell_car.gif)
+
 Admin side
 
 ![Demo Admin side-CarBuddy](images/admin.gif)
