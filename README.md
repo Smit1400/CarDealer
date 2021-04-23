@@ -14,7 +14,8 @@
 <h1 align = 'center'><b>Car Buddy</b></h1>
 
 ## Description ##
-    The focus of the project is developing machine learning model that can accurately predict the price of a used car based on its features, in order to make informed purchases. Along with that, giving options to sell, view and search cars in the app.This app would help buyers connect to the sellers. The app would also validate the image by detecting the car in the picture uploaded by the user while regestering of his/her car.
+
+The focus of the project is developing machine learning model that can accurately predict the price of a used car based on its features, in order to make informed purchases. Along with that, giving options to sell, view and search cars in the app.This app would help buyers connect to the sellers. The app would also validate the image by detecting the car in the picture uploaded by the user while regestering of his/her car.
 
 <!--
 <p>
