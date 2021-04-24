@@ -43,6 +43,7 @@ dependencies:
   flutter_otp: ^0.3.2
   #flutter_launch: ^0.2.0
   flutter_open_whatsapp: ^0.1.2
+  liquid_swipe: ^2.1.0
 
 dev_dependencies:
   flutter_test:
