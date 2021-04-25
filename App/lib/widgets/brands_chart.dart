@@ -3,18 +3,21 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:car_dealer/models/cars_per_brand.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:charts_common/src/common/color.dart' as c;
 
 class CarsPerBrandChart extends StatelessWidget {
   final List<CarsPerBrand> data;
   CarsPerBrandChart({@required this.data});
- 
+
   @override
   Widget build(BuildContext context) {
-     int count = 0;
+    int count = 0;
     data.forEach((brand) {
       count += brand.cars;
     });
     print(count);
+    double size = 0;
+  
     List<charts.Series<CarsPerBrand, String>> series = [
       charts.Series(
         id: "Cars",
@@ -23,20 +26,21 @@ class CarsPerBrandChart extends StatelessWidget {
 
         // colorFn: (CarsPerBrand car, _) => car.color,
         measureFn: (CarsPerBrand car, _) => car.cars,
-        labelAccessorFn: (CarsPerBrand car, _) => '${car.brand}-${car.cars}\n  ${(car.cars*100~/count)}%',
+        labelAccessorFn: (CarsPerBrand car, _) =>
+            '${car.brand}\n ${(car.cars * 100 ~/ count)}%',
       ),
     ];
     return Container(
       height: 400,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(10),
       child: Card(
         color: Color(0xff2c4260),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
               Text(
-                "Cars Per Brand",
+                "Top 5 Brands",
                 style: GoogleFonts.oswald(
                   textStyle: TextStyle(
                     color: Constants.mainColor,
@@ -55,35 +59,18 @@ class CarsPerBrandChart extends StatelessWidget {
                   defaultRenderer: new charts.ArcRendererConfig(
                     arcRendererDecorators: [
                       new charts.ArcLabelDecorator(
+                          insideLabelStyleSpec: charts.TextStyleSpec(
+                              fontSize: 10,
+                              color: c.Color.fromHex(code: "#311d52")),
+                          outsideLabelStyleSpec: charts.TextStyleSpec(
+                              fontSize: 10,
+                              color: c.Color.fromHex(code: "#311d52")),
+                          leaderLineColor:
+                              charts.ColorUtil.fromDartColor(Colors.red),
                           //labelPadding:-25,
                           labelPosition: charts.ArcLabelPosition.inside),
                     ],
                   ),
-
-                  //         domainAxis: new charts.OrdinalAxisSpec(
-                  // renderSpec: new charts.SmallTickRendererSpec(
-
-                  //     // Tick and Label styling here.
-                  //     labelStyle: new charts.TextStyleSpec(
-                  //         fontSize: 15, // size in Pts.
-                  //         color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
-
-                  //     // Change the line colors to match text color.
-                  //     lineStyle: new charts.LineStyleSpec(
-                  //         color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
-
-                  /// Assign a custom style for the measure axis.
-                  // primaryMeasureAxis: new charts.NumericAxisSpec(
-                  //     renderSpec: new charts.GridlineRendererSpec(
-
-                  //         // Tick and Label styling here.
-                  //         labelStyle: new charts.TextStyleSpec(
-                  //             fontSize: 15, // size in Pts.
-                  //             color: charts.ColorUtil.fromDartColor(Constants.mainColor)),
-
-                  //         // Change the line colors to match text color.
-                  //         lineStyle: new charts.LineStyleSpec(
-                  //             color: charts.ColorUtil.fromDartColor(Color(0xFF041E42))))),
                 ),
               ),
             ],

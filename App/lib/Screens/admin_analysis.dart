@@ -1,9 +1,13 @@
 import 'package:car_dealer/components/constants.dart';
 import 'package:car_dealer/models/car_details.dart';
 import 'package:car_dealer/models/per_month_model.dart';
+import 'package:car_dealer/models/per_nmonth_model.dart';
+
 import 'package:car_dealer/models/users.dart';
 import 'package:car_dealer/services/firebase_db.dart';
 import 'package:car_dealer/widgets/per_month_chart.dart';
+import 'package:car_dealer/widgets/per_month_linechart.dart';
+
 import 'package:car_dealer/models/cars_per_brand.dart';
 import 'package:car_dealer/models/users_per_month.dart';
 
@@ -17,6 +21,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:lottie/lottie.dart';
+import 'dart:collection';
 
 class AdminAnalysis extends StatefulWidget {
   @override
@@ -27,6 +32,8 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
   FirebaseMethods _methods = FirebaseMethods();
   List<PerMonthModel> graphData = [];
   List<PerMonthModel> graphData2 = [];
+  List<PerNMonthModel> graphDataSold = [];
+
   List<CarsPerBrand> graphData3 = [];
 
   int noNotSold = 0;
@@ -64,6 +71,8 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       print(users);
       Map<String, int> data1 = {};
       Map<String, int> data2 = {};
+      Map<String, int> data3 = {};
+
       List<CarDetails> carsSold = await _methods.getAllSoldCars();
 
       setState(() {
@@ -118,6 +127,31 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           ));
         });
       });
+
+      for (CarDetails car in cars) {
+        if (car.isSold == true) {
+          String month = DateTime.parse(car.dateSold).month.toString();
+          if (data3.containsKey(month)) {
+            setState(() {
+              data3[month] = data3[month] + 1;
+            });
+          } else {
+            setState(() {
+              data3[month] = 1;
+            });
+          }
+        }
+      }
+      print(data3);
+      data3.forEach((month, cars) {
+        setState(() {
+          graphDataSold.add(PerNMonthModel(
+            month: int.tryParse(month),
+            cars: cars,
+            color: charts.ColorUtil.fromDartColor(Colors.teal),
+          ));
+        });
+      });
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -150,17 +184,34 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         }
       }
       print(data);
-
-      data.forEach((brandName, cars) {
-        print(cars);
-        setState(() {
-          graphData3.add(CarsPerBrand(
-            brand: brandName,
-            cars: cars,
-            color: charts.ColorUtil.fromDartColor(Colors.teal),
-          ));
-        });
-      });
+      var temp = data;
+      var sortedKeys = temp.keys.toList(growable: false)
+        ..sort((k2, k1) => temp[k1].compareTo(temp[k2]));
+      LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
+          key: (k) => k, value: (k) => temp[k]);
+      print(sortedMap);
+      Map<String, int> sortedData =
+          sortedMap.map((a, b) => MapEntry(a as String, b as int));
+      List<String> sortedListName =
+          sortedData.entries.map((entry) => (entry.key)).toList();
+      List<int> sortedListCars =
+          sortedData.entries.map((entry) => (entry.value)).toList();
+      print(sortedListName);
+      print(sortedListCars);
+      for (int i = 0; i < sortedListCars.length && i<5;i++){
+        print(sortedListName[i]);
+  
+        // sortedData.forEach((brandName, cars) {
+  
+          setState(() {
+            graphData3.add(CarsPerBrand(
+              brand: sortedListName[i],
+              cars: sortedListCars[i],
+              color: charts.ColorUtil.fromDartColor(Colors.teal),
+            ));
+          });
+    }
+        // });
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -191,7 +242,6 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -221,8 +271,13 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                     id: "Users",
                     title: "Users Registered Per Month",
                   ),
+                  PerMonthLineChart(
+                    data: graphDataSold,
+                    id: "Cars",
+                    title: "Cars Sold Per Month",
+                  ),
                   // SizedBox(height: 10),
-                   
+
                   //  SizedBox(height: 10),
                   CarsPerBrandChart(
                     data: graphData3,
@@ -293,10 +348,9 @@ class _UserAnalysisState extends State<UserAnalysis> {
               ownerName: ownerName, cars: cars, mobileNumber: mbno[k]));
         });
         k += 1;
-        
       });
       print("User Data------------------->");
-        print(UserCarsData);
+      print(UserCarsData);
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -391,14 +445,14 @@ class _UserAnalysisState extends State<UserAnalysis> {
     });
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 18),
-     
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: FittedBox(
           child: DataTable(
             showBottomBorder: true,
-            headingRowColor:
-                MaterialStateProperty.resolveWith((states) =>  Color(0xff2c4260),),
+            headingRowColor: MaterialStateProperty.resolveWith(
+              (states) => Color(0xff2c4260),
+            ),
             headingTextStyle: GoogleFonts.oswald(
               textStyle: TextStyle(
                 color: Colors.white,

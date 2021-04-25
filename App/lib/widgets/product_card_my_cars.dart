@@ -134,7 +134,7 @@ class ProductCard extends StatelessWidget {
                             updateCar();
                           },
                           child: Text(
-                            "CAR SOLD ",
+                            "CAR SOLD ",style: TextStyle(color: Constants.secColor),
                           ),
                         ),
                       )

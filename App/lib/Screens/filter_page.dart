@@ -79,20 +79,17 @@ class _FiltersState extends State<Filters> {
   ];
 
   List _brands = [
-    {"display": ' Maruti', "value": ' Maruti'},
-    {
-      "display": 'Suzuki',
-      "value": 'Suzuki',
-    },
+    {"display": 'Maruti Suzuki', "value": 'Maruti Suzuki'},
+
     {"display": 'Hyundai', "value": 'Hyundai'},
     {"display": 'Tata', "value": 'Tata'},
     {
-      "display": ' Mahindra',
+      "display": 'Mahindra',
       "value": ' Mahindra',
     },
     {
       "display": 'Kia',
-      "value": ' Kia',
+      "value": 'Kia',
     },
     {
       "display": 'BMW',

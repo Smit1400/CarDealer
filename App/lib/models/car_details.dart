@@ -19,6 +19,7 @@ class CarDetails {
   final String title;
   final String description;
   final List<dynamic> imageUrls;
+  final String dateSold;
   bool approved;
   bool isSold;
 
@@ -43,6 +44,7 @@ class CarDetails {
     @required this.transmissionType,
     this.approved: false,
     this.isSold: false,
+    this.dateSold:""
 
   });
 
@@ -68,6 +70,8 @@ class CarDetails {
       approved: data["approved"],
       isSold: data["isSold"],
       transmissionType: data['transmissionType'],
+      dateSold:data['dateSold']
+
     );
   }
 
@@ -93,6 +97,7 @@ class CarDetails {
       "approved": this.approved,
       "isSold": this.isSold,
       'transmissionType': this.transmissionType,
+      "dateSold":this.dateSold
     };
   }
 }

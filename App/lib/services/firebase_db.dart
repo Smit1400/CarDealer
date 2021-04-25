@@ -158,7 +158,7 @@ class FirebaseMethods {
       String path = "Cars/$carId";
       print(path);
       // print("[INFO] Updated car data = ${carDetails.toMap()}");
-      await firestore.doc(path).update({"isSold": true});
+      await firestore.doc(path).update({"isSold": true,"dateSold":DateTime.now().toString()});
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while updating ${e.code}");
       throw FirebaseException(

@@ -134,12 +134,11 @@ class _SellCarState extends State<SellCar> {
   FirebaseMethods _firebaseMethods = FirebaseMethods();
 
   List<String> _brandnames = [
-    ' Maruti',
-    'Suzuki',
+    'Maruti Suzuki',
     'Hyundai',
     'Tata',
-    ' Mahindra',
-    ' Kia',
+    'Mahindra',
+    'Kia',
     'BMW',
     'Jeep',
     'Ford',

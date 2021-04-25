@@ -12,14 +12,11 @@ class MySellCars extends StatefulWidget {
 }
 
 class _MySellCarsState extends State<MySellCars> {
-// final _scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    //print(screenWidth);
-    //print(screenHeight);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
