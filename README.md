@@ -60,9 +60,26 @@ Document link
 User side
 ![Demo User side-CarBuddy](images/user.gif) -->
 
-**<font size=24>Selling Car Form Demo</font>**
+### Selling Car Form Demo
+
 <br>
-<img src="demo_files/sell_car.gif" width="800" height="500"/>
+
+
+<img src="demo_files/sell_car.gif" width="250" height="500"/>
+
+### Predict Car Price Demo
+
+<br>
+
+
+<img src="demo_files/predict_price.gif" width="250" height="500"/>
+
+### User Functionalities Demo
+
+<br>
+
+
+<img src="demo_files/user.gif" width="250" height="500"/>
 
 
 <!-- Admin side
