@@ -63,8 +63,7 @@ Document link
 <img src="demo_files/login_demo.gif" width="250" height="500"/>
 
 
-User side
-![Demo User side-CarBuddy](images/user.gif) -->
+<!--![Demo User side-CarBuddy](images/user.gif) -->
 
 ### Selling Car Form Demo
 
