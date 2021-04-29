@@ -53,9 +53,15 @@ Document link
 
 ------------------------------------------
 ## Demo ##
-<!-- Sign Up/Sign In -->
 
-<!-- ![Demo Sign In](images/login.gif)
+
+### Sign Up/Sign In 
+
+<br>
+
+
+<img src="demo_files/login_demo.gif" width="250" height="500"/>
+
 
 User side
 ![Demo User side-CarBuddy](images/user.gif) -->
