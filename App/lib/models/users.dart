@@ -5,9 +5,10 @@ class User {
   final bool admin;
   final String password;
   final String date;
+  final List car_list;
 
   User(
-      {this.phonenum, this.username, this.email, this.admin: false, this.password ,this.date});
+      {this.phonenum, this.username, this.email, this.admin: false, this.password ,this.date, this.car_list});
 
   factory User.fromMap(Map<dynamic, dynamic> value) {
     // print("value =  $value");
@@ -18,6 +19,7 @@ class User {
       admin: value['admin'],
       date: value['date'],
       password: value['password'],
+      car_list: value['car_list'],
     );
   }
 
@@ -29,6 +31,7 @@ class User {
       'admin': this.admin,
       'password':this.password,
       'date': this.date,
+      'car_list': this.car_list,
     };
   }
 }

@@ -8,9 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'package:car_dealer/services/firebase_auth.dart';
 
-
 class LandingPage extends StatelessWidget {
-
   Map<String, dynamic> user;
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
@@ -67,7 +65,7 @@ class LandingPage extends StatelessWidget {
               return Scaffold(
                 body: Center(
                   child: Lottie.asset(
-                     "assets/images/old-car-moving-animation.json",
+                    "assets/images/old-car-moving-animation.json",
                     width: double.infinity,
                     height: 250,
                     fit: BoxFit.cover,
@@ -128,18 +126,19 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-     return Scaffold(
-                  body: Center(
-                    child: Lottie.asset(
-                       "assets/images/old-car-moving-animation.json",
-                      width: double.infinity,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
+      return Scaffold(
+        body: Center(
+          child: Lottie.asset(
+            "assets/images/old-car-moving-animation.json",
+            width: double.infinity,
+            height: 250,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
     } else {
       print(user);
+      // u.User currentUser = u.User.fromMap(user);
       if (user['admin']) {
         return AdminHomeScreen(user: user);
       } else {

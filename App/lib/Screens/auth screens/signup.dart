@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
             'phonenum': "+91" + _phonenum,
             'admin': false,
             'date': DateTime.now().toString(),
-
+            'car_list': [],
             // 42
           })
           .then((value) => Navigator.pushReplacementNamed(context, '/'))

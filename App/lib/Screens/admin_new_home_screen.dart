@@ -13,6 +13,7 @@ import 'package:car_dealer/screens/add_admin.dart';
 import 'package:car_dealer/screens/index_page.dart';
 
 import 'package:car_dealer/screens/faq.dart';
+import 'package:car_dealer/widgets/dialog_box.dart';
 
 import 'package:flutter/material.dart';
 import 'package:car_dealer/widgets/custom_alert_dialog.dart';
@@ -42,6 +43,46 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
     _tabsPageController.dispose();
     super.dispose();
   }
+
+  checkUserCars() async {
+    List userCars =
+        widget.user['car_list'].isEmpty ? [] : widget.user['car_list'];
+    int count = 0;
+    int currentMonth = DateTime.now().month;
+    int currentYear = DateTime.now().year;
+    for (int i = 0; i < userCars.length; i++) {
+      int month = DateTime.parse(userCars[i].substring(5)).month;
+      int year = DateTime.parse(userCars[i].substring(5)).year;
+      if ((month == currentMonth) && (year == currentYear)) {
+        setState(() {
+          count += 1;
+        });
+      }
+    }
+    print("Count = $count");
+    if (count >= 3) {
+      return false;
+    }
+    return true;
+  }
+
+  errorDialogBox(description, context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            title: "Warning",
+            buttonText1: 'OK',
+            button1Func: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icons.clear,
+            description: '$description',
+            iconColor: Colors.red,
+          );
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,16 +153,23 @@ class _NewHomescreenstate extends State<AdminHomeScreen> {
                           ),
                         ),
                         ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SellCar(
-                                  email: widget.user['email'],
-                                  username: widget.user['username'],
+                          onTap: () async{
+                            if (await checkUserCars()) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SellCar(
+                                    email: widget.user['email'],
+                                    username: widget.user['username'],
+                                    carList: widget.user['car_list'],
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else {
+                              await errorDialogBox(
+                                  "Your Limit is over for this month.",
+                                  context);
+                            }
                           },
                           leading: Image.asset("assets/images/sell_car2.png",
                               width: 35, height: 35, color: Colors.white),

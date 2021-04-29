@@ -32,8 +32,10 @@ class FirebaseMethods {
           isEqualTo: true,
         );
     final snapshots = reference.snapshots();
-    return snapshots.map((snapshot) =>
-        snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList()).first;
+    return snapshots
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList())
+        .first;
   }
 
   Future<List<CarDetails>> getCars() async {
@@ -96,13 +98,24 @@ class FirebaseMethods {
         snapshot.docs.map((doc) => CarDetails.fromMap(doc.data())).toList());
   }
 
-  Future<void> addCarDetailsToDb(CarDetails carDetails) async {
+  Future<void> addCarDetailsToDb(
+      CarDetails carDetails, List carList) async {
     try {
       print("[INFO] Storing new car details");
       await firestore
           .collection("Cars")
           .doc(carDetails.carId)
           .set(carDetails.toMap());
+      print('---------------------');
+      print(carDetails.userId);
+      print(carList);
+      print('------------------------');
+      await firestore
+          .collection("Users")
+          .doc(carDetails.userId)
+          .update({'car_list': carList}).then((a) {
+        print("[INFO] User details updated.");
+      });
       print("[INFO] Stored new car details");
     } on FirebaseException catch (e) {
       print("[ERROR] ${e.message}");
@@ -158,7 +171,9 @@ class FirebaseMethods {
       String path = "Cars/$carId";
       print(path);
       // print("[INFO] Updated car data = ${carDetails.toMap()}");
-      await firestore.doc(path).update({"isSold": true,"dateSold":DateTime.now().toString()});
+      await firestore
+          .doc(path)
+          .update({"isSold": true, "dateSold": DateTime.now().toString()});
     } on FirebaseException catch (e) {
       print("[ERROR] Erro while updating ${e.code}");
       throw FirebaseException(
@@ -196,8 +211,8 @@ class FirebaseMethods {
         .collection("Wishlist");
     final snapshots = reference.snapshots();
     // return snapshots.toList();
-    return snapshots.map((snapshot) =>
-        snapshot.docs.map((doc) => (doc.data)).toList());
+    return snapshots
+        .map((snapshot) => snapshot.docs.map((doc) => (doc.data)).toList());
   }
 
   Future<void> deleteCarFromWishlist(String carId) async {

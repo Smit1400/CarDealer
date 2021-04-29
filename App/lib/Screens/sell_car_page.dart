@@ -117,7 +117,10 @@ class _ImageUploadState extends State<ImageUpload> {
 class SellCar extends StatefulWidget {
   final String email;
   final String username;
-  SellCar({@required this.email, @required this.username});
+  final List carList;
+
+  SellCar(
+      {@required this.username, @required this.carList, @required this.email});
   @override
   _SellCarState createState() => _SellCarState();
 }
@@ -367,6 +370,7 @@ class _SellCarState extends State<SellCar> {
   }
 
   Future<void> _submit(BuildContext context) async {
+    // print(widget.carList);
     try {
       setState(() {
         _loading = true;
@@ -398,7 +402,14 @@ class _SellCarState extends State<SellCar> {
             description: _description,
             mobileNumber: 9999999999,
             imageUrls: imageUrls);
-        _firebaseMethods.addCarDetailsToDb(carDetails);
+        print(widget.carList);
+        List car_list =
+            widget.carList.isEmpty ? [] : widget.carList;
+        setState(() {
+          car_list.add(carId);
+        });
+        _firebaseMethods.addCarDetailsToDb(carDetails, car_list);
+
         print("[INFO] Successfully Registered");
         Toast.show("Car Registered. Wait for approval", context,
             duration: Toast.LENGTH_LONG,
