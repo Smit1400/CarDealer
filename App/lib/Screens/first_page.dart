@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:car_dealer/Screens/login_page.dart';
 import 'package:car_dealer/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,41 +10,7 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
-  // static const TextStyle goldcoinGreyStyle = TextStyle(
-  //     color: Colors.grey,
-  //     fontSize: 20.0,
-  //     fontWeight: FontWeight.bold,
-  //     fontFamily: "Product Sans");
-
-  // static const TextStyle goldCoinWhiteStyle = TextStyle(
-  //     color: Colors.white,
-  //     fontSize: 20.0,
-  //     fontWeight: FontWeight.bold,
-  //     fontFamily: "Product Sans");
-
-  // static const TextStyle greyStyle =
-  //     TextStyle(fontSize: 40.0, color: Colors.grey, fontFamily: "Product Sans");
-  // static const TextStyle whiteStyle = TextStyle(
-  //     fontSize: 40.0, color: Colors.white, fontFamily: "Product Sans");
-
-  // static const TextStyle boldStyle = TextStyle(
-  //   fontSize: 50.0,
-  //   color: Colors.black,
-  //   fontFamily: "Product Sans",
-  //   fontWeight: FontWeight.bold,
-  // );
-
-  // static const TextStyle descriptionGreyStyle = TextStyle(
-  //   color: Colors.grey,
-  //   fontSize: 20.0,
-  //   fontFamily: "Product Sans",
-  // );
-
-  // static const TextStyle descriptionWhiteStyle = TextStyle(
-  //   color: Colors.white,
-  //   fontSize: 20.0,
-  //   fontFamily: "Product Sans",
-  // );
+ 
   int page = 0;
   LiquidController liquidController;
   UpdateType updateType;

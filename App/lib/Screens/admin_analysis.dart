@@ -94,15 +94,42 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         }
       }
       print(data1);
-      data1.forEach((month, cars) {
+       var temp1 = data1;
+      var sortedKeys1 = temp1.keys.toList(growable: false)
+        ..sort((k1, k2) => k1.compareTo(k2));
+      LinkedHashMap sortedMap1 = new LinkedHashMap.fromIterable(sortedKeys1,
+          key: (k) => k, value: (k) => temp1[k]);
+      print(sortedMap1);
+      Map<String, int> sortedData1 =
+          sortedMap1.map((a, b) => MapEntry(a as String, b as int));
+      List<String> sortedListMonth1 =
+          sortedData1.entries.map((entry) => (entry.key)).toList();
+      List<int> sortedListCars1 =
+          sortedData1.entries.map((entry) => (entry.value)).toList();
+      print(sortedListMonth1);
+      print(sortedListCars1);
+      for (int i = 0; i < sortedListCars1.length && i < 5; i++) {
+        print(sortedListMonth1[i]);
+
+        // sortedData.forEach((brandName, cars) {
+
         setState(() {
           graphData.add(PerMonthModel(
-            month: mo[int.tryParse(month)],
-            cars: cars,
+            month: mo[int.tryParse(sortedListMonth1[i])],
+            cars: sortedListCars1[i],
             color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      });
+      }
+      // data1.forEach((month, cars) {
+      //   setState(() {
+      //     graphData.add(PerMonthModel(
+      //       month: mo[int.tryParse(month)],
+      //       cars: cars,
+      //       color: charts.ColorUtil.fromDartColor(Colors.teal),
+      //     ));
+      //   });
+      // });
       for (User user in users) {
         String month = DateTime.parse(user.date).month.toString();
         if (data2.containsKey(month)) {
@@ -118,15 +145,42 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       }
       print("Hello");
       print(data2);
-      data2.forEach((month, cars) {
+       var temp = data2;
+      var sortedKeys = temp.keys.toList(growable: false)
+        ..sort((k1, k2) => temp[k1].compareTo(temp[k2]));
+      LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
+          key: (k) => k, value: (k) => temp[k]);
+      print(sortedMap);
+      Map<String, int> sortedData =
+          sortedMap.map((a, b) => MapEntry(a as String, b as int));
+      List<String> sortedListMonth =
+          sortedData.entries.map((entry) => (entry.key)).toList();
+      List<int> sortedListCars =
+          sortedData.entries.map((entry) => (entry.value)).toList();
+      print(sortedListMonth);
+      print(sortedListCars);
+      for (int i = 0; i < sortedListCars.length && i < 5; i++) {
+        print(sortedListMonth[i]);
+
+        // sortedData.forEach((brandName, cars) {
+
         setState(() {
           graphData2.add(PerMonthModel(
-            month: mo[int.tryParse(month)],
-            cars: cars,
-            color: charts.ColorUtil.fromDartColor(Constants.mainColor),
+            month: mo[int.tryParse(sortedListMonth[i])],
+            cars: sortedListCars[i],
+            color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      });
+      }
+      // data2.forEach((month, cars) {
+      //   setState(() {
+      //     graphData2.add(PerMonthModel(
+      //       month: mo[int.tryParse(month)],
+      //       cars: cars,
+      //       color: charts.ColorUtil.fromDartColor(Constants.mainColor),
+      //     ));
+      //   });
+      // });
 
       for (CarDetails car in cars) {
         if (car.isSold == true) {
@@ -142,16 +196,43 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           }
         }
       }
-      print(data3);
-      data3.forEach((month, cars) {
+       var temp2 = data3;
+      var sortedKeys2 = temp2.keys.toList(growable: false)
+        ..sort((k2, k1) => temp2[k1].compareTo(temp2[k2]));
+      LinkedHashMap sortedMap2 = new LinkedHashMap.fromIterable(sortedKeys2,
+          key: (k) => k, value: (k) => temp2[k]);
+      print(sortedMap2);
+      Map<String, int> sortedData2 =
+          sortedMap2.map((a, b) => MapEntry(a as String, b as int));
+      List<String> sortedListMonth2 =
+          sortedData2.entries.map((entry) => (entry.key)).toList();
+      List<int> sortedListCars2 =
+          sortedData2.entries.map((entry) => (entry.value)).toList();
+      print(sortedListMonth2);
+      print(sortedListCars2);
+      for (int i = 0; i < sortedListCars2.length && i < 5; i++) {
+        print(sortedListMonth2[i]);
+
+        // sortedData.forEach((brandName, cars) {
+
         setState(() {
           graphDataSold.add(PerNMonthModel(
-            month: int.tryParse(month),
-            cars: cars,
+            month: int.tryParse(sortedListMonth2[i]),
+            cars: sortedListCars2[i],
             color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      });
+      }
+
+        // data3.forEach((month, cars) {
+        //   setState(() {
+        //     graphDataSold.add(PerNMonthModel(
+        //       month: int.tryParse(month),
+        //       cars: cars,
+        //       color: charts.ColorUtil.fromDartColor(Colors.teal),
+        //     ));
+        //   });
+        // });
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -198,20 +279,17 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           sortedData.entries.map((entry) => (entry.value)).toList();
       print(sortedListName);
       print(sortedListCars);
-      for (int i = 0; i < sortedListCars.length && i<5;i++){
+      for (int i = 0; i < sortedListCars.length && i < 5; i++) {
         print(sortedListName[i]);
-  
-        // sortedData.forEach((brandName, cars) {
-  
-          setState(() {
-            graphData3.add(CarsPerBrand(
-              brand: sortedListName[i],
-              cars: sortedListCars[i],
-              color: charts.ColorUtil.fromDartColor(Colors.teal),
-            ));
-          });
-    }
-        // });
+        setState(() {
+          graphData3.add(CarsPerBrand(
+            brand: sortedListName[i],
+            cars: sortedListCars[i],
+            color: charts.ColorUtil.fromDartColor(Colors.teal),
+          ));
+        });
+      }
+
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {

@@ -4,8 +4,6 @@ import 'package:car_dealer/widgets/admin_card.dart';
 import 'package:car_dealer/widgets/custom_action_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:car_dealer/widgets/loading_page.dart';
-
 class AdminPage extends StatefulWidget {
   @override
   _AdminPageState createState() => _AdminPageState();
