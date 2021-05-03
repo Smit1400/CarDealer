@@ -94,7 +94,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         }
       }
       print(data1);
-       var temp1 = data1;
+      var temp1 = data1;
       var sortedKeys1 = temp1.keys.toList(growable: false)
         ..sort((k1, k2) => k1.compareTo(k2));
       LinkedHashMap sortedMap1 = new LinkedHashMap.fromIterable(sortedKeys1,
@@ -145,7 +145,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       }
       print("Hello");
       print(data2);
-       var temp = data2;
+      var temp = data2;
       var sortedKeys = temp.keys.toList(growable: false)
         ..sort((k1, k2) => temp[k1].compareTo(temp[k2]));
       LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
@@ -196,7 +196,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           }
         }
       }
-       var temp2 = data3;
+      var temp2 = data3;
       var sortedKeys2 = temp2.keys.toList(growable: false)
         ..sort((k2, k1) => temp2[k1].compareTo(temp2[k2]));
       LinkedHashMap sortedMap2 = new LinkedHashMap.fromIterable(sortedKeys2,
@@ -224,15 +224,15 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         });
       }
 
-        // data3.forEach((month, cars) {
-        //   setState(() {
-        //     graphDataSold.add(PerNMonthModel(
-        //       month: int.tryParse(month),
-        //       cars: cars,
-        //       color: charts.ColorUtil.fromDartColor(Colors.teal),
-        //     ));
-        //   });
-        // });
+      // data3.forEach((month, cars) {
+      //   setState(() {
+      //     graphDataSold.add(PerNMonthModel(
+      //       month: int.tryParse(month),
+      //       cars: cars,
+      //       color: charts.ColorUtil.fromDartColor(Colors.teal),
+      //     ));
+      //   });
+      // });
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -289,7 +289,6 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
           ));
         });
       }
-
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -303,67 +302,147 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(),
-      body: _loading
-          ? Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: Lottie.asset(
-                  "assets/images/3971-graph.json",
-                  width: double.infinity,
-                  height: 250,
-                  fit: BoxFit.cover,
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            // appBar: MyAppBar(),
+            appBar: AppBar(
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Image.asset(
+                  "assets/images/logo5.png",
+                  fit: BoxFit.contain,
+                  height: 19,
                 ),
               ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      adminNoCard(
-                        count: noNotSold,
-                        title: "Total cars not sold",
-                        color1: Color(0xFF3366FF),
-                        color2: Color(0xFF00CCFF),
-                      ),
-                      adminNoCard(
-                        count: noSold,
-                        title: "Total cars sold",
-                        color1: Color(0xFFdb5d44),
-                        color2: Color(0xFFde8d64),
-                      ),
-                    ],
-                  ),
-                  PerMonthChart(
-                    data: graphData,
-                    id: "Cars",
-                    title: "Cars Registered Per Month",
-                  ),
-                  UserAnalysis(),
-                  // SizedBox(height: 10),
-                  PerMonthChart(
-                    data: graphData2,
-                    id: "Users",
-                    title: "Users Registered Per Month",
-                  ),
-                  PerMonthLineChart(
-                    data: graphDataSold,
-                    id: "Cars",
-                    title: "Cars Sold Per Month",
-                  ),
-                  // SizedBox(height: 10),
-
-                  //  SizedBox(height: 10),
-                  CarsPerBrandChart(
-                    data: graphData3,
-                  )
+              backgroundColor: Color(0xFF041E42),
+              title: Text(
+                "Car Buddy",
+                style: GoogleFonts.oswald(),
+              ),
+              iconTheme: IconThemeData(color: Constants.mainColor),
+              // title: Text('Car Buddy',
+              //     style: TextStyle(
+              //         fontSize: screenHeight*0.028,
+              //         color: Constants.secColor,
+              //         fontWeight: FontWeight.bold)),
+              // backgroundColor: Colors.white,
+              bottom: TabBar(
+                isScrollable: true,
+                indicator: UnderlineTabIndicator(
+                    borderSide:
+                        BorderSide(color: Constants.mainColor, width: 3.5)),
+                tabs: <Widget>[
+                  Tab(
+                      child: Text(
+                    '   Cars  ',
+                    style: GoogleFonts.alegreya(
+                        fontSize: 18, fontWeight: FontWeight.w500),
+                  )),
+                  Tab(
+                      child: Text(
+                    '   User   ',
+                    style: GoogleFonts.alegreya(
+                        fontSize: 18, fontWeight: FontWeight.w500),
+                  )),
                 ],
               ),
             ),
-    );
+            resizeToAvoidBottomInset: false,
+            body: TabBarView(children: <Widget>[
+              _loading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: Center(
+                        child: Lottie.asset(
+                          "assets/images/3971-graph.json",
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              adminNoCard(
+                                count: noNotSold,
+                                title: "Total cars not sold",
+                                color1: Color(0xFF3366FF),
+                                color2: Color(0xFF00CCFF),
+                              ),
+                              adminNoCard(
+                                count: noSold,
+                                title: "Total cars sold",
+                                color1: Color(0xFFdb5d44),
+                                color2: Color(0xFFde8d64),
+                              ),
+                            ],
+                          ),
+                          PerMonthChart(
+                            data: graphData,
+                            id: "Cars",
+                            title: "Cars Registered Per Month",
+                          ),
+                          PerMonthLineChart(
+                            data: graphDataSold,
+                            id: "Cars",
+                            title: "Cars Sold Per Month",
+                          ),
+                          // SizedBox(height: 10),
+                          CarsPerBrandChart(
+                            data: graphData3,
+                          )
+                        ],
+                      ),
+                    ),
+              _loading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: Center(
+                        child: Lottie.asset(
+                          "assets/images/3971-graph.json",
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              adminNoCard(
+                                count: noNotSold,
+                                title: "Total no. of users",
+                                color1: Color(0xFF3366FF),
+                                color2: Color(0xFF00CCFF),
+                              ),
+                              adminNoCard(
+                                count: noSold,
+                                title: "Total no. of user ",
+                                color1: Color(0xFFdb5d44),
+                                color2: Color(0xFFde8d64),
+                              ),
+                            ],
+                          ),
+
+                          UserAnalysis(),
+                          // SizedBox(height: 10),
+                          PerMonthChart(
+                            data: graphData2,
+                            id: "Users",
+                            title: "Users Registered Per Month",
+                          ),
+                        ],
+                      ),
+                    ),
+            ])));
   }
 }
 
