@@ -25,7 +25,7 @@ class PerMonthLineChart extends StatelessWidget {
         colorFn: (PerNMonthModel car, _) => charts.MaterialPalette.blue.shadeDefault,
         measureFn: (PerNMonthModel car, _) => car.cars,
         labelAccessorFn: (PerNMonthModel car, _) => '${car.cars}',
-        
+
 
       ),
     ];
@@ -53,6 +53,7 @@ class PerMonthLineChart extends StatelessWidget {
                 child: charts.LineChart(
                   
                   series,
+     
                   animate: true,
                   animationDuration: Duration(
                     seconds: 1,
@@ -84,3 +85,5 @@ class PerMonthLineChart extends StatelessWidget {
     );
   }
 }
+String text;
+

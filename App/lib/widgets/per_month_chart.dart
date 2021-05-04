@@ -31,6 +31,7 @@ class PerMonthChart extends StatelessWidget {
         colorFn: (PerMonthModel car, _) => car.color,
         measureFn: (PerMonthModel car, _) => car.cars,
         labelAccessorFn: (PerMonthModel car, _) => '${car.cars}',
+        
       ),
     ];
     return Container(

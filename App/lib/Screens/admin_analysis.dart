@@ -1,41 +1,49 @@
-import 'package:car_dealer/components/constants.dart';
-import 'package:car_dealer/models/car_details.dart';
-import 'package:car_dealer/models/per_month_model.dart';
-import 'package:car_dealer/models/per_nmonth_model.dart';
-
-import 'package:car_dealer/models/users.dart';
-import 'package:car_dealer/services/firebase_db.dart';
-import 'package:car_dealer/widgets/per_month_chart.dart';
-import 'package:car_dealer/widgets/per_month_linechart.dart';
-
-import 'package:car_dealer/models/cars_per_brand.dart';
-import 'package:car_dealer/models/users_per_month.dart';
-
-import 'package:car_dealer/widgets/admin_no_card.dart';
-import 'package:car_dealer/widgets/brands_chart.dart';
-import 'package:car_dealer/widgets/appbar.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:collection';
+
+import 'package:car_dealer/components/constants.dart';
+
+import 'package:car_dealer/models/car_details.dart';
+import 'package:car_dealer/models/per_month_model.dart';
+import 'package:car_dealer/models/per_nmonth_model.dart';
+import 'package:car_dealer/models/cars_per_brand.dart';
+import 'package:car_dealer/models/cars_per_user_model.dart';
+import 'package:car_dealer/models/users.dart';
+
+import 'package:car_dealer/services/firebase_db.dart';
+import 'package:car_dealer/widgets/per_month_chart.dart';
+import 'package:car_dealer/widgets/per_month_linechart.dart';
+import 'package:car_dealer/widgets/admin_no_card.dart';
+import 'package:car_dealer/widgets/brands_chart.dart';
+import 'package:car_dealer/widgets/appbar.dart';
 
 class AdminAnalysis extends StatefulWidget {
   @override
   _AdminAnalysisState createState() => _AdminAnalysisState();
 }
+int totalSeller = 0;
 
 class _AdminAnalysisState extends State<AdminAnalysis> {
+      List _years = [
+    {"value": 'All',},
+    {"value": '2019'},
+    {"value": '2020'},
+    {"value": '2021'},
+    {"value": '2022'},
+    {"value": '2023'},
+  ];
   FirebaseMethods _methods = FirebaseMethods();
-  List<PerMonthModel> graphData = [];
-  List<PerMonthModel> graphData2 = [];
-  List<PerNMonthModel> graphDataSold = [];
-
-  List<CarsPerBrand> graphData3 = [];
-
+  List<PerMonthModel> carsRegPerMonth = [];
+  List<PerMonthModel> userRegPerMonth = [];
+  List<PerNMonthModel> carSoldPerMonth = [];
+  List<CarsPerBrand> carsRegPerBrand = [];
+  int totalUser = 0;
+  String selectedYear = "All";
   int noNotSold = 0;
   int noSold = 0;
   bool _loading = true;
@@ -69,9 +77,9 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       List<CarDetails> cars = await _methods.getCars();
       List<User> users = await _methods.getUsers();
       print(users);
-      Map<String, int> data1 = {};
-      Map<String, int> data2 = {};
-      Map<String, int> data3 = {};
+      Map<String, int> dataCarsRegPerMonth = {};
+      Map<String, int> dataUserRegPerMonth = {};
+      Map<String, int> dataCarSoldPerMonth = {};
 
       List<CarDetails> carsSold = await _methods.getAllSoldCars();
 
@@ -80,159 +88,102 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         print(cars.length);
         noNotSold = cars.length;
         noSold = carsSold.length;
+        totalUser = users.length;
+          userRegPerMonth = [];
+        carsRegPerMonth=[];
+        carSoldPerMonth = [];
+
       });
       for (CarDetails car in cars) {
         String month = DateTime.parse(car.carId.substring(5)).month.toString();
-        if (data1.containsKey(month)) {
+        String year = DateTime.parse(car.carId.substring(5)).year.toString();
+        // print("selected year----->" + selectedYear);
+        // print("year----->" + year);
+        if (selectedYear=="All" || year == selectedYear) {
+        if (dataCarsRegPerMonth.containsKey(month)) {
           setState(() {
-            data1[month] = data1[month] + 1;
+            dataCarsRegPerMonth[month] = dataCarsRegPerMonth[month] + 1;
           });
         } else {
           setState(() {
-            data1[month] = 1;
+            dataCarsRegPerMonth[month] = 1;
           });
         }
+        }
       }
-      print(data1);
-      var temp1 = data1;
-      var sortedKeys1 = temp1.keys.toList(growable: false)
-        ..sort((k1, k2) => k1.compareTo(k2));
-      LinkedHashMap sortedMap1 = new LinkedHashMap.fromIterable(sortedKeys1,
-          key: (k) => k, value: (k) => temp1[k]);
-      print(sortedMap1);
-      Map<String, int> sortedData1 =
-          sortedMap1.map((a, b) => MapEntry(a as String, b as int));
-      List<String> sortedListMonth1 =
-          sortedData1.entries.map((entry) => (entry.key)).toList();
-      List<int> sortedListCars1 =
-          sortedData1.entries.map((entry) => (entry.value)).toList();
-      print(sortedListMonth1);
-      print(sortedListCars1);
-      for (int i = 0; i < sortedListCars1.length && i < 5; i++) {
-        print(sortedListMonth1[i]);
-
-        // sortedData.forEach((brandName, cars) {
-
+       print(dataCarsRegPerMonth);
+      dataCarsRegPerMonth.forEach((month, cars) {
         setState(() {
-          graphData.add(PerMonthModel(
-            month: mo[int.tryParse(sortedListMonth1[i])],
-            cars: sortedListCars1[i],
+          carsRegPerMonth.add(PerMonthModel(
+            monthN: int.tryParse(month),
+            month: mo[int.tryParse(month)],
+            cars: cars,
             color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      }
-      // data1.forEach((month, cars) {
-      //   setState(() {
-      //     graphData.add(PerMonthModel(
-      //       month: mo[int.tryParse(month)],
-      //       cars: cars,
-      //       color: charts.ColorUtil.fromDartColor(Colors.teal),
-      //     ));
-      //   });
-      // });
-      for (User user in users) {
+      });
+      carsRegPerMonth.sort((a, b) => a.monthN.compareTo(b.monthN));
+     for (User user in users) {
         String month = DateTime.parse(user.date).month.toString();
-        if (data2.containsKey(month)) {
-          setState(() {
-            data2[month] = data2[month] + 1;
-          });
-        } else {
-          setState(() {
-            data2[month] = 1;
-          });
-        }
-        // print(user);
-      }
-      print("Hello");
-      print(data2);
-      var temp = data2;
-      var sortedKeys = temp.keys.toList(growable: false)
-        ..sort((k1, k2) => temp[k1].compareTo(temp[k2]));
-      LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
-          key: (k) => k, value: (k) => temp[k]);
-      print(sortedMap);
-      Map<String, int> sortedData =
-          sortedMap.map((a, b) => MapEntry(a as String, b as int));
-      List<String> sortedListMonth =
-          sortedData.entries.map((entry) => (entry.key)).toList();
-      List<int> sortedListCars =
-          sortedData.entries.map((entry) => (entry.value)).toList();
-      print(sortedListMonth);
-      print(sortedListCars);
-      for (int i = 0; i < sortedListCars.length && i < 5; i++) {
-        print(sortedListMonth[i]);
-
-        // sortedData.forEach((brandName, cars) {
-
-        setState(() {
-          graphData2.add(PerMonthModel(
-            month: mo[int.tryParse(sortedListMonth[i])],
-            cars: sortedListCars[i],
-            color: charts.ColorUtil.fromDartColor(Colors.teal),
-          ));
-        });
-      }
-      // data2.forEach((month, cars) {
-      //   setState(() {
-      //     graphData2.add(PerMonthModel(
-      //       month: mo[int.tryParse(month)],
-      //       cars: cars,
-      //       color: charts.ColorUtil.fromDartColor(Constants.mainColor),
-      //     ));
-      //   });
-      // });
-
-      for (CarDetails car in cars) {
-        if (car.isSold == true) {
-          String month = DateTime.parse(car.dateSold).month.toString();
-          if (data3.containsKey(month)) {
+        String year = DateTime.parse(user.date).year.toString();
+        print("selected year----->" + selectedYear);
+        print("year----->" + year);
+        if (selectedYear=="All" || year == selectedYear) {
+          if (dataUserRegPerMonth.containsKey(month)) {
             setState(() {
-              data3[month] = data3[month] + 1;
+              dataUserRegPerMonth[month] = dataUserRegPerMonth[month] + 1;
             });
           } else {
             setState(() {
-              data3[month] = 1;
+              dataUserRegPerMonth[month] = 1;
             });
           }
         }
       }
-      var temp2 = data3;
-      var sortedKeys2 = temp2.keys.toList(growable: false)
-        ..sort((k2, k1) => temp2[k1].compareTo(temp2[k2]));
-      LinkedHashMap sortedMap2 = new LinkedHashMap.fromIterable(sortedKeys2,
-          key: (k) => k, value: (k) => temp2[k]);
-      print(sortedMap2);
-      Map<String, int> sortedData2 =
-          sortedMap2.map((a, b) => MapEntry(a as String, b as int));
-      List<String> sortedListMonth2 =
-          sortedData2.entries.map((entry) => (entry.key)).toList();
-      List<int> sortedListCars2 =
-          sortedData2.entries.map((entry) => (entry.value)).toList();
-      print(sortedListMonth2);
-      print(sortedListCars2);
-      for (int i = 0; i < sortedListCars2.length && i < 5; i++) {
-        print(sortedListMonth2[i]);
 
-        // sortedData.forEach((brandName, cars) {
-
+      print(dataUserRegPerMonth);
+      dataUserRegPerMonth.forEach((month, cars) {
         setState(() {
-          graphDataSold.add(PerNMonthModel(
-            month: int.tryParse(sortedListMonth2[i]),
-            cars: sortedListCars2[i],
+          userRegPerMonth.add(PerMonthModel(
+            monthN: int.tryParse(month),
+            month: mo[int.tryParse(month)],
+            cars: cars,
+            color: charts.ColorUtil.fromDartColor(Constants.mainColor),
+          ));
+        });
+      });
+      userRegPerMonth.sort((a, b) => a.monthN.compareTo(b.monthN));
+
+       for (CarDetails car in cars) {
+        if (car.isSold == true) {
+          String month = DateTime.parse(car.dateSold).month.toString();
+          String year = DateTime.parse(car.dateSold).year.toString();
+        print("selected year----->" + selectedYear);
+        print("year----->" + year);
+        if (selectedYear=="All" || year == selectedYear) {
+          if (dataCarSoldPerMonth.containsKey(month)) {
+            setState(() {
+              dataCarSoldPerMonth[month] = dataCarSoldPerMonth[month] + 1;
+            });
+          } else {
+            setState(() {
+              dataCarSoldPerMonth[month] = 1;
+            });
+          }
+        }
+        }
+      }
+      ;
+      dataCarSoldPerMonth.forEach((month, cars) {
+        setState(() {
+          carSoldPerMonth.add(PerNMonthModel(
+            month: int.tryParse(month),
+            cars: cars,
             color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      }
-
-      // data3.forEach((month, cars) {
-      //   setState(() {
-      //     graphDataSold.add(PerNMonthModel(
-      //       month: int.tryParse(month),
-      //       cars: cars,
-      //       color: charts.ColorUtil.fromDartColor(Colors.teal),
-      //     ));
-      //   });
-      // });
+      });
+      carSoldPerMonth.sort((a, b) => a.month.compareTo(b.month));
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -244,51 +195,38 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
     }
   }
 
-  void getBrandData() async {
+void getBrandData() async {
     setState(() {
       _loading = true;
     });
     try {
       List<CarDetails> cars = await _methods.getCars();
-      Map<String, int> data = {};
+      Map<String, int> dataCarsRegPerBrand = {};
+
       for (CarDetails car in cars) {
         String brandName = car.brand;
         // String month = DateTime.parse(car.carId.substring(5)).month.toString();
-        if (data.containsKey(brandName)) {
+        if (dataCarsRegPerBrand.containsKey(brandName)) {
           setState(() {
-            data[brandName] = data[brandName] + 1;
+            dataCarsRegPerBrand[brandName] = dataCarsRegPerBrand[brandName] + 1;
           });
         } else {
           setState(() {
-            data[brandName] = 1;
+            dataCarsRegPerBrand[brandName] = 1;
           });
         }
       }
-      print(data);
-      var temp = data;
-      var sortedKeys = temp.keys.toList(growable: false)
-        ..sort((k2, k1) => temp[k1].compareTo(temp[k2]));
-      LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
-          key: (k) => k, value: (k) => temp[k]);
-      print(sortedMap);
-      Map<String, int> sortedData =
-          sortedMap.map((a, b) => MapEntry(a as String, b as int));
-      List<String> sortedListName =
-          sortedData.entries.map((entry) => (entry.key)).toList();
-      List<int> sortedListCars =
-          sortedData.entries.map((entry) => (entry.value)).toList();
-      print(sortedListName);
-      print(sortedListCars);
-      for (int i = 0; i < sortedListCars.length && i < 5; i++) {
-        print(sortedListName[i]);
+      print(dataCarsRegPerBrand);
+      dataCarsRegPerBrand.forEach((brand, cars) {
         setState(() {
-          graphData3.add(CarsPerBrand(
-            brand: sortedListName[i],
-            cars: sortedListCars[i],
+          carsRegPerBrand.add(CarsPerBrand(
+            brand: brand,
+            cars: cars,
             color: charts.ColorUtil.fromDartColor(Colors.teal),
           ));
         });
-      }
+      });
+      carsRegPerBrand.sort((a, b) => a.cars.compareTo(b.cars));
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -321,12 +259,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                 style: GoogleFonts.oswald(),
               ),
               iconTheme: IconThemeData(color: Constants.mainColor),
-              // title: Text('Car Buddy',
-              //     style: TextStyle(
-              //         fontSize: screenHeight*0.028,
-              //         color: Constants.secColor,
-              //         fontWeight: FontWeight.bold)),
-              // backgroundColor: Colors.white,
+
               bottom: TabBar(
                 isScrollable: true,
                 indicator: UnderlineTabIndicator(
@@ -336,13 +269,13 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                   Tab(
                       child: Text(
                     '   Cars  ',
-                    style: GoogleFonts.alegreya(
+                    style: GoogleFonts.lobster(
                         fontSize: 18, fontWeight: FontWeight.w500),
                   )),
                   Tab(
                       child: Text(
-                    '   User   ',
-                    style: GoogleFonts.alegreya(
+                    '   Users   ',
+                    style: GoogleFonts.lobster(
                         fontSize: 18, fontWeight: FontWeight.w500),
                   )),
                 ],
@@ -382,19 +315,63 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                               ),
                             ],
                           ),
+                           Container(
+                            margin: EdgeInsets.symmetric(horizontal:10),
+                            padding:EdgeInsets.symmetric(horizontal:10),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue[100], 
+                                    blurRadius: 2)
+                                    ],
+                                 borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: DropDownFormField(
+                            
+                              filled: false,
+                              titleText: 'Year',
+                              hintText: 'Please choose one',
+                              value: selectedYear,
+                              onSaved: (value) {
+                                setState(() {
+                                selectedYear = value;
+                                });
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedYear = value;
+                                      getData();
+                                });
+                              },
+                              dataSource: _years,
+                              textField: 'value',
+                              valueField: 'value',
+                            ),
+                          ),
+                          // RaisedButton(
+                          //   color:Constants.mainColor,
+                          //     child: Text("Apply",
+                          //     style: GoogleFonts.oswald(
+                          //       textStyle: TextStyle(
+                          //           color: Constants.secColor, fontSize: 18),
+                          //     )),
+                              
+                          //     onPressed: () {
+                          //       getData();
+                          //     }),
                           PerMonthChart(
-                            data: graphData,
+                            data: carsRegPerMonth,
                             id: "Cars",
                             title: "Cars Registered Per Month",
                           ),
                           PerMonthLineChart(
-                            data: graphDataSold,
+                            data: carSoldPerMonth,
                             id: "Cars",
                             title: "Cars Sold Per Month",
                           ),
                           // SizedBox(height: 10),
                           CarsPerBrandChart(
-                            data: graphData3,
+                            data: carsRegPerBrand,
                           )
                         ],
                       ),
@@ -418,24 +395,25 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               adminNoCard(
-                                count: noNotSold,
+                                count: totalUser,
                                 title: "Total no. of users",
                                 color1: Color(0xFF3366FF),
                                 color2: Color(0xFF00CCFF),
                               ),
                               adminNoCard(
-                                count: noSold,
-                                title: "Total no. of user ",
+                                count: totalSeller,
+                                title: "Total no. of seller ",
                                 color1: Color(0xFFdb5d44),
                                 color2: Color(0xFFde8d64),
                               ),
                             ],
                           ),
 
+
                           UserAnalysis(),
                           // SizedBox(height: 10),
                           PerMonthChart(
-                            data: graphData2,
+                            data: userRegPerMonth,
                             id: "Users",
                             title: "Users Registered Per Month",
                           ),
@@ -461,7 +439,7 @@ class UserAnalysis extends StatefulWidget {
 class _UserAnalysisState extends State<UserAnalysis> {
   FirebaseMethods _methods = FirebaseMethods();
 
-  List<CarsPerUser> UserCarsData = [];
+  List<CarsPerUserModel> UserCarsData = [];
 
   bool _loading = true;
 
@@ -477,7 +455,6 @@ class _UserAnalysisState extends State<UserAnalysis> {
     try {
       List<CarDetails> cars = await _methods.getCars();
       Map<String, dynamic> data = {};
-      Map<String, dynamic> data2 = {};
 
       List<int> mbno = [];
       for (CarDetails car in cars) {
@@ -495,19 +472,19 @@ class _UserAnalysisState extends State<UserAnalysis> {
           });
         }
       }
-      print(data);
-      int k = 0;
-      data.forEach((ownerName, cars) {
-        print(cars);
 
+      int k = 0;
+      print(data);
+      data.forEach((ownerName, cars) {
         setState(() {
-          UserCarsData.add(CarsPerUser(
+          UserCarsData.add(CarsPerUserModel(
               ownerName: ownerName, cars: cars, mobileNumber: mbno[k]));
+        });
+        setState(() {
+          totalSeller = UserCarsData.length;
         });
         k += 1;
       });
-      print("User Data------------------->");
-      print(UserCarsData);
     } on FirebaseException catch (e) {
       print(e.message);
     } catch (e) {
@@ -600,8 +577,9 @@ class _UserAnalysisState extends State<UserAnalysis> {
         DataCell(Text('${person.mobileNumber}')),
       ]);
     });
-    return Padding(
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: 18),
+      height: 200,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: FittedBox(
