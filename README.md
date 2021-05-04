@@ -65,6 +65,17 @@ Document link
 
 <!--![Demo User side-CarBuddy](images/user.gif) -->
 
+
+
+### Admin Analysis 
+
+<br>
+
+
+<img src="demo_files/admin_analysis.gif" width="250" height="500"/>
+
+
+<!--![Demo User side-CarBuddy](images/user.gif) -->
 ### Selling Car Form Demo
 
 <br>
