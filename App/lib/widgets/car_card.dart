@@ -65,7 +65,7 @@ class CarCard extends StatelessWidget {
                       width: 10,
                     ),
                     Expanded(
-                                          child: Container(
+                        child: Container(
                         padding: EdgeInsets.all(10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

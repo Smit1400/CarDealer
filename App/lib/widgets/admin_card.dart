@@ -27,7 +27,7 @@ class _AdminCardState extends State<AdminCard> {
   }
 
   Future<void> approveCars(CarDetails car) async {
-    try {
+    try { 
       bool confirm = await showDialog(
           context: context,
           builder: (context) {
@@ -136,27 +136,29 @@ class _AdminCardState extends State<AdminCard> {
                   SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("${widget.car.brand}",
-                            style: GoogleFonts.oswald(
-                              textStyle: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold),
-                            )),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text('Rs.${widget.car.price}',
-                            style: GoogleFonts.oswald(
-                              textStyle: TextStyle(
-                                  color: Constants.secColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                            )),
-                      ],
+                  Expanded(
+                      child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("${widget.car.brand}",
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text('Rs.${widget.car.price}',
+                              style: GoogleFonts.oswald(
+                                textStyle: TextStyle(
+                                    color: Constants.secColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                        ],
+                      ),
                     ),
                   )
                 ],
