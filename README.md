@@ -55,52 +55,35 @@ Document link
 ## Demo ##
 
 
+<table>
+<tr>
+<td>Sign Up/Sign In</td>
+<td>User Functionalities </td>
+<td>Filter</td>
+</tr>
+<tr>
+
+<td><img src="demo_files/login.gif" width="250" height="500"/></td>
+<td><img src="demo_files/user2.gif" width="250" height="500"/></td>
+<td><img src="demo_files/filter.gif" width="250" height="500"/></td>
+</tr>
+<br>
+<tr>
+<td>Sell Car</td>
+<td>Predict Car-price</td>
+<td>Admin analysis</td>
+</tr>
+<tr>
+
+<td><img src="demo_files/sell_car.gif" width="250" height="500"/></td>
+<td><img src="demo_files/predict_price.gif" width="250" height="500"/></td>
+<td><img src="demo_files/admin_analysis.gif" width="250" height="500"/></td>
+</tr>
+</table>
 ### Sign Up/Sign In 
 
-<br>
 
 
-<img src="demo_files/login_demo.gif" width="250" height="500"/>
-
-
-<!--![Demo User side-CarBuddy](images/user.gif) -->
-
-
-
-### Admin Analysis 
-
-<br>
-
-
-<img src="demo_files/admin_analysis.gif" width="250" height="500"/>
-
-
-<!--![Demo User side-CarBuddy](images/user.gif) -->
-### Selling Car Form Demo
-
-<br>
-
-
-<img src="demo_files/sell_car.gif" width="250" height="500"/>
-
-### Predict Car Price Demo
-
-<br>
-
-
-<img src="demo_files/predict_price.gif" width="250" height="500"/>
-
-### User Functionalities Demo
-
-<br>
-
-
-<img src="demo_files/user.gif" width="250" height="500"/>
-
-
-<!-- Admin side
-
-![Demo Admin side-CarBuddy](images/admin.gif) -->
 ------------------------------------------
 
 ## How To Use
