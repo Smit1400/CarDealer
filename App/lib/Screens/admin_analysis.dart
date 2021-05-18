@@ -23,8 +23,8 @@ import 'package:car_dealer/widgets/brands_chart.dart';
 import 'package:car_dealer/widgets/appbar.dart';
 
 class AdminAnalysis extends StatefulWidget {
-  bool appbar;
-  AdminAnalysis({this.appbar = false});
+  bool isAdmin;
+  AdminAnalysis({this.isAdmin = true});
   @override
   _AdminAnalysisState createState() => _AdminAnalysisState();
 }
@@ -406,7 +406,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
                             ],
                           ),
 
-                          UserAnalysis(),
+                          widget.isAdmin ? UserAnalysis() : Container(),
                           // SizedBox(height: 10),
                           PerMonthChart(
                             data: userRegPerMonth,

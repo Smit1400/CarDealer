@@ -280,7 +280,7 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
                                 HomeTab(),
                                 SearchTab(),
                                 SavedTab(),
-                                AdminAnalysis(),
+                                AdminAnalysis(isAdmin : false),
                               ],
                             ),
                           ),
@@ -319,7 +319,7 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
                                 HomeTab(),
                                 SearchTab(),
                                 SavedTab(),
-                                AdminAnalysis(),
+                                AdminAnalysis(isAdmin: false,),
                               ],
                             ),
                           ),
@@ -347,7 +347,7 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
               }),
           GestureDetector(
             onHorizontalDragUpdate: (val) {
-              if (val.delta.dx > 0) {
+              if (val.delta.dx > 0.3) {
                 setState(() {
                   value = 1;
                 });
