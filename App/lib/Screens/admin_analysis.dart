@@ -23,14 +23,19 @@ import 'package:car_dealer/widgets/brands_chart.dart';
 import 'package:car_dealer/widgets/appbar.dart';
 
 class AdminAnalysis extends StatefulWidget {
+  bool appbar;
+  AdminAnalysis({this.appbar = false});
   @override
   _AdminAnalysisState createState() => _AdminAnalysisState();
 }
+
 int totalSeller = 0;
 
 class _AdminAnalysisState extends State<AdminAnalysis> {
-      List _years = [
-    {"value": 'All',},
+  List _years = [
+    {
+      "value": 'All',
+    },
     {"value": '2019'},
     {"value": '2020'},
     {"value": '2021'},
@@ -89,29 +94,28 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         noNotSold = cars.length;
         noSold = carsSold.length;
         totalUser = users.length;
-          userRegPerMonth = [];
-        carsRegPerMonth=[];
+        userRegPerMonth = [];
+        carsRegPerMonth = [];
         carSoldPerMonth = [];
-
       });
       for (CarDetails car in cars) {
         String month = DateTime.parse(car.carId.substring(5)).month.toString();
         String year = DateTime.parse(car.carId.substring(5)).year.toString();
         // print("selected year----->" + selectedYear);
         // print("year----->" + year);
-        if (selectedYear=="All" || year == selectedYear) {
-        if (dataCarsRegPerMonth.containsKey(month)) {
-          setState(() {
-            dataCarsRegPerMonth[month] = dataCarsRegPerMonth[month] + 1;
-          });
-        } else {
-          setState(() {
-            dataCarsRegPerMonth[month] = 1;
-          });
-        }
+        if (selectedYear == "All" || year == selectedYear) {
+          if (dataCarsRegPerMonth.containsKey(month)) {
+            setState(() {
+              dataCarsRegPerMonth[month] = dataCarsRegPerMonth[month] + 1;
+            });
+          } else {
+            setState(() {
+              dataCarsRegPerMonth[month] = 1;
+            });
+          }
         }
       }
-       print(dataCarsRegPerMonth);
+      print(dataCarsRegPerMonth);
       dataCarsRegPerMonth.forEach((month, cars) {
         setState(() {
           carsRegPerMonth.add(PerMonthModel(
@@ -123,12 +127,12 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
         });
       });
       carsRegPerMonth.sort((a, b) => a.monthN.compareTo(b.monthN));
-     for (User user in users) {
+      for (User user in users) {
         String month = DateTime.parse(user.date).month.toString();
         String year = DateTime.parse(user.date).year.toString();
         print("selected year----->" + selectedYear);
         print("year----->" + year);
-        if (selectedYear=="All" || year == selectedYear) {
+        if (selectedYear == "All" || year == selectedYear) {
           if (dataUserRegPerMonth.containsKey(month)) {
             setState(() {
               dataUserRegPerMonth[month] = dataUserRegPerMonth[month] + 1;
@@ -154,23 +158,23 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
       });
       userRegPerMonth.sort((a, b) => a.monthN.compareTo(b.monthN));
 
-       for (CarDetails car in cars) {
+      for (CarDetails car in cars) {
         if (car.isSold == true) {
           String month = DateTime.parse(car.dateSold).month.toString();
           String year = DateTime.parse(car.dateSold).year.toString();
-        print("selected year----->" + selectedYear);
-        print("year----->" + year);
-        if (selectedYear=="All" || year == selectedYear) {
-          if (dataCarSoldPerMonth.containsKey(month)) {
-            setState(() {
-              dataCarSoldPerMonth[month] = dataCarSoldPerMonth[month] + 1;
-            });
-          } else {
-            setState(() {
-              dataCarSoldPerMonth[month] = 1;
-            });
+          print("selected year----->" + selectedYear);
+          print("year----->" + year);
+          if (selectedYear == "All" || year == selectedYear) {
+            if (dataCarSoldPerMonth.containsKey(month)) {
+              setState(() {
+                dataCarSoldPerMonth[month] = dataCarSoldPerMonth[month] + 1;
+              });
+            } else {
+              setState(() {
+                dataCarSoldPerMonth[month] = 1;
+              });
+            }
           }
-        }
         }
       }
       ;
@@ -195,7 +199,7 @@ class _AdminAnalysisState extends State<AdminAnalysis> {
     }
   }
 
-void getBrandData() async {
+  void getBrandData() async {
     setState(() {
       _loading = true;
     });
@@ -244,7 +248,7 @@ void getBrandData() async {
         length: 2,
         child: Scaffold(
             // appBar: MyAppBar(),
-            appBar: AppBar(
+             appBar: AppBar(
               leading: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Image.asset(
@@ -259,7 +263,6 @@ void getBrandData() async {
                 style: GoogleFonts.oswald(),
               ),
               iconTheme: IconThemeData(color: Constants.mainColor),
-
               bottom: TabBar(
                 isScrollable: true,
                 indicator: UnderlineTabIndicator(
@@ -315,32 +318,26 @@ void getBrandData() async {
                               ),
                             ],
                           ),
-                           Container(
-                            margin: EdgeInsets.symmetric(horizontal:10),
-                            padding:EdgeInsets.symmetric(horizontal:10),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.blue[100], 
-                                    blurRadius: 2)
-                                    ],
-                                 borderRadius: BorderRadius.circular(20)
-                            ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(color: Colors.blue[100], blurRadius: 2)
+                            ], borderRadius: BorderRadius.circular(20)),
                             child: DropDownFormField(
-                            
                               filled: false,
                               titleText: 'Year',
                               hintText: 'Please choose one',
                               value: selectedYear,
                               onSaved: (value) {
                                 setState(() {
-                                selectedYear = value;
+                                  selectedYear = value;
                                 });
                               },
                               onChanged: (value) {
                                 setState(() {
                                   selectedYear = value;
-                                      getData();
+                                  getData();
                                 });
                               },
                               dataSource: _years,
@@ -355,7 +352,7 @@ void getBrandData() async {
                           //       textStyle: TextStyle(
                           //           color: Constants.secColor, fontSize: 18),
                           //     )),
-                              
+
                           //     onPressed: () {
                           //       getData();
                           //     }),
@@ -408,7 +405,6 @@ void getBrandData() async {
                               ),
                             ],
                           ),
-
 
                           UserAnalysis(),
                           // SizedBox(height: 10),

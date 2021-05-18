@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:car_dealer/Screens/admin_analysis.dart';
 import 'package:car_dealer/screens/price_predict.dart';
 import 'package:car_dealer/screens/sell_car_page.dart';
 
@@ -261,7 +262,7 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20))
                         : BorderRadius.zero,
-                    child: Scaffold(
+                    child:index != 3 ? Scaffold(
                       appBar: MyAppBar(),
                       body: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -279,6 +280,7 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
                                 HomeTab(),
                                 SearchTab(),
                                 SavedTab(),
+                                AdminAnalysis(),
                               ],
                             ),
                           ),
@@ -291,6 +293,46 @@ class _NewHomescreenstate extends State<NewHomeScreen> {
                           TabItem(icon: Icons.home_outlined),
                           TabItem(icon: Icons.search_outlined),
                           TabItem(icon: Icons.save_alt_outlined),
+                          TabItem(icon: Icons.analytics_outlined),
+                        ],
+                        initialActiveIndex: index,
+                        onTap: (num) {
+                          _tabsPageController.animateToPage(num,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeOutCubic);
+                        },
+                      ),
+                    ) : Scaffold(
+                      body: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: PageView(
+                              physics: NeverScrollableScrollPhysics(),
+                              controller: _tabsPageController,
+                              onPageChanged: (num) {
+                                setState(() {
+                                  index = num;
+                                });
+                              },
+                              children: [
+                                HomeTab(),
+                                SearchTab(),
+                                SavedTab(),
+                                AdminAnalysis(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      bottomNavigationBar: ConvexAppBar(
+                        backgroundColor: Color(0xFF041E42),
+                        style: TabStyle.reactCircle,
+                        items: [
+                          TabItem(icon: Icons.home_outlined),
+                          TabItem(icon: Icons.search_outlined),
+                          TabItem(icon: Icons.save_alt_outlined),
+                          TabItem(icon: Icons.analytics_outlined),
                         ],
                         initialActiveIndex: index,
                         onTap: (num) {
