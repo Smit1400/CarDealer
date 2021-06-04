@@ -12,7 +12,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  var _order = true;
+  var _order = false;
   final FirebaseMethods _firebaseMethods = FirebaseMethods();
 
   @override

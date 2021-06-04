@@ -80,9 +80,6 @@ Document link
 <td><img src="demo_files/admin_analysis.gif" width="250" height="500"/></td>
 </tr>
 </table>
-### Sign Up/Sign In 
-
-
 
 ------------------------------------------
 
